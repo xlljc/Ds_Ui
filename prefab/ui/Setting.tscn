@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://be317uav85bpa"]
+
+[ext_resource type="Script" path="res://src/ui/setting/SettingPanel.cs" id="1_m8m8l"]
+
+[node name="Setting" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_m8m8l")
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 1
+offset_right = 8.0
+offset_bottom = 8.0
+text = "返回"

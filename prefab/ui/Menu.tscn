@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=3 uid="uid://jtq8fx85d7up"]
+
+[ext_resource type="Script" path="res://src/ui/menu/MenuPanel.cs" id="1_4mvrv"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4mvrv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 60.0
+theme_override_font_sizes/font_size = 50
+text = "Game Titile"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -151.0
+offset_right = 151.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Start" type="Button" parent="VBoxContainer/Control/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="Setting" type="Button" parent="VBoxContainer/Control/VBoxContainer"]
+layout_mode = 2
+text = "Setting"
+
+[node name="Exit" type="Button" parent="VBoxContainer/Control/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
