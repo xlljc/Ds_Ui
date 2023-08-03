@@ -1,0 +1,74 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjspcymebeqyl"]
+
+[ext_resource type="Script" path="res://src/ui/gameUi/GameUiPanel.cs" id="1_r0ukk"]
+
+[node name="GameUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_r0ukk")
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "返回"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Package" type="Button" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -15.0
+offset_right = 95.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "打开背包"
+
+[node name="Label" type="Label" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = 25.0
+offset_right = 138.0
+offset_bottom = 129.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "打开一个通用弹窗, 弹窗内再嵌套高背包页面, 使用背包中的道具会加1金币
+使用的功能: 嵌套Ui, UiGrid, 获取Ui实例"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Coin" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "金币数量: 0"

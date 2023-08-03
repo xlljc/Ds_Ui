@@ -234,7 +234,7 @@ namespace DsUi
         }
 
         /// <summary>
-        /// 设置当前网格组件中的所有数据, 性能较低
+        /// 设置当前网格组件中的所有 Cell 数据, 性能较低
         /// </summary>
         public void SetDataList(TData[] array)
         {
@@ -266,7 +266,7 @@ namespace DsUi
         }
 
         /// <summary>
-        /// 添加单条数据
+        /// 添加单条 Cell 数据
         /// </summary>
         public void Add(TData data)
         {
@@ -278,7 +278,7 @@ namespace DsUi
         }
 
         /// <summary>
-        /// 修改指定索引的位置的 cell 数据
+        /// 修改指定索引的位置的 Cell 数据
         /// </summary>
         public void UpdateByIndex(int index, TData data)
         {
@@ -290,10 +290,39 @@ namespace DsUi
         }
 
         /// <summary>
+        /// 移除指定索引的 Cell
+        /// </summary>
+        /// <param name="index"></param>
+        public void RemoveByIndex(int index)
+        {
+            if (index < 0 || index >= _cellList.Count)
+            {
+                return;
+            }
+
+            if (index >= _selectIndex)
+            {
+                //取消选中
+                SelectIndex = -1;
+            }
+            var uiCell = _cellList[index];
+            _cellList.RemoveAt(index);
+            ReclaimCellInstance(uiCell);
+            //更新后面的索引
+            for (var i = index; i < _cellList.Count; i++)
+            {
+                var tempCell = _cellList[i];
+                tempCell.SetIndex(i);
+            }
+        }
+
+        /// <summary>
         /// 移除所有 Cell
         /// </summary>
         public void RemoveAll()
         {
+            //取消选中
+            SelectIndex = -1;
             var uiCells = _cellList.ToArray();
             foreach (var uiCell in uiCells)
             {

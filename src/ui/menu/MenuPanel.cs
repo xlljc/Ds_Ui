@@ -34,16 +34,18 @@ public partial class MenuPanel : Menu
         
     }
 
+    //点击开始游戏
     private void OnStart()
     {
-        
+        //打开下一级游戏中页面
+        OpenNextUi(UiManager.UiName.GameUi);
     }
 
+    //点击设置
     private void OnSetting()
     {
-        var setting = UiManager.Open_Setting();
-        setting.PrevUi = this;
-        HideUi();
+        //打开下一级设置页面
+        OpenNextUi(UiManager.UiName.Setting);
     }
     
     //退出游戏

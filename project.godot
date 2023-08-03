@@ -15,6 +15,11 @@ run/main_scene="res://example/Example.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=1270
+window/size/viewport_height=720
+
 [dotnet]
 
 project/assembly_name="DS_Ui"

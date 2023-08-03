@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://byy4dwgh1pkg7"]
+
+[ext_resource type="Script" path="res://src/ui/commonWindow/CommonWindowPanel.cs" id="1_vy06k"]
+
+[node name="CommonWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_vy06k")
+Layer = 2
+
+[node name="Window" type="Window" parent="."]
+initial_position = 2
+size = Vector2i(1000, 600)
+visible = false

@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://nm0naio1nfd7"]
+
+[ext_resource type="Script" path="res://src/ui/tips/TipsPanel.cs" id="1_e40px"]
+
+[node name="Tips" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e40px")
+Layer = 3
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+initial_position = 2
+size = Vector2i(300, 200)
+exclusive = false
