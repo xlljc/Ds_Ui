@@ -7,6 +7,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_r0ukk")
 
 [node name="Back" type="Button" parent="."]
@@ -57,8 +59,46 @@ offset_right = 138.0
 offset_bottom = 129.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "打开一个通用弹窗, 弹窗内再嵌套高背包页面, 使用背包中的道具会加1金币
-使用的功能: 嵌套Ui, UiGrid, 获取Ui实例"
+text = "打开一个通用弹窗, 弹窗内再嵌套打开背包页面, 使用背包中的道具会加若干金币
+使用的功能: 嵌套Ui, UiGrid"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Control2" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Setting" type="Button" parent="HBoxContainer/Control2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -15.0
+offset_right = 95.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "打开设置"
+
+[node name="Label" type="Label" parent="HBoxContainer/Control2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = 25.0
+offset_right = 138.0
+offset_bottom = 129.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "打开一个通用弹窗, 弹窗内再嵌套高背包页面,
+使用的功能: 嵌套Ui"
 horizontal_alignment = 1
 autowrap_mode = 3
 

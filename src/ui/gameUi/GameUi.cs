@@ -118,6 +118,59 @@ public abstract partial class GameUi : UiBase
     }
 
     /// <summary>
+    /// 类型: <see cref="Godot.Button"/>, 路径: GameUi.HBoxContainer.Control2.Setting
+    /// </summary>
+    public class Setting : UiNode<GameUi, Godot.Button, Setting>
+    {
+        public Setting(GameUi uiPanel, Godot.Button node) : base(uiPanel, node) {  }
+        public override Setting Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
+    }
+
+    /// <summary>
+    /// 类型: <see cref="Godot.Label"/>, 路径: GameUi.HBoxContainer.Control2.Label
+    /// </summary>
+    public class Label_1 : UiNode<GameUi, Godot.Label, Label_1>
+    {
+        public Label_1(GameUi uiPanel, Godot.Label node) : base(uiPanel, node) {  }
+        public override Label_1 Clone() => new (UiPanel, (Godot.Label)Instance.Duplicate());
+    }
+
+    /// <summary>
+    /// 类型: <see cref="Godot.Control"/>, 路径: GameUi.HBoxContainer.Control2
+    /// </summary>
+    public class Control2 : UiNode<GameUi, Godot.Control, Control2>
+    {
+        /// <summary>
+        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: GameUi.HBoxContainer.Setting
+        /// </summary>
+        public Setting L_Setting
+        {
+            get
+            {
+                if (_L_Setting == null) _L_Setting = new Setting(UiPanel, Instance.GetNodeOrNull<Godot.Button>("Setting"));
+                return _L_Setting;
+            }
+        }
+        private Setting _L_Setting;
+
+        /// <summary>
+        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: GameUi.HBoxContainer.Label
+        /// </summary>
+        public Label_1 L_Label
+        {
+            get
+            {
+                if (_L_Label == null) _L_Label = new Label_1(UiPanel, Instance.GetNodeOrNull<Godot.Label>("Label"));
+                return _L_Label;
+            }
+        }
+        private Label_1 _L_Label;
+
+        public Control2(GameUi uiPanel, Godot.Control node) : base(uiPanel, node) {  }
+        public override Control2 Clone() => new (UiPanel, (Godot.Control)Instance.Duplicate());
+    }
+
+    /// <summary>
     /// 类型: <see cref="Godot.HBoxContainer"/>, 路径: GameUi.HBoxContainer
     /// </summary>
     public class HBoxContainer : UiNode<GameUi, Godot.HBoxContainer, HBoxContainer>
@@ -134,6 +187,19 @@ public abstract partial class GameUi : UiBase
             }
         }
         private Control _L_Control;
+
+        /// <summary>
+        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Control"/>, 节点路径: GameUi.Control2
+        /// </summary>
+        public Control2 L_Control2
+        {
+            get
+            {
+                if (_L_Control2 == null) _L_Control2 = new Control2(UiPanel, Instance.GetNodeOrNull<Godot.Control>("Control2"));
+                return _L_Control2;
+            }
+        }
+        private Control2 _L_Control2;
 
         public HBoxContainer(GameUi uiPanel, Godot.HBoxContainer node) : base(uiPanel, node) {  }
         public override HBoxContainer Clone() => new (UiPanel, (Godot.HBoxContainer)Instance.Duplicate());
@@ -160,14 +226,19 @@ public abstract partial class GameUi : UiBase
     public Package S_Package => L_HBoxContainer.L_Control.L_Package;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Label"/>, 节点路径: GameUi.HBoxContainer.Control.Label
-    /// </summary>
-    public Label S_Label => L_HBoxContainer.L_Control.L_Label;
-
-    /// <summary>
     /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Control"/>, 节点路径: GameUi.HBoxContainer.Control
     /// </summary>
     public Control S_Control => L_HBoxContainer.L_Control;
+
+    /// <summary>
+    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: GameUi.HBoxContainer.Control2.Setting
+    /// </summary>
+    public Setting S_Setting => L_HBoxContainer.L_Control2.L_Setting;
+
+    /// <summary>
+    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Control"/>, 节点路径: GameUi.HBoxContainer.Control2
+    /// </summary>
+    public Control2 S_Control2 => L_HBoxContainer.L_Control2;
 
     /// <summary>
     /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.HBoxContainer"/>, 节点路径: GameUi.HBoxContainer

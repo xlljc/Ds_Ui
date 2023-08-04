@@ -62,25 +62,25 @@ namespace DsUi
             _bottomLayer = new CanvasLayer();
             _bottomLayer.Name = "BottomLayer";
             _bottomLayer.Layer = 5;
-            root.AddChild(_bottomLayer);
+            root.CallDeferred(Node.MethodName.AddChild, _bottomLayer);
 
             //Middle
             _middleLayer = new CanvasLayer();
             _middleLayer.Name = "MiddleLayer";
             _middleLayer.Layer = 15;
-            root.AddChild(_middleLayer);
+            root.CallDeferred(Node.MethodName.AddChild, _middleLayer);
 
             //Height
             _heightLayer = new CanvasLayer();
             _heightLayer.Name = "HeightLayer";
             _heightLayer.Layer = 25;
-            root.AddChild(_heightLayer);
+            root.CallDeferred(Node.MethodName.AddChild, _heightLayer);
 
             //Pop
             _popLayer = new CanvasLayer();
             _popLayer.Name = "PopLayer";
             _popLayer.Layer = 35;
-            root.AddChild(_popLayer);
+            root.CallDeferred(Node.MethodName.AddChild, _popLayer);
         }
 
         /// <summary>

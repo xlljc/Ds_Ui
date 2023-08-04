@@ -47,6 +47,7 @@ namespace DsUi
             AddToolMenuItem("创建Ui", new Callable(this, nameof(OnCreateUi)));
             AddToolMenuItem("重新生成当前Ui代码", new Callable(this, nameof(OnGenerateUiCode)));
             AddToolMenuItem("重新生成UiManager中的Ui函数", new Callable(this, nameof(GenerateUiManagerMethods)));
+            AddAutoloadSingleton("InitUiManager", "res://addons/ds_ui/InitUiManager.cs");
         }
 
         public override void _ExitTree()
@@ -62,6 +63,7 @@ namespace DsUi
             RemoveToolMenuItem("创建Ui");
             RemoveToolMenuItem("重新生成当前Ui代码");
             RemoveToolMenuItem("重新生成UiManager中的Ui函数");
+            RemoveAutoloadSingleton("InitUiManager");
         }
 
 

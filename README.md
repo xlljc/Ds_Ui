@@ -26,23 +26,34 @@ DsUi插件就是为了解决这个问题, **在编辑场景完成后动态生成
    如果插件正常被启用, 则可以在`项目/工具`目录下看到`创建Ui`, `重新生成当前Ui代码`, `重新生成UiManager中的Ui函数`这三个选项  
    ![img.png](image/img.png)  
 
-2. 配置插件
-    * 在项目初始化时添加以下代码:
-    ```csharp
-    ///初始化Ui管理器
-    UiManager.Init(rootNode);
-    ```
-    执行完成初始化代码后就会创建4个Ui层级, 分别为: `BottomLayer`, `MiddleLayer`, `HeightLayer`, `PopLayer`
-
-3. 快速开发Ui
+2. 快速创建Ui
     * 点击`项目/工具/创建Ui`, 输入Ui名称, 点击创建, 教程Ui名称以`MyUi`为例  
     ![img.png](image/img2.png)  
     创建成功后会自动创建Ui场景和Ui脚本文件  
     * 此时编辑Ui场景, 插件会实时生成对应的Ui节点代码  
     ![gif.gif](image/gif.gif)  
+    * 代码操作Ui
+    ```csharp
+    //获取指定节点, 命名规则: L_ + 节点名称
+    var button = L_Control.L_Button;
+    //注意, 此时的对象是包裹类型, 需要从 Instance 属性中获取原生节点对象
+    button.Instance.Pressed += () =>
+    {
+        
+    };
+    
+    //如果 Button 是场景中唯一名称的节点, 那么获取 Button 节点可以使用 S_ + 节点名称 缩写方式
+    S_Button.Instance.Pressed += () =>
+    {
+        
+    };
+    ```
     * 创建Ui时会在`UiManager`下自动创建打开Ui的函数, 那么打开Ui只需要调用以下代码
     ```csharp
     UiManager.Open_MyUi();
     ```
     * 最后运行效果  
-    ![img.png](image/img3.png)  
+    ![img.png](image/img3.png)
+
+### 样例
+本仓库包含样例代码, 入口文件为`example/Example.cs`
