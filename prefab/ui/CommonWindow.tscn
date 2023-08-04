@@ -7,10 +7,12 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_vy06k")
 Layer = 2
 
 [node name="Window" type="Window" parent="."]
-initial_position = 2
+position = Vector2i(140, 60)
 size = Vector2i(1000, 600)
 visible = false
