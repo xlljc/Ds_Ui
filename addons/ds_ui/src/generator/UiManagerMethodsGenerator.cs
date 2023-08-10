@@ -12,25 +12,24 @@ namespace DsUi.Generator
     /// </summary>
     public static class UiManagerMethodsGenerator
     {
-        private static string savePath = "src/game/manager/UiManager_Methods.cs";
-
         /// <summary>
         /// 执行生成操作, 并返回执行结果
         /// </summary>
         public static bool Generate()
         {
             //扫描所有ui
-            if (!Directory.Exists(UiManager.UiPrefabDir))
+            if (!Directory.Exists(DsUiConfig.UiPrefabDir))
             {
                 return true;
             }
 
             try
             {
-                var directoryInfo = new DirectoryInfo(UiManager.UiPrefabDir);
+                var directoryInfo = new DirectoryInfo(DsUiConfig.UiPrefabDir);
                 var fileInfos = directoryInfo.GetFiles();
 
-                var code = $"/**\n" +
+                var code = $"namespace DsUi;\n\n" +
+                        $"/*\n" +
                         $" * 该类为自动生成的, 请不要手动编辑, 以免造成代码丢失\n" +
                         $" */\n" +
                         $"public static partial class UiManager\n" +
@@ -104,7 +103,7 @@ namespace DsUi.Generator
                 code += methodClass;
                 code += $"}}\n";
 
-                File.WriteAllText(savePath, code);
+                File.WriteAllText(DsUiConfig.UiManagerMethodsCodePath, code);
             }
             catch (Exception e)
             {

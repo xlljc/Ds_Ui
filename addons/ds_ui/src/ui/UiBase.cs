@@ -204,7 +204,7 @@ namespace DsUi
         /// </summary>
         public UiBase OpenNestedUi(string uiName, UiBase prevUi = null)
         {
-            var packedScene = ResourceLoader.Load<PackedScene>("res://" + UiManager.UiPrefabDir + uiName + ".tscn");
+            var packedScene = ResourceLoader.Load<PackedScene>("res://" + DsUiConfig.UiPrefabDir + uiName + ".tscn");
             var uiBase = packedScene.Instantiate<UiBase>();
             uiBase.PrevUi = prevUi;
             AddChild(uiBase);

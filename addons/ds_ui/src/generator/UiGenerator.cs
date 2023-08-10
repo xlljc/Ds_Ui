@@ -24,7 +24,7 @@ namespace DsUi.Generator
             try
             {
                 //创建脚本代码
-                var scriptPath = UiManager.UiCodeDir + ds_ui.FirstToLower(uiName);
+                var scriptPath = DsUiConfig.UiCodeDir + ds_ui.FirstToLower(uiName);
                 var scriptFile = scriptPath + "/" + uiName + "Panel.cs";
                 var scriptCode = $"using Godot;\n" +
                                 $"\n" +
@@ -54,11 +54,11 @@ namespace DsUi.Generator
                 var scriptRes = GD.Load<CSharpScript>("res://" + scriptFile);
 
                 //创建场景资源
-                var prefabFile = UiManager.UiPrefabDir + uiName + ".tscn";
+                var prefabFile = DsUiConfig.UiPrefabDir + uiName + ".tscn";
                 var prefabResPath = "res://" + prefabFile;
-                if (!Directory.Exists(UiManager.UiPrefabDir))
+                if (!Directory.Exists(DsUiConfig.UiPrefabDir))
                 {
-                    Directory.CreateDirectory(UiManager.UiPrefabDir);
+                    Directory.CreateDirectory(DsUiConfig.UiPrefabDir);
                 }
                 var uiNode = new Control();
                 uiNode.Name = uiName;
@@ -116,7 +116,7 @@ namespace DsUi.Generator
                 _nestedIndex = 1;
                 
                 var uiName = control.Name.ToString();
-                var path = UiManager.UiCodeDir + ds_ui.FirstToLower(uiName) + "/" + uiName + ".cs";
+                var path = DsUiConfig.UiCodeDir + ds_ui.FirstToLower(uiName) + "/" + uiName + ".cs";
                 GD.Print("重新生成ui代码: " + path);
 
                 var uiNode = EachNodeFromEditor(control.Name, control);
@@ -145,6 +145,7 @@ namespace DsUi.Generator
         {
             var retraction = "    ";
             return $"namespace UI.{uiNodeInfo.OriginName};\n\n" +
+                $"using DsUi;\n\n" +
                 $"/// <summary>\n" +
                 $"/// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失\n" +
                 $"/// </summary>\n" +
@@ -377,7 +378,7 @@ namespace DsUi.Generator
                 if (fileName.EndsWith("Panel"))
                 {
                     var childUiName = fileName.Substring(0, fileName.Length - 5);
-                    if (childUiName != uiRootName && File.Exists(UiManager.UiPrefabDir + childUiName + ".tscn"))
+                    if (childUiName != uiRootName && File.Exists(DsUiConfig.UiPrefabDir + childUiName + ".tscn"))
                     {
                         //是引用Ui
                         uiNode.IsRefUi = true;

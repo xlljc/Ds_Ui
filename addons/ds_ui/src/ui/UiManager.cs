@@ -15,26 +15,6 @@ namespace DsUi
             Close,
         }
 
-        /// <summary>
-        /// 生成Ui的命名空间, 必须要设置命名空间!
-        /// </summary>
-        public const string UiNamespace = "UI";
-
-        /// <summary>
-        /// UiManager 打开和关闭 ui 的代码
-        /// </summary>
-        public const string UiManagerMethodsCodePath = "src/ui/UiManager_Methods.cs";
-
-        /// <summary>
-        /// Ui预制体保存路径, 从 config.json 中读取
-        /// </summary>
-        public const string UiPrefabDir = "prefab/ui/";
-
-        /// <summary>
-        /// Ui代码保存路径, 从 config.json 中读取
-        /// </summary>
-        public const string UiCodeDir = "src/ui/";
-
         private static bool _init = false;
 
         private static CanvasLayer _bottomLayer;
@@ -146,7 +126,7 @@ namespace DsUi
             {
                 throw new Exception("未初始化 UiManager!, 请先调用 UiManager.Init() 函数!");
             }
-            var packedScene = ResourceLoader.Load<PackedScene>("res://" + UiPrefabDir + uiName + ".tscn");
+            var packedScene = ResourceLoader.Load<PackedScene>("res://" + DsUiConfig.UiPrefabDir + uiName + ".tscn");
             var uiBase = packedScene.Instantiate<UiBase>();
             uiBase.PrevUi = prevUi;
             var canvasLayer = GetUiLayer(uiBase.Layer);

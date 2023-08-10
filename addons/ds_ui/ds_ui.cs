@@ -78,11 +78,11 @@ namespace DsUi
                 return false;
             }
 
-            if (resourcePath.StartsWith("res://" + UiManager.UiCodeDir) && resourcePath.EndsWith("Panel.cs"))
+            if (resourcePath.StartsWith("res://" + DsUiConfig.UiCodeDir) && resourcePath.EndsWith("Panel.cs"))
             {
                 var index = resourcePath.LastIndexOf("/", StringComparison.Ordinal);
                 var uiName = resourcePath.Substring(index + 1, resourcePath.Length - index - 8 - 1);
-                var codePath = "res://" + UiManager.UiCodeDir + FirstToLower(uiName) + "/" + uiName + "Panel.cs";
+                var codePath = "res://" + DsUiConfig.UiCodeDir + FirstToLower(uiName) + "/" + uiName + "Panel.cs";
                 if (ResourceLoader.Exists(codePath))
                 {
                     return true;
@@ -140,7 +140,7 @@ namespace DsUi
                     }
 
                     //检查是否有同名的Ui
-                    var path = UiManager.UiPrefabDir + result + ".tscn";
+                    var path = DsUiConfig.UiPrefabDir + result + ".tscn";
                     if (File.Exists(path))
                     {
                         ShowTips("错误", "已经存在相同名称'" + result + "'的UI了, 不能重复创建!");
