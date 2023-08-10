@@ -11,13 +11,10 @@ namespace DsUi
     /// </summary>
     /// <typeparam name="TUiCellNode">Ui节点类型</typeparam>
     /// <typeparam name="TData">传给Cell的数据类型</typeparam>
-    public class UiGrid<TUiCellNode, TData> : IDestroy where TUiCellNode : IUiCellNode
+    public class UiGrid<TUiCellNode, TData> : IUiGrid where TUiCellNode : IUiCellNode
     {
         public bool IsDestroyed { get; private set; }
-
-        /// <summary>
-        /// 当前选中的 Cell 索引
-        /// </summary>
+        
         public int SelectIndex
         {
             get => _selectIndex;
@@ -26,6 +23,16 @@ namespace DsUi
                 var newIndex = Mathf.Clamp(value, -1, _cellList.Count - 1);
                 if (_selectIndex != newIndex)
                 {
+                    //检测新的 Cell 是否可以被选中
+                    if (newIndex >= 0)
+                    {
+                        var uiCell = _cellList[newIndex];
+                        //不能被选中, 直接跳出
+                        if (!uiCell.CanSelect())
+                        {
+                            return;
+                        }
+                    }
                     var prevIndex = _selectIndex;
                     _selectIndex = newIndex;
 
@@ -46,30 +53,47 @@ namespace DsUi
             }
         }
 
+        /// <summary>
+        /// 选中的 Cell 包含的数据
+        /// </summary>
+        public TData SelectData => _selectIndex >= 0 ? _cellList[_selectIndex].Data : default;
+        
+        public bool Visible
+        {
+            get => _gridContainer.Visible;
+            set => _gridContainer.Visible = value;
+        }
+
+        //模板对象
         private TUiCellNode _template;
+        //模板大小
         private Vector2 _size = Vector2.Zero;
-        private Node _parent;
+        //cell逻辑处理类
         private Type _cellType;
-        private Stack<UiCell<TUiCellNode, TData>> _cellPool = new Stack<UiCell<TUiCellNode, TData>>();
+        //当前活动的cell池
         private List<UiCell<TUiCellNode, TData>> _cellList = new List<UiCell<TUiCellNode, TData>>();
-
-        private GridContainer _gridContainer;
+        //当前已被回收的cell池
+        private Stack<UiCell<TUiCellNode, TData>> _cellPool = new Stack<UiCell<TUiCellNode, TData>>();
+        //godot原生网格组件
+        private UiGridContainer _gridContainer;
+        //单个cell偏移
         private Vector2I _cellOffset;
+        //列数
         private int _columns;
+        //是否自动扩展列数
         private bool _autoColumns;
-
+        //选中的cell索引
         private int _selectIndex = -1;
 
         public UiGrid(TUiCellNode template, Type cellType)
         {
-            _gridContainer = new GridContainer();
+            _gridContainer = new UiGridContainer(OnReady, OnProcess);
             _gridContainer.Ready += OnReady;
             _template = template;
             _cellType = cellType;
             var uiInstance = _template.GetUiInstance();
-            _parent = uiInstance.GetParent();
-            _parent.RemoveChild(uiInstance);
-            _parent.AddChild(_gridContainer);
+            uiInstance.AddSibling(_gridContainer);
+            uiInstance.GetParent().RemoveChild(uiInstance);
             if (uiInstance is Control control)
             {
                 _size = control.Size;
@@ -79,14 +103,11 @@ namespace DsUi
         /// <summary>
         /// 设置每个 Cell 之间的偏移量
         /// </summary>
-        public void SetCellOffset(Vector2I offset)
+        public void  SetCellOffset(Vector2I offset)
         {
-            if (_gridContainer != null)
-            {
-                _cellOffset = offset;
-                _gridContainer.AddThemeConstantOverride("h_separation", offset.X);
-                _gridContainer.AddThemeConstantOverride("v_separation", offset.Y);
-            }
+            _cellOffset = offset;
+            _gridContainer.AddThemeConstantOverride("h_separation", offset.X);
+            _gridContainer.AddThemeConstantOverride("v_separation", offset.Y);
         }
 
         /// <summary>
@@ -103,10 +124,7 @@ namespace DsUi
         public void SetColumns(int columns)
         {
             _columns = columns;
-            if (_gridContainer != null)
-            {
-                _gridContainer.Columns = columns;
-            }
+            _gridContainer.Columns = columns;
         }
 
         /// <summary>
@@ -114,12 +132,7 @@ namespace DsUi
         /// </summary>
         public int GetColumns()
         {
-            if (_gridContainer != null)
-            {
-                return _gridContainer.Columns;
-            }
-
-            return _columns;
+            return _gridContainer.Columns;
         }
 
         /// <summary>
@@ -130,18 +143,15 @@ namespace DsUi
             if (flag != _autoColumns)
             {
                 _autoColumns = flag;
-                if (_gridContainer != null)
+                if (_autoColumns)
                 {
-                    if (_autoColumns)
-                    {
-                        _gridContainer.Resized += OnGridResized;
-                        OnGridResized();
-                    }
-                    else
-                    {
-                        _gridContainer.Columns = _columns;
-                        _gridContainer.Resized -= OnGridResized;
-                    }
+                    _gridContainer.Resized += OnGridResized;
+                    OnGridResized();
+                }
+                else
+                {
+                    _gridContainer.Columns = _columns;
+                    _gridContainer.Resized -= OnGridResized;
                 }
             }
         }
@@ -155,34 +165,19 @@ namespace DsUi
         }
 
         /// <summary>
-        /// 设置当前组布局方式是否横向扩展, 如果为 true, 则 GridContainer 的宽度会撑满父物体
+        /// 设置当前组件布局方式是否横向扩展, 如果为 true, 则 GridContainer 的宽度会撑满父物体
         /// </summary>
         public void SetHorizontalExpand(bool flag)
         {
-            if (_gridContainer != null)
-            {
-                if (flag)
-                {
-                    _gridContainer.SizeFlagsHorizontal |= Control.SizeFlags.Expand;
-                }
-                else if ((_gridContainer.SizeFlagsHorizontal & Control.SizeFlags.Expand) != 0)
-                {
-                    _gridContainer.SizeFlagsHorizontal ^= Control.SizeFlags.Expand;
-                }
-            }
+            SetHorizontalExpand(_gridContainer, flag);
         }
 
         /// <summary>
-        /// 获取当前组布局方式是否横向扩展
+        /// 获取当前组件布局方式是否横向扩展
         /// </summary>
         public bool GetHorizontalExpand()
         {
-            if (_gridContainer != null)
-            {
-                return (_gridContainer.SizeFlagsHorizontal & Control.SizeFlags.Expand) != 0;
-            }
-
-            return false;
+            return GetHorizontalExpand(_gridContainer);
         }
 
         /// <summary>
@@ -354,18 +349,32 @@ namespace DsUi
 
             _cellList = null;
             _cellPool = null;
-            if (_gridContainer != null)
-            {
-                _gridContainer.QueueFree();
-            }
+            _gridContainer.QueueFree();
         }
-
+        
         private void OnReady()
         {
-            _gridContainer.Ready -= OnReady;
             if (_template.GetUiInstance() is Control control)
             {
                 _gridContainer.Position = control.Position;
+            }
+        }
+        
+        private void OnProcess(float delta)
+        {
+            if (IsDestroyed || !_template.GetUiPanel().IsOpen)
+            {
+                return;
+            }
+            //调用 cell 更新
+            var uiCells = _cellPool.ToArray();
+            for (var i = 0; i < uiCells.Length; i++)
+            {
+                var item = uiCells[i];
+                if (item.Enable)
+                {
+                    item.Process(delta);
+                }
             }
         }
 
@@ -376,7 +385,7 @@ namespace DsUi
             {
                 var cell = _cellPool.Pop();
                 cell.SetIndex(_cellList.Count);
-                cell.OnEnable();
+                cell.SetEnable(true);
                 _cellList.Add(cell);
                 return cell;
             }
@@ -389,14 +398,14 @@ namespace DsUi
 
             _cellList.Add(uiCell);
             uiCell.Init(this, (TUiCellNode)_template.CloneUiCell(), _cellList.Count - 1);
-            uiCell.OnEnable();
+            uiCell.SetEnable(true);
             return uiCell;
         }
 
         //回收 cell
         private void ReclaimCellInstance(UiCell<TUiCellNode, TData> cell)
         {
-            cell.OnDisable();
+            cell.SetEnable(false);
             _gridContainer.RemoveChild(cell.CellNode.GetUiInstance());
             _cellPool.Push(cell);
         }
@@ -415,6 +424,29 @@ namespace DsUi
                     _gridContainer.Columns = Mathf.FloorToInt(width / (_size.X + _cellOffset.X));
                 }
             }
+        }
+
+        /// <summary>
+        /// 设置Ui布局方式是否横向扩展, 如果为 true, 则 GridContainer 的宽度会撑满父物体
+        /// </summary>
+        private static void SetHorizontalExpand(Control control, bool flag)
+        {
+            if (flag)
+            {
+                control.SizeFlagsHorizontal |= Control.SizeFlags.Expand;
+            }
+            else if ((control.SizeFlagsHorizontal & Control.SizeFlags.Expand) != 0)
+            {
+                control.SizeFlagsHorizontal ^= Control.SizeFlags.Expand;
+            }
+        }
+
+        /// <summary>
+        /// 获取Ui布局方式是否横向扩展
+        /// </summary>
+        private static bool GetHorizontalExpand(Control control)
+        {
+            return (control.SizeFlagsHorizontal & Control.SizeFlags.Expand) != 0;
         }
     }
 }

@@ -189,6 +189,7 @@ namespace DsUi
             return (T)OpenUi(uiName, prevUi);
         }
 
+
         /// <summary>
         /// 销毁指定Ui
         /// </summary>
@@ -204,7 +205,7 @@ namespace DsUi
         {
             uiBase.HideUi();
         }
-
+        
         /// <summary>
         /// 销毁所有Ui
         /// </summary>
@@ -215,7 +216,7 @@ namespace DsUi
             {
                 map.Add(item.Key, new List<UiBase>(item.Value));
             }
-
+            
             foreach (var item in map)
             {
                 foreach (var uiBase in item.Value)
@@ -235,7 +236,7 @@ namespace DsUi
             {
                 map.Add(item.Key, new List<UiBase>(item.Value));
             }
-
+            
             foreach (var item in map)
             {
                 foreach (var uiBase in item.Value)
@@ -257,7 +258,6 @@ namespace DsUi
                 {
                     result[i] = (T)list[i];
                 }
-
                 return result;
             }
 

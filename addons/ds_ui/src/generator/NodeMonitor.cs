@@ -24,17 +24,14 @@ namespace DsUi.Generator
             /// 节点类型
             /// </summary>
             public string Type;
-
             /// <summary>
             /// 节点名称
             /// </summary>
             public string Name;
-
             /// <summary>
             /// 节点脚本路径
             /// </summary>
             public string ScriptPath;
-
             /// <summary>
             /// 子节点
             /// </summary>
@@ -112,7 +109,6 @@ namespace DsUi.Generator
             {
                 _targetNode = null;
             }
-
             _checkTreeTimer = 0;
         }
 
@@ -120,7 +116,7 @@ namespace DsUi.Generator
         {
             if (_targetNode == null)
                 return;
-
+            
             _checkTreeTimer += delta;
             if (_checkTreeTimer >= 5) //5秒检查一次
             {
@@ -139,12 +135,11 @@ namespace DsUi.Generator
                     GD.Print(e.Message);
                     _targetNode = null;
                 }
-
                 _checkTreeTimer = 0;
             }
         }
-
-
+        
+        
         private SceneNode ParseNodeTree(Node node)
         {
             var script = node.GetScript().As<CSharpScript>();
@@ -157,7 +152,6 @@ namespace DsUi.Generator
             {
                 scriptPath = script.ResourcePath;
             }
-
             var uiNode = new SceneNode(node.GetType().FullName, node.Name, scriptPath);
             var count = node.GetChildCount();
             for (var i = 0; i < count; i++)
