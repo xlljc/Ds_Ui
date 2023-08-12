@@ -15,5 +15,10 @@ namespace DsUi
         /// 设置网格组件是否可见
         /// </summary>
         bool Visible { get; set; }
+        
+        /// <summary>
+        /// 当前网格组件数据大小
+        /// </summary>
+        int Count { get; }
     }
 }

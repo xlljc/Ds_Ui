@@ -10,8 +10,6 @@ public class PackageItemCell : UiCell<Package.Item, PackagePanel.ItemCellData>
         // CellNode 表示当前从模板对象克隆出来的新对象
         //隐藏选中按钮
         CellNode.L_Mask.Instance.Visible = false;
-        //点击当前cell
-        CellNode.Instance.Pressed += OnClick;
         //使用按钮
         CellNode.L_Mask.L_UseButton.Instance.Pressed += OnUse;
     }
@@ -22,7 +20,7 @@ public class PackageItemCell : UiCell<Package.Item, PackagePanel.ItemCellData>
         CellNode.L_ItemName.Instance.Text = data.Name;
     }
 
-    private void OnClick()
+    public override void OnClick()
     {
         //选中cell, 并会触发选中的函数
         Grid.SelectIndex = Index;

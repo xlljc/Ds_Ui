@@ -1,6 +1,6 @@
-using DsUi;
-
 namespace UI.Setting;
+
+using DsUi;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -14,7 +14,7 @@ public abstract partial class Setting : UiBase
     {
         get
         {
-            if (_L_Back == null) _L_Back = new Back(this, GetNodeOrNull<Godot.Button>("Back"));
+            if (_L_Back == null) _L_Back = new Back((SettingPanel)this, GetNodeOrNull<Godot.Button>("Back"));
             return _L_Back;
         }
     }
@@ -27,7 +27,7 @@ public abstract partial class Setting : UiBase
     {
         get
         {
-            if (_L_CenterContainer == null) _L_CenterContainer = new CenterContainer(this, GetNodeOrNull<Godot.CenterContainer>("CenterContainer"));
+            if (_L_CenterContainer == null) _L_CenterContainer = new CenterContainer((SettingPanel)this, GetNodeOrNull<Godot.CenterContainer>("CenterContainer"));
             return _L_CenterContainer;
         }
     }
@@ -45,34 +45,34 @@ public abstract partial class Setting : UiBase
     /// <summary>
     /// 类型: <see cref="Godot.Button"/>, 路径: Setting.Back
     /// </summary>
-    public class Back : UiNode<Setting, Godot.Button, Back>
+    public class Back : UiNode<SettingPanel, Godot.Button, Back>
     {
-        public Back(Setting uiPanel, Godot.Button node) : base(uiPanel, node) {  }
+        public Back(SettingPanel uiPanel, Godot.Button node) : base(uiPanel, node) {  }
         public override Back Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Label"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer.Setting1Name
     /// </summary>
-    public class Setting1Name : UiNode<Setting, Godot.Label, Setting1Name>
+    public class Setting1Name : UiNode<SettingPanel, Godot.Label, Setting1Name>
     {
-        public Setting1Name(Setting uiPanel, Godot.Label node) : base(uiPanel, node) {  }
+        public Setting1Name(SettingPanel uiPanel, Godot.Label node) : base(uiPanel, node) {  }
         public override Setting1Name Clone() => new (UiPanel, (Godot.Label)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.HSlider"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer.SettingValue1
     /// </summary>
-    public class SettingValue1 : UiNode<Setting, Godot.HSlider, SettingValue1>
+    public class SettingValue1 : UiNode<SettingPanel, Godot.HSlider, SettingValue1>
     {
-        public SettingValue1(Setting uiPanel, Godot.HSlider node) : base(uiPanel, node) {  }
+        public SettingValue1(SettingPanel uiPanel, Godot.HSlider node) : base(uiPanel, node) {  }
         public override SettingValue1 Clone() => new (UiPanel, (Godot.HSlider)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.HBoxContainer"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer
     /// </summary>
-    public class HBoxContainer : UiNode<Setting, Godot.HBoxContainer, HBoxContainer>
+    public class HBoxContainer : UiNode<SettingPanel, Godot.HBoxContainer, HBoxContainer>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: Setting.CenterContainer.VBoxContainer.Setting1Name
@@ -100,32 +100,32 @@ public abstract partial class Setting : UiBase
         }
         private SettingValue1 _L_SettingValue1;
 
-        public HBoxContainer(Setting uiPanel, Godot.HBoxContainer node) : base(uiPanel, node) {  }
+        public HBoxContainer(SettingPanel uiPanel, Godot.HBoxContainer node) : base(uiPanel, node) {  }
         public override HBoxContainer Clone() => new (UiPanel, (Godot.HBoxContainer)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Label"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2.Setting2Name
     /// </summary>
-    public class Setting2Name : UiNode<Setting, Godot.Label, Setting2Name>
+    public class Setting2Name : UiNode<SettingPanel, Godot.Label, Setting2Name>
     {
-        public Setting2Name(Setting uiPanel, Godot.Label node) : base(uiPanel, node) {  }
+        public Setting2Name(SettingPanel uiPanel, Godot.Label node) : base(uiPanel, node) {  }
         public override Setting2Name Clone() => new (UiPanel, (Godot.Label)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.OptionButton"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2.SettingValue2
     /// </summary>
-    public class SettingValue2 : UiNode<Setting, Godot.OptionButton, SettingValue2>
+    public class SettingValue2 : UiNode<SettingPanel, Godot.OptionButton, SettingValue2>
     {
-        public SettingValue2(Setting uiPanel, Godot.OptionButton node) : base(uiPanel, node) {  }
+        public SettingValue2(SettingPanel uiPanel, Godot.OptionButton node) : base(uiPanel, node) {  }
         public override SettingValue2 Clone() => new (UiPanel, (Godot.OptionButton)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.HBoxContainer"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2
     /// </summary>
-    public class HBoxContainer2 : UiNode<Setting, Godot.HBoxContainer, HBoxContainer2>
+    public class HBoxContainer2 : UiNode<SettingPanel, Godot.HBoxContainer, HBoxContainer2>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: Setting.CenterContainer.VBoxContainer.Setting2Name
@@ -153,32 +153,32 @@ public abstract partial class Setting : UiBase
         }
         private SettingValue2 _L_SettingValue2;
 
-        public HBoxContainer2(Setting uiPanel, Godot.HBoxContainer node) : base(uiPanel, node) {  }
+        public HBoxContainer2(SettingPanel uiPanel, Godot.HBoxContainer node) : base(uiPanel, node) {  }
         public override HBoxContainer2 Clone() => new (UiPanel, (Godot.HBoxContainer)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Label"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3.Setting3Name
     /// </summary>
-    public class Setting3Name : UiNode<Setting, Godot.Label, Setting3Name>
+    public class Setting3Name : UiNode<SettingPanel, Godot.Label, Setting3Name>
     {
-        public Setting3Name(Setting uiPanel, Godot.Label node) : base(uiPanel, node) {  }
+        public Setting3Name(SettingPanel uiPanel, Godot.Label node) : base(uiPanel, node) {  }
         public override Setting3Name Clone() => new (UiPanel, (Godot.Label)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.SpinBox"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3.SettingValue3
     /// </summary>
-    public class SettingValue3 : UiNode<Setting, Godot.SpinBox, SettingValue3>
+    public class SettingValue3 : UiNode<SettingPanel, Godot.SpinBox, SettingValue3>
     {
-        public SettingValue3(Setting uiPanel, Godot.SpinBox node) : base(uiPanel, node) {  }
+        public SettingValue3(SettingPanel uiPanel, Godot.SpinBox node) : base(uiPanel, node) {  }
         public override SettingValue3 Clone() => new (UiPanel, (Godot.SpinBox)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.HBoxContainer"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3
     /// </summary>
-    public class HBoxContainer3 : UiNode<Setting, Godot.HBoxContainer, HBoxContainer3>
+    public class HBoxContainer3 : UiNode<SettingPanel, Godot.HBoxContainer, HBoxContainer3>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: Setting.CenterContainer.VBoxContainer.Setting3Name
@@ -206,23 +206,23 @@ public abstract partial class Setting : UiBase
         }
         private SettingValue3 _L_SettingValue3;
 
-        public HBoxContainer3(Setting uiPanel, Godot.HBoxContainer node) : base(uiPanel, node) {  }
+        public HBoxContainer3(SettingPanel uiPanel, Godot.HBoxContainer node) : base(uiPanel, node) {  }
         public override HBoxContainer3 Clone() => new (UiPanel, (Godot.HBoxContainer)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Button"/>, 路径: Setting.CenterContainer.VBoxContainer.Apply
     /// </summary>
-    public class Apply : UiNode<Setting, Godot.Button, Apply>
+    public class Apply : UiNode<SettingPanel, Godot.Button, Apply>
     {
-        public Apply(Setting uiPanel, Godot.Button node) : base(uiPanel, node) {  }
+        public Apply(SettingPanel uiPanel, Godot.Button node) : base(uiPanel, node) {  }
         public override Apply Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.VBoxContainer"/>, 路径: Setting.CenterContainer.VBoxContainer
     /// </summary>
-    public class VBoxContainer : UiNode<Setting, Godot.VBoxContainer, VBoxContainer>
+    public class VBoxContainer : UiNode<SettingPanel, Godot.VBoxContainer, VBoxContainer>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.HBoxContainer"/>, 节点路径: Setting.CenterContainer.HBoxContainer
@@ -276,14 +276,14 @@ public abstract partial class Setting : UiBase
         }
         private Apply _L_Apply;
 
-        public VBoxContainer(Setting uiPanel, Godot.VBoxContainer node) : base(uiPanel, node) {  }
+        public VBoxContainer(SettingPanel uiPanel, Godot.VBoxContainer node) : base(uiPanel, node) {  }
         public override VBoxContainer Clone() => new (UiPanel, (Godot.VBoxContainer)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.CenterContainer"/>, 路径: Setting.CenterContainer
     /// </summary>
-    public class CenterContainer : UiNode<Setting, Godot.CenterContainer, CenterContainer>
+    public class CenterContainer : UiNode<SettingPanel, Godot.CenterContainer, CenterContainer>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.VBoxContainer"/>, 节点路径: Setting.VBoxContainer
@@ -298,7 +298,7 @@ public abstract partial class Setting : UiBase
         }
         private VBoxContainer _L_VBoxContainer;
 
-        public CenterContainer(Setting uiPanel, Godot.CenterContainer node) : base(uiPanel, node) {  }
+        public CenterContainer(SettingPanel uiPanel, Godot.CenterContainer node) : base(uiPanel, node) {  }
         public override CenterContainer Clone() => new (UiPanel, (Godot.CenterContainer)Instance.Duplicate());
     }
 

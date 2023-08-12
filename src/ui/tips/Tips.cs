@@ -1,6 +1,6 @@
-using DsUi;
-
 namespace UI.Tips;
+
+using DsUi;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -14,7 +14,7 @@ public abstract partial class Tips : UiBase
     {
         get
         {
-            if (_L_AcceptDialog == null) _L_AcceptDialog = new AcceptDialog(this, GetNodeOrNull<Godot.AcceptDialog>("AcceptDialog"));
+            if (_L_AcceptDialog == null) _L_AcceptDialog = new AcceptDialog((TipsPanel)this, GetNodeOrNull<Godot.AcceptDialog>("AcceptDialog"));
             return _L_AcceptDialog;
         }
     }
@@ -32,9 +32,9 @@ public abstract partial class Tips : UiBase
     /// <summary>
     /// 类型: <see cref="Godot.AcceptDialog"/>, 路径: Tips.AcceptDialog
     /// </summary>
-    public class AcceptDialog : UiNode<Tips, Godot.AcceptDialog, AcceptDialog>
+    public class AcceptDialog : UiNode<TipsPanel, Godot.AcceptDialog, AcceptDialog>
     {
-        public AcceptDialog(Tips uiPanel, Godot.AcceptDialog node) : base(uiPanel, node) {  }
+        public AcceptDialog(TipsPanel uiPanel, Godot.AcceptDialog node) : base(uiPanel, node) {  }
         public override AcceptDialog Clone() => new (UiPanel, (Godot.AcceptDialog)Instance.Duplicate());
     }
 

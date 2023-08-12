@@ -1,6 +1,6 @@
-using DsUi;
-
 namespace UI.GameUi;
+
+using DsUi;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -14,7 +14,7 @@ public abstract partial class GameUi : UiBase
     {
         get
         {
-            if (_L_Back == null) _L_Back = new Back(this, GetNodeOrNull<Godot.Button>("Back"));
+            if (_L_Back == null) _L_Back = new Back((GameUiPanel)this, GetNodeOrNull<Godot.Button>("Back"));
             return _L_Back;
         }
     }
@@ -27,7 +27,7 @@ public abstract partial class GameUi : UiBase
     {
         get
         {
-            if (_L_HBoxContainer == null) _L_HBoxContainer = new HBoxContainer(this, GetNodeOrNull<Godot.HBoxContainer>("HBoxContainer"));
+            if (_L_HBoxContainer == null) _L_HBoxContainer = new HBoxContainer((GameUiPanel)this, GetNodeOrNull<Godot.HBoxContainer>("HBoxContainer"));
             return _L_HBoxContainer;
         }
     }
@@ -40,7 +40,7 @@ public abstract partial class GameUi : UiBase
     {
         get
         {
-            if (_L_Coin == null) _L_Coin = new Coin(this, GetNodeOrNull<Godot.Label>("Coin"));
+            if (_L_Coin == null) _L_Coin = new Coin((GameUiPanel)this, GetNodeOrNull<Godot.Label>("Coin"));
             return _L_Coin;
         }
     }
@@ -58,34 +58,34 @@ public abstract partial class GameUi : UiBase
     /// <summary>
     /// 类型: <see cref="Godot.Button"/>, 路径: GameUi.Back
     /// </summary>
-    public class Back : UiNode<GameUi, Godot.Button, Back>
+    public class Back : UiNode<GameUiPanel, Godot.Button, Back>
     {
-        public Back(GameUi uiPanel, Godot.Button node) : base(uiPanel, node) {  }
+        public Back(GameUiPanel uiPanel, Godot.Button node) : base(uiPanel, node) {  }
         public override Back Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Button"/>, 路径: GameUi.HBoxContainer.Control.Package
     /// </summary>
-    public class Package : UiNode<GameUi, Godot.Button, Package>
+    public class Package : UiNode<GameUiPanel, Godot.Button, Package>
     {
-        public Package(GameUi uiPanel, Godot.Button node) : base(uiPanel, node) {  }
+        public Package(GameUiPanel uiPanel, Godot.Button node) : base(uiPanel, node) {  }
         public override Package Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Label"/>, 路径: GameUi.HBoxContainer.Control.Label
     /// </summary>
-    public class Label : UiNode<GameUi, Godot.Label, Label>
+    public class Label : UiNode<GameUiPanel, Godot.Label, Label>
     {
-        public Label(GameUi uiPanel, Godot.Label node) : base(uiPanel, node) {  }
+        public Label(GameUiPanel uiPanel, Godot.Label node) : base(uiPanel, node) {  }
         public override Label Clone() => new (UiPanel, (Godot.Label)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Control"/>, 路径: GameUi.HBoxContainer.Control
     /// </summary>
-    public class Control : UiNode<GameUi, Godot.Control, Control>
+    public class Control : UiNode<GameUiPanel, Godot.Control, Control>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: GameUi.HBoxContainer.Package
@@ -113,32 +113,32 @@ public abstract partial class GameUi : UiBase
         }
         private Label _L_Label;
 
-        public Control(GameUi uiPanel, Godot.Control node) : base(uiPanel, node) {  }
+        public Control(GameUiPanel uiPanel, Godot.Control node) : base(uiPanel, node) {  }
         public override Control Clone() => new (UiPanel, (Godot.Control)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Button"/>, 路径: GameUi.HBoxContainer.Control2.Setting
     /// </summary>
-    public class Setting : UiNode<GameUi, Godot.Button, Setting>
+    public class Setting : UiNode<GameUiPanel, Godot.Button, Setting>
     {
-        public Setting(GameUi uiPanel, Godot.Button node) : base(uiPanel, node) {  }
+        public Setting(GameUiPanel uiPanel, Godot.Button node) : base(uiPanel, node) {  }
         public override Setting Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Label"/>, 路径: GameUi.HBoxContainer.Control2.Label
     /// </summary>
-    public class Label_1 : UiNode<GameUi, Godot.Label, Label_1>
+    public class Label_1 : UiNode<GameUiPanel, Godot.Label, Label_1>
     {
-        public Label_1(GameUi uiPanel, Godot.Label node) : base(uiPanel, node) {  }
+        public Label_1(GameUiPanel uiPanel, Godot.Label node) : base(uiPanel, node) {  }
         public override Label_1 Clone() => new (UiPanel, (Godot.Label)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Control"/>, 路径: GameUi.HBoxContainer.Control2
     /// </summary>
-    public class Control2 : UiNode<GameUi, Godot.Control, Control2>
+    public class Control2 : UiNode<GameUiPanel, Godot.Control, Control2>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: GameUi.HBoxContainer.Setting
@@ -166,14 +166,14 @@ public abstract partial class GameUi : UiBase
         }
         private Label_1 _L_Label;
 
-        public Control2(GameUi uiPanel, Godot.Control node) : base(uiPanel, node) {  }
+        public Control2(GameUiPanel uiPanel, Godot.Control node) : base(uiPanel, node) {  }
         public override Control2 Clone() => new (UiPanel, (Godot.Control)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.HBoxContainer"/>, 路径: GameUi.HBoxContainer
     /// </summary>
-    public class HBoxContainer : UiNode<GameUi, Godot.HBoxContainer, HBoxContainer>
+    public class HBoxContainer : UiNode<GameUiPanel, Godot.HBoxContainer, HBoxContainer>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Control"/>, 节点路径: GameUi.Control
@@ -201,16 +201,16 @@ public abstract partial class GameUi : UiBase
         }
         private Control2 _L_Control2;
 
-        public HBoxContainer(GameUi uiPanel, Godot.HBoxContainer node) : base(uiPanel, node) {  }
+        public HBoxContainer(GameUiPanel uiPanel, Godot.HBoxContainer node) : base(uiPanel, node) {  }
         public override HBoxContainer Clone() => new (UiPanel, (Godot.HBoxContainer)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Label"/>, 路径: GameUi.Coin
     /// </summary>
-    public class Coin : UiNode<GameUi, Godot.Label, Coin>
+    public class Coin : UiNode<GameUiPanel, Godot.Label, Coin>
     {
-        public Coin(GameUi uiPanel, Godot.Label node) : base(uiPanel, node) {  }
+        public Coin(GameUiPanel uiPanel, Godot.Label node) : base(uiPanel, node) {  }
         public override Coin Clone() => new (UiPanel, (Godot.Label)Instance.Duplicate());
     }
 

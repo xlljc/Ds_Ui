@@ -1,6 +1,6 @@
-using DsUi;
-
 namespace UI.Menu;
+
+using DsUi;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -14,7 +14,7 @@ public abstract partial class Menu : UiBase
     {
         get
         {
-            if (_L_VBoxContainer == null) _L_VBoxContainer = new VBoxContainer(this, GetNodeOrNull<Godot.VBoxContainer>("VBoxContainer"));
+            if (_L_VBoxContainer == null) _L_VBoxContainer = new VBoxContainer((MenuPanel)this, GetNodeOrNull<Godot.VBoxContainer>("VBoxContainer"));
             return _L_VBoxContainer;
         }
     }
@@ -32,43 +32,43 @@ public abstract partial class Menu : UiBase
     /// <summary>
     /// 类型: <see cref="Godot.Label"/>, 路径: Menu.VBoxContainer.Label
     /// </summary>
-    public class Label : UiNode<Menu, Godot.Label, Label>
+    public class Label : UiNode<MenuPanel, Godot.Label, Label>
     {
-        public Label(Menu uiPanel, Godot.Label node) : base(uiPanel, node) {  }
+        public Label(MenuPanel uiPanel, Godot.Label node) : base(uiPanel, node) {  }
         public override Label Clone() => new (UiPanel, (Godot.Label)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Button"/>, 路径: Menu.VBoxContainer.Control.VBoxContainer.Start
     /// </summary>
-    public class Start : UiNode<Menu, Godot.Button, Start>
+    public class Start : UiNode<MenuPanel, Godot.Button, Start>
     {
-        public Start(Menu uiPanel, Godot.Button node) : base(uiPanel, node) {  }
+        public Start(MenuPanel uiPanel, Godot.Button node) : base(uiPanel, node) {  }
         public override Start Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Button"/>, 路径: Menu.VBoxContainer.Control.VBoxContainer.Setting
     /// </summary>
-    public class Setting : UiNode<Menu, Godot.Button, Setting>
+    public class Setting : UiNode<MenuPanel, Godot.Button, Setting>
     {
-        public Setting(Menu uiPanel, Godot.Button node) : base(uiPanel, node) {  }
+        public Setting(MenuPanel uiPanel, Godot.Button node) : base(uiPanel, node) {  }
         public override Setting Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Button"/>, 路径: Menu.VBoxContainer.Control.VBoxContainer.Exit
     /// </summary>
-    public class Exit : UiNode<Menu, Godot.Button, Exit>
+    public class Exit : UiNode<MenuPanel, Godot.Button, Exit>
     {
-        public Exit(Menu uiPanel, Godot.Button node) : base(uiPanel, node) {  }
+        public Exit(MenuPanel uiPanel, Godot.Button node) : base(uiPanel, node) {  }
         public override Exit Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.VBoxContainer"/>, 路径: Menu.VBoxContainer.Control.VBoxContainer
     /// </summary>
-    public class VBoxContainer_1 : UiNode<Menu, Godot.VBoxContainer, VBoxContainer_1>
+    public class VBoxContainer_1 : UiNode<MenuPanel, Godot.VBoxContainer, VBoxContainer_1>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: Menu.VBoxContainer.Control.Start
@@ -109,14 +109,14 @@ public abstract partial class Menu : UiBase
         }
         private Exit _L_Exit;
 
-        public VBoxContainer_1(Menu uiPanel, Godot.VBoxContainer node) : base(uiPanel, node) {  }
+        public VBoxContainer_1(MenuPanel uiPanel, Godot.VBoxContainer node) : base(uiPanel, node) {  }
         public override VBoxContainer_1 Clone() => new (UiPanel, (Godot.VBoxContainer)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Control"/>, 路径: Menu.VBoxContainer.Control
     /// </summary>
-    public class Control : UiNode<Menu, Godot.Control, Control>
+    public class Control : UiNode<MenuPanel, Godot.Control, Control>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.VBoxContainer"/>, 节点路径: Menu.VBoxContainer.VBoxContainer
@@ -131,14 +131,14 @@ public abstract partial class Menu : UiBase
         }
         private VBoxContainer_1 _L_VBoxContainer;
 
-        public Control(Menu uiPanel, Godot.Control node) : base(uiPanel, node) {  }
+        public Control(MenuPanel uiPanel, Godot.Control node) : base(uiPanel, node) {  }
         public override Control Clone() => new (UiPanel, (Godot.Control)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.VBoxContainer"/>, 路径: Menu.VBoxContainer
     /// </summary>
-    public class VBoxContainer : UiNode<Menu, Godot.VBoxContainer, VBoxContainer>
+    public class VBoxContainer : UiNode<MenuPanel, Godot.VBoxContainer, VBoxContainer>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: Menu.Label
@@ -166,7 +166,7 @@ public abstract partial class Menu : UiBase
         }
         private Control _L_Control;
 
-        public VBoxContainer(Menu uiPanel, Godot.VBoxContainer node) : base(uiPanel, node) {  }
+        public VBoxContainer(MenuPanel uiPanel, Godot.VBoxContainer node) : base(uiPanel, node) {  }
         public override VBoxContainer Clone() => new (UiPanel, (Godot.VBoxContainer)Instance.Duplicate());
     }
 

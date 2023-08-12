@@ -58,6 +58,8 @@ namespace DsUi
         /// </summary>
         public TData SelectData => _selectIndex >= 0 ? _cellList[_selectIndex].Data : default;
         
+        public int Count => _cellList.Count;
+
         public bool Visible
         {
             get => _gridContainer.Visible;

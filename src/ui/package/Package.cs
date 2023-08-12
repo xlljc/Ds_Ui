@@ -1,6 +1,6 @@
-using DsUi;
-
 namespace UI.Package;
+
+using DsUi;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -14,7 +14,7 @@ public abstract partial class Package : UiBase
     {
         get
         {
-            if (_L_ScrollContainer == null) _L_ScrollContainer = new ScrollContainer(this, GetNodeOrNull<Godot.ScrollContainer>("ScrollContainer"));
+            if (_L_ScrollContainer == null) _L_ScrollContainer = new ScrollContainer((PackagePanel)this, GetNodeOrNull<Godot.ScrollContainer>("ScrollContainer"));
             return _L_ScrollContainer;
         }
     }
@@ -32,25 +32,25 @@ public abstract partial class Package : UiBase
     /// <summary>
     /// 类型: <see cref="Godot.Label"/>, 路径: Package.ScrollContainer.Item.ItemName
     /// </summary>
-    public class ItemName : UiNode<Package, Godot.Label, ItemName>
+    public class ItemName : UiNode<PackagePanel, Godot.Label, ItemName>
     {
-        public ItemName(Package uiPanel, Godot.Label node) : base(uiPanel, node) {  }
+        public ItemName(PackagePanel uiPanel, Godot.Label node) : base(uiPanel, node) {  }
         public override ItemName Clone() => new (UiPanel, (Godot.Label)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.Button"/>, 路径: Package.ScrollContainer.Item.Mask.UseButton
     /// </summary>
-    public class UseButton : UiNode<Package, Godot.Button, UseButton>
+    public class UseButton : UiNode<PackagePanel, Godot.Button, UseButton>
     {
-        public UseButton(Package uiPanel, Godot.Button node) : base(uiPanel, node) {  }
+        public UseButton(PackagePanel uiPanel, Godot.Button node) : base(uiPanel, node) {  }
         public override UseButton Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.ColorRect"/>, 路径: Package.ScrollContainer.Item.Mask
     /// </summary>
-    public class Mask : UiNode<Package, Godot.ColorRect, Mask>
+    public class Mask : UiNode<PackagePanel, Godot.ColorRect, Mask>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: Package.ScrollContainer.Item.UseButton
@@ -65,14 +65,14 @@ public abstract partial class Package : UiBase
         }
         private UseButton _L_UseButton;
 
-        public Mask(Package uiPanel, Godot.ColorRect node) : base(uiPanel, node) {  }
+        public Mask(PackagePanel uiPanel, Godot.ColorRect node) : base(uiPanel, node) {  }
         public override Mask Clone() => new (UiPanel, (Godot.ColorRect)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.TextureButton"/>, 路径: Package.ScrollContainer.Item
     /// </summary>
-    public class Item : UiNode<Package, Godot.TextureButton, Item>
+    public class Item : UiNode<PackagePanel, Godot.TextureButton, Item>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: Package.ScrollContainer.ItemName
@@ -100,14 +100,14 @@ public abstract partial class Package : UiBase
         }
         private Mask _L_Mask;
 
-        public Item(Package uiPanel, Godot.TextureButton node) : base(uiPanel, node) {  }
+        public Item(PackagePanel uiPanel, Godot.TextureButton node) : base(uiPanel, node) {  }
         public override Item Clone() => new (UiPanel, (Godot.TextureButton)Instance.Duplicate());
     }
 
     /// <summary>
     /// 类型: <see cref="Godot.ScrollContainer"/>, 路径: Package.ScrollContainer
     /// </summary>
-    public class ScrollContainer : UiNode<Package, Godot.ScrollContainer, ScrollContainer>
+    public class ScrollContainer : UiNode<PackagePanel, Godot.ScrollContainer, ScrollContainer>
     {
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.TextureButton"/>, 节点路径: Package.Item
@@ -122,7 +122,7 @@ public abstract partial class Package : UiBase
         }
         private Item _L_Item;
 
-        public ScrollContainer(Package uiPanel, Godot.ScrollContainer node) : base(uiPanel, node) {  }
+        public ScrollContainer(PackagePanel uiPanel, Godot.ScrollContainer node) : base(uiPanel, node) {  }
         public override ScrollContainer Clone() => new (UiPanel, (Godot.ScrollContainer)Instance.Duplicate());
     }
 

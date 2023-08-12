@@ -33,6 +33,10 @@ namespace DsUi
         {
             UiPanel = uiPanel;
             Instance = node;
+            if (node is IUiNodeScript uiNodeScript)
+            {
+                uiNodeScript.SetUiNode(this);
+            }
         }
         
         public UiBase OpenNestedUi(string uiName, UiBase prevUi = null)
@@ -81,6 +85,31 @@ namespace DsUi
         public IUiCellNode CloneUiCell()
         {
             return Clone();
+        }
+
+        public void AddChild(IUiNode uiNode)
+        {
+            Instance.AddChild(uiNode.GetUiInstance());
+        }
+
+        public void AddChild(Node node)
+        {
+            Instance.AddChild(node);
+        }
+        
+        public void RemoveChild(IUiNode uiNode)
+        {
+            Instance.RemoveChild(uiNode.GetUiInstance());
+        }
+        
+        public void RemoveChild(Node node)
+        {
+            Instance.RemoveChild(node);
+        }
+
+        public void QueueFree()
+        {
+            Instance.QueueFree();
         }
     }
 }

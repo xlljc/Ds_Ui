@@ -1,6 +1,6 @@
-using DsUi;
-
 namespace UI.CommonWindow;
+
+using DsUi;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -14,7 +14,7 @@ public abstract partial class CommonWindow : UiBase
     {
         get
         {
-            if (_L_Window == null) _L_Window = new Window(this, GetNodeOrNull<Godot.Window>("Window"));
+            if (_L_Window == null) _L_Window = new Window((CommonWindowPanel)this, GetNodeOrNull<Godot.Window>("Window"));
             return _L_Window;
         }
     }
@@ -32,9 +32,9 @@ public abstract partial class CommonWindow : UiBase
     /// <summary>
     /// 类型: <see cref="Godot.Window"/>, 路径: CommonWindow.Window
     /// </summary>
-    public class Window : UiNode<CommonWindow, Godot.Window, Window>
+    public class Window : UiNode<CommonWindowPanel, Godot.Window, Window>
     {
-        public Window(CommonWindow uiPanel, Godot.Window node) : base(uiPanel, node) {  }
+        public Window(CommonWindowPanel uiPanel, Godot.Window node) : base(uiPanel, node) {  }
         public override Window Clone() => new (UiPanel, (Godot.Window)Instance.Duplicate());
     }
 
