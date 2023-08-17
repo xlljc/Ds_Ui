@@ -3,4 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="src\ui\youName\YouNamePanel.cs" />
+  </ItemGroup>
 </Project>

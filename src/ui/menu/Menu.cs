@@ -27,6 +27,8 @@ public abstract partial class Menu : UiBase
 
     public sealed override void OnInitNestedUi()
     {
+        _ = L_VBoxContainer.L_Control.L_VBoxContainer.L_Custom;
+
     }
 
     /// <summary>
@@ -54,6 +56,15 @@ public abstract partial class Menu : UiBase
     {
         public Setting(MenuPanel uiPanel, Godot.Button node) : base(uiPanel, node) {  }
         public override Setting Clone() => new (UiPanel, (Godot.Button)Instance.Duplicate());
+    }
+
+    /// <summary>
+    /// 类型: <see cref="UI.Menu.CustomButton"/>, 路径: Menu.VBoxContainer.Control.VBoxContainer.Custom
+    /// </summary>
+    public class Custom : UiNode<MenuPanel, UI.Menu.CustomButton, Custom>
+    {
+        public Custom(MenuPanel uiPanel, UI.Menu.CustomButton node) : base(uiPanel, node) {  }
+        public override Custom Clone() => new (UiPanel, (UI.Menu.CustomButton)Instance.Duplicate());
     }
 
     /// <summary>
@@ -95,6 +106,19 @@ public abstract partial class Menu : UiBase
             }
         }
         private Setting _L_Setting;
+
+        /// <summary>
+        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="UI.Menu.CustomButton"/>, 节点路径: Menu.VBoxContainer.Control.Custom
+        /// </summary>
+        public Custom L_Custom
+        {
+            get
+            {
+                if (_L_Custom == null) _L_Custom = new Custom(UiPanel, Instance.GetNodeOrNull<UI.Menu.CustomButton>("Custom"));
+                return _L_Custom;
+            }
+        }
+        private Custom _L_Custom;
 
         /// <summary>
         /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: Menu.VBoxContainer.Control.Exit
@@ -185,6 +209,11 @@ public abstract partial class Menu : UiBase
     /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Setting
     /// </summary>
     public Setting S_Setting => L_VBoxContainer.L_Control.L_VBoxContainer.L_Setting;
+
+    /// <summary>
+    /// 场景中唯一名称的节点, 节点类型: <see cref="UI.Menu.CustomButton"/>, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Custom
+    /// </summary>
+    public Custom S_Custom => L_VBoxContainer.L_Control.L_VBoxContainer.L_Custom;
 
     /// <summary>
     /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Exit

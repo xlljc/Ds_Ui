@@ -27,27 +27,28 @@ namespace DsUi.Generator
                 var scriptPath = DsUiConfig.UiCodeDir + ds_ui.FirstToLower(uiName);
                 var scriptFile = scriptPath + "/" + uiName + "Panel.cs";
                 var scriptCode = $"using Godot;\n" +
-                                $"\n" +
-                                $"namespace UI.{uiName};\n" +
-                                $"\n" +
-                                $"public partial class {uiName}Panel : {uiName}\n" +
-                                $"{{\n" +
-                                $"\n" +
-                                $"    public override void OnCreateUi()\n" +
-                                $"    {{\n" +
-                                $"        \n" +
-                                $"    }}\n" +
-                                $"\n" +
-                                $"    public override void OnDestroyUi()\n" +
-                                $"    {{\n" +
-                                $"        \n" +
-                                $"    }}\n" +
-                                $"\n" +
-                                $"}}\n";
+                                 $"\n" +
+                                 $"namespace UI.{uiName};\n" +
+                                 $"\n" +
+                                 $"public partial class {uiName}Panel : {uiName}\n" +
+                                 $"{{\n" +
+                                 $"\n" +
+                                 $"    public override void OnCreateUi()\n" +
+                                 $"    {{\n" +
+                                 $"        \n" +
+                                 $"    }}\n" +
+                                 $"\n" +
+                                 $"    public override void OnDestroyUi()\n" +
+                                 $"    {{\n" +
+                                 $"        \n" +
+                                 $"    }}\n" +
+                                 $"\n" +
+                                 $"}}\n";
                 if (!Directory.Exists(scriptPath))
                 {
                     Directory.CreateDirectory(scriptPath);
                 }
+
                 File.WriteAllText(scriptFile, scriptCode);
 
                 //加载脚本资源
@@ -60,6 +61,7 @@ namespace DsUi.Generator
                 {
                     Directory.CreateDirectory(DsUiConfig.UiPrefabDir);
                 }
+
                 var uiNode = new Control();
                 uiNode.Name = uiName;
                 uiNode.SetAnchorsPreset(Control.LayoutPreset.FullRect, true);
@@ -67,7 +69,7 @@ namespace DsUi.Generator
                 var scene = new PackedScene();
                 scene.Pack(uiNode);
                 ResourceSaver.Save(scene, prefabResPath);
-                
+
                 //生成Ui结构代码
                 GenerateUiCode(uiNode, scriptPath + "/" + uiName + ".cs");
 
@@ -114,14 +116,14 @@ namespace DsUi.Generator
             {
                 _nodeNameMap.Clear();
                 _nestedIndex = 1;
-                
+
                 var uiName = control.Name.ToString();
                 var path = DsUiConfig.UiCodeDir + ds_ui.FirstToLower(uiName) + "/" + uiName + ".cs";
                 GD.Print("重新生成ui代码: " + path);
 
                 var uiNode = EachNodeFromEditor(control.Name, control);
                 var code = GenerateClassCode(uiNode);
-                
+
                 foreach (var pair in _nodeNameMap)
                 {
                     if (pair.Value > 1)
@@ -129,7 +131,7 @@ namespace DsUi.Generator
                         GD.Print($"检测到同名节点: '{pair.Key}', 使用该名称的节点将无法生成唯一节点属性!");
                     }
                 }
-                
+
                 File.WriteAllText(path, code);
             }
             catch (Exception e)
@@ -145,27 +147,59 @@ namespace DsUi.Generator
         {
             var retraction = "    ";
             return $"namespace UI.{uiNodeInfo.OriginName};\n\n" +
-                $"using DsUi;\n\n" +
-                $"/// <summary>\n" +
-                $"/// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失\n" +
-                $"/// </summary>\n" +
-                $"public abstract partial class {uiNodeInfo.OriginName} : UiBase\n" +
-                $"{{\n" +
-                GeneratePropertyListClassCode("", uiNodeInfo.OriginName + ".", uiNodeInfo, retraction) +
-                $"\n" +
-                $"    public {uiNodeInfo.OriginName}() : base(nameof({uiNodeInfo.OriginName}))\n" +
-                $"    {{\n" +
-                $"    }}\n" +
-                $"\n" +
-                $"    public sealed override void OnInitNestedUi()\n" +
-                $"    {{\n" +
-                GenerateInitNestedUi("", uiNodeInfo, retraction) +
-                $"    }}\n" +
-                $"\n" +
-                GenerateAllChildrenClassCode(uiNodeInfo.OriginName + ".", uiNodeInfo, retraction) +
-                $"\n" +
-                GenerateSoleLayerCode(uiNodeInfo, "", uiNodeInfo.OriginName, retraction) +
-                $"}}\n";
+                   $"using DsUi;\n\n" +
+                   $"/// <summary>\n" +
+                   $"/// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失\n" +
+                   $"/// </summary>\n" +
+                   $"public abstract partial class {uiNodeInfo.OriginName} : UiBase\n" +
+                   $"{{\n" +
+                   GeneratePropertyListClassCode("", uiNodeInfo.OriginName + ".", uiNodeInfo, retraction) +
+                   $"\n" +
+                   $"    public {uiNodeInfo.OriginName}() : base(nameof({uiNodeInfo.OriginName}))\n" +
+                   $"    {{\n" +
+                   $"    }}\n" +
+                   $"\n" +
+                   $"    public sealed override void OnInitNestedUi()\n" +
+                   $"    {{\n" +
+                   GenerateUiScriptCode("", uiNodeInfo, retraction) +
+                   $"\n" +
+                   GenerateInitNestedUi("", uiNodeInfo, retraction) +
+                   $"    }}\n" +
+                   $"\n" +
+                   GenerateAllChildrenClassCode(uiNodeInfo.OriginName + ".", uiNodeInfo, retraction) +
+                   $"\n" +
+                   GenerateSoleLayerCode(uiNodeInfo, "", uiNodeInfo.OriginName, retraction) +
+                   $"}}\n";
+        }
+
+        private static string GenerateUiScriptCode(string parent, UiNodeInfo uiNodeInfo, string retraction)
+        {
+            var str = "";
+            var node = parent + (string.IsNullOrEmpty(parent) ? "" : ".") + uiNodeInfo.Name;
+            if (uiNodeInfo.IsNodeScript)
+            {
+                str += retraction + $"    _ = {node};\n";
+            }
+            else
+            {
+                if (uiNodeInfo.Children != null)
+                {
+                    for (var i = 0; i < uiNodeInfo.Children.Count; i++)
+                    {
+                        var item = uiNodeInfo.Children[i];
+                        if (uiNodeInfo.OriginName == uiNodeInfo.UiRootName)
+                        {
+                            str += GenerateUiScriptCode("", item, retraction);
+                        }
+                        else
+                        {
+                            str += GenerateUiScriptCode(node, item, retraction);
+                        }
+                    }
+                }
+            }
+
+            return str;
         }
 
         private static string GenerateInitNestedUi(string parent, UiNodeInfo uiNodeInfo, string retraction)
@@ -195,7 +229,8 @@ namespace DsUi.Generator
                         }
                         else
                         {
-                            str += GenerateInitNestedUi(parent + (string.IsNullOrEmpty(parent)? "" : ".") + uiNodeInfo.Name, item, retraction);
+                            str += GenerateInitNestedUi(
+                                parent + (string.IsNullOrEmpty(parent) ? "" : ".") + uiNodeInfo.Name, item, retraction);
                         }
                     }
                 }
@@ -203,7 +238,7 @@ namespace DsUi.Generator
 
             return str;
         }
-        
+
         private static string GenerateAllChildrenClassCode(string parent, UiNodeInfo uiNodeInfo, string retraction)
         {
             var str = "";
@@ -219,7 +254,7 @@ namespace DsUi.Generator
 
             return str;
         }
-        
+
         private static string GenerateChildrenClassCode(string parent, UiNodeInfo uiNodeInfo, string retraction)
         {
             string cloneCode;
@@ -228,8 +263,10 @@ namespace DsUi.Generator
             {
                 cloneCode = retraction + $"    public override {uiNodeInfo.ClassName} Clone()\n";
                 cloneCode += retraction + $"    {{\n";
-                cloneCode += retraction + $"        var uiNode = new {uiNodeInfo.ClassName}(UiPanel, ({uiNodeInfo.NodeTypeName})Instance.Duplicate());\n";
-                cloneCode += retraction + $"        UiPanel.RecordNestedUi(uiNode.Instance, this, UiManager.RecordType.Open);\n";
+                cloneCode += retraction +
+                             $"        var uiNode = new {uiNodeInfo.ClassName}(UiPanel, ({uiNodeInfo.NodeTypeName})Instance.Duplicate());\n";
+                cloneCode += retraction +
+                             $"        UiPanel.RecordNestedUi(uiNode.Instance, this, UiManager.RecordType.Open);\n";
                 cloneCode += retraction + $"        uiNode.Instance.OnCreateUi();\n";
                 cloneCode += retraction + $"        uiNode.Instance.OnInitNestedUi();\n";
                 cloneCode += retraction + $"        return uiNode;\n";
@@ -237,21 +274,26 @@ namespace DsUi.Generator
             }
             else
             {
-                cloneCode = retraction + $"    public override {uiNodeInfo.ClassName} Clone() => new (UiPanel, ({uiNodeInfo.NodeTypeName})Instance.Duplicate());\n";
+                cloneCode = retraction +
+                            $"    public override {uiNodeInfo.ClassName} Clone() => new (UiPanel, ({uiNodeInfo.NodeTypeName})Instance.Duplicate());\n";
             }
-            
-            return retraction + $"/// <summary>\n" + 
-                retraction + $"/// 类型: <see cref=\"{uiNodeInfo.NodeTypeName}\"/>, 路径: {parent}{uiNodeInfo.OriginName}\n" + 
-                retraction + $"/// </summary>\n" + 
-                retraction + $"public class {uiNodeInfo.ClassName} : UiNode<{uiNodeInfo.UiRootName}Panel, {uiNodeInfo.NodeTypeName}, {uiNodeInfo.ClassName}>\n" +
-                retraction + $"{{\n" +
-                GeneratePropertyListClassCode("Instance.", parent, uiNodeInfo, retraction + "    ") + 
-                retraction + $"    public {uiNodeInfo.ClassName}({uiNodeInfo.UiRootName}Panel uiPanel, {uiNodeInfo.NodeTypeName} node) : base(uiPanel, node) {{  }}\n" +
-                cloneCode +
-                retraction + $"}}\n\n";
+
+            return retraction + $"/// <summary>\n" +
+                   retraction +
+                   $"/// 类型: <see cref=\"{uiNodeInfo.NodeTypeName}\"/>, 路径: {parent}{uiNodeInfo.OriginName}\n" +
+                   retraction + $"/// </summary>\n" +
+                   retraction +
+                   $"public class {uiNodeInfo.ClassName} : UiNode<{uiNodeInfo.UiRootName}Panel, {uiNodeInfo.NodeTypeName}, {uiNodeInfo.ClassName}>\n" +
+                   retraction + $"{{\n" +
+                   GeneratePropertyListClassCode("Instance.", parent, uiNodeInfo, retraction + "    ") +
+                   retraction +
+                   $"    public {uiNodeInfo.ClassName}({uiNodeInfo.UiRootName}Panel uiPanel, {uiNodeInfo.NodeTypeName} node) : base(uiPanel, node) {{  }}\n" +
+                   cloneCode +
+                   retraction + $"}}\n\n";
         }
 
-        private static string GeneratePropertyListClassCode(string target, string parent, UiNodeInfo uiNodeInfo, string retraction)
+        private static string GeneratePropertyListClassCode(string target, string parent, UiNodeInfo uiNodeInfo,
+            string retraction)
         {
             var str = "";
             if (uiNodeInfo.Children != null)
@@ -265,8 +307,9 @@ namespace DsUi.Generator
 
             return str;
         }
-        
-        private static string GeneratePropertyCode(string target, string parent, UiNodeInfo uiNodeInfo, string retraction)
+
+        private static string GeneratePropertyCode(string target, string parent, UiNodeInfo uiNodeInfo,
+            string retraction)
         {
             string uiPanel;
             if (string.IsNullOrEmpty(target))
@@ -277,21 +320,25 @@ namespace DsUi.Generator
             {
                 uiPanel = "UiPanel";
             }
-            return retraction + $"/// <summary>\n" + 
-                retraction + $"/// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref=\"{uiNodeInfo.NodeTypeName}\"/>, 节点路径: {parent}{uiNodeInfo.OriginName}\n" + 
-                retraction + $"/// </summary>\n" + 
-                retraction + $"public {uiNodeInfo.ClassName} {uiNodeInfo.Name}\n" +
-                retraction + $"{{\n" + 
-                retraction + $"    get\n" + 
-                retraction + $"    {{\n" + 
-                retraction + $"        if (_{uiNodeInfo.Name} == null) _{uiNodeInfo.Name} = new {uiNodeInfo.ClassName}({uiPanel}, {target}GetNodeOrNull<{uiNodeInfo.NodeTypeName}>(\"{uiNodeInfo.OriginName}\"));\n" + 
-                retraction + $"        return _{uiNodeInfo.Name};\n" + 
-                retraction + $"    }}\n" + 
-                retraction + $"}}\n" +
-                retraction + $"private {uiNodeInfo.ClassName} _{uiNodeInfo.Name};\n\n";
+
+            return retraction + $"/// <summary>\n" +
+                   retraction +
+                   $"/// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref=\"{uiNodeInfo.NodeTypeName}\"/>, 节点路径: {parent}{uiNodeInfo.OriginName}\n" +
+                   retraction + $"/// </summary>\n" +
+                   retraction + $"public {uiNodeInfo.ClassName} {uiNodeInfo.Name}\n" +
+                   retraction + $"{{\n" +
+                   retraction + $"    get\n" +
+                   retraction + $"    {{\n" +
+                   retraction +
+                   $"        if (_{uiNodeInfo.Name} == null) _{uiNodeInfo.Name} = new {uiNodeInfo.ClassName}({uiPanel}, {target}GetNodeOrNull<{uiNodeInfo.NodeTypeName}>(\"{uiNodeInfo.OriginName}\"));\n" +
+                   retraction + $"        return _{uiNodeInfo.Name};\n" +
+                   retraction + $"    }}\n" +
+                   retraction + $"}}\n" +
+                   retraction + $"private {uiNodeInfo.ClassName} _{uiNodeInfo.Name};\n\n";
         }
 
-        private static string GenerateSoleLayerCode(UiNodeInfo uiNodeInfo, string layerName, string parent, string retraction)
+        private static string GenerateSoleLayerCode(UiNodeInfo uiNodeInfo, string layerName, string parent,
+            string retraction)
         {
             var str = "";
             if (uiNodeInfo.Children != null)
@@ -310,12 +357,14 @@ namespace DsUi.Generator
                     if (IsSoleNameNode(nodeInfo))
                     {
                         str += $"{retraction}/// <summary>\n";
-                        str += $"{retraction}/// 场景中唯一名称的节点, 节点类型: <see cref=\"{nodeInfo.NodeTypeName}\"/>, 节点路径: {path}\n";
+                        str +=
+                            $"{retraction}/// 场景中唯一名称的节点, 节点类型: <see cref=\"{nodeInfo.NodeTypeName}\"/>, 节点路径: {path}\n";
                         str += $"{retraction}/// </summary>\n";
                         str += $"{retraction}public {nodeInfo.ClassName} S_{nodeInfo.OriginName} => {layer};\n\n";
                     }
                 }
             }
+
             return str;
         }
 
@@ -357,7 +406,7 @@ namespace DsUi.Generator
             var script = node.GetScript().As<CSharpScript>();
             if (script == null) //无脚本, 说明是内置节点
             {
-                uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, node.GetType().FullName);
+                uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, node.GetType().FullName, false);
             }
             else //存在脚本
             {
@@ -366,14 +415,19 @@ namespace DsUi.Generator
                 var fileName = script.ResourcePath.Substring(index + 1, script.ResourcePath.Length - index - 3 - 1);
                 //在源代码中寻找命名空间
                 var match = Regex.Match(script.SourceCode, "(?<=namespace\\s+)[\\w\\.]+");
+                bool isNodeScript;
                 if (match.Success) //存在命名空间
                 {
-                    uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, match.Value + "." + fileName);
+                    isNodeScript = IsNodeScript(match.Value + "." + fileName);
+                    uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, match.Value + "." + fileName,
+                        isNodeScript);
                 }
                 else //不存在命名空间
                 {
-                    uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, fileName);
+                    isNodeScript = IsNodeScript(fileName);
+                    uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, fileName, isNodeScript);
                 }
+
                 //检测是否是引用Ui
                 if (fileName.EndsWith("Panel"))
                 {
@@ -385,13 +439,13 @@ namespace DsUi.Generator
                     }
                 }
             }
-            
+
             //如果是引用Ui, 就没有必要递归子节点了
             if (uiNode.IsRefUi)
             {
                 return uiNode;
             }
-            
+
             var childCount = node.GetChildCount();
             if (childCount > 0)
             {
@@ -409,8 +463,19 @@ namespace DsUi.Generator
                     }
                 }
             }
-            
+
             return uiNode;
+        }
+
+        private static bool IsNodeScript(string typeName)
+        {
+            var type = typeof(UiGenerator).Assembly.GetType(typeName);
+            if (type == null)
+            {
+                return false;
+            }
+
+            return type.IsAssignableTo(typeof(IUiNodeScript));
         }
 
         private class UiNodeInfo
@@ -419,43 +484,55 @@ namespace DsUi.Generator
             /// 层级名称
             /// </summary>
             public string Name;
+
             /// <summary>
             /// 层级原名称
             /// </summary>
             public string OriginName;
+
             /// <summary>
             /// 层级类名
             /// </summary>
             public string ClassName;
+
             /// <summary>
             /// Godot节点类型名称
             /// </summary>
             public string NodeTypeName;
+
             /// <summary>
             /// 子节点
             /// </summary>
             public List<UiNodeInfo> Children;
+
             /// <summary>
             /// Ui根节点名称
             /// </summary>
             public string UiRootName;
+
+            /// <summary>
+            /// 是否实现了 IUiNodeScript 接口
+            /// </summary>
+            public bool IsNodeScript;
+
             /// <summary>
             /// 是否是引用Ui
             /// </summary>
             public bool IsRefUi;
-            
-            public UiNodeInfo(string uiRootName, string name, string originName, string className, string nodeTypeName)
+
+            public UiNodeInfo(string uiRootName, string name, string originName, string className, string nodeTypeName,
+                bool isNodeScript)
             {
                 UiRootName = uiRootName;
                 Name = name;
                 OriginName = originName;
                 ClassName = className;
                 NodeTypeName = nodeTypeName;
+                IsNodeScript = isNodeScript;
             }
         }
-        
-    }
 
+    }
 }
 
 #endif

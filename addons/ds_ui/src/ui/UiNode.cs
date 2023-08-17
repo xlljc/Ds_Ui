@@ -19,10 +19,12 @@ namespace DsUi
         /// 当前Ui节点所属的Ui面板对象
         /// </summary>
         public TUi UiPanel { get; }
+
         /// <summary>
         /// Godot节点实例
         /// </summary>
         public TNodeType Instance { get; }
+
         /// <summary>
         /// 克隆当前对象, 并返回新的对象,
         /// 注意: 如果子节点改名或者移动层级, 那么有可能对导致属性中的子节点无法访问
@@ -38,7 +40,8 @@ namespace DsUi
                 uiNodeScript.SetUiNode(this);
             }
         }
-        
+
+        //已知问题: 通过 OpenNestedUi() 打开子Ui, 然后再克隆当前节点, 被克隆出来的节点的子Ui不会被调用生命周期函数, 也就是没有被记录
         public UiBase OpenNestedUi(string uiName, UiBase prevUi = null)
         {
             var packedScene = ResourceLoader.Load<PackedScene>("res://" + DsUiConfig.UiPrefabDir + uiName + ".tscn");
@@ -46,14 +49,14 @@ namespace DsUi
             uiBase.PrevUi = prevUi;
             Instance.AddChild(uiBase);
             UiPanel.RecordNestedUi(uiBase, this, UiManager.RecordType.Open);
-            
+
             uiBase.OnCreateUi();
             uiBase.OnInitNestedUi();
             if (UiPanel.IsOpen)
             {
                 uiBase.ShowUi();
             }
-            
+
             return uiBase;
         }
 
@@ -96,12 +99,12 @@ namespace DsUi
         {
             Instance.AddChild(node);
         }
-        
+
         public void RemoveChild(IUiNode uiNode)
         {
             Instance.RemoveChild(uiNode.GetUiInstance());
         }
-        
+
         public void RemoveChild(Node node)
         {
             Instance.RemoveChild(node);
@@ -110,6 +113,21 @@ namespace DsUi
         public void QueueFree()
         {
             Instance.QueueFree();
+        }
+
+        public void Reparent(IUiNode uiNode)
+        {
+            Instance.Reparent(uiNode.GetUiInstance());
+        }
+
+        public void Reparent(Node node)
+        {
+            Instance.Reparent(node);
+        }
+
+        public Node GetParent()
+        {
+            return Instance.GetParent();
         }
     }
 }
