@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxseeyo0xrak"]
+[gd_scene load_steps=3 format=3 uid="uid://dn6c5nfr6kua"]
 
 [ext_resource type="Script" path="res://src/ui/package/PackagePanel.cs" id="1_0o36a"]
 [ext_resource type="Texture2D" uid="uid://bo6230c1vpyu8" path="res://icon.svg" id="2_onj6v"]
@@ -8,6 +8,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_0o36a")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]

@@ -14,7 +14,7 @@ public abstract partial class CommonWindow : UiBase
     {
         get
         {
-            if (_L_Window == null) _L_Window = new Window((CommonWindowPanel)this, GetNodeOrNull<Godot.Window>("Window"));
+            if (_L_Window == null) _L_Window = new Window((CommonWindowPanel)this, GetNode<Godot.Window>("Window"));
             return _L_Window;
         }
     }
@@ -27,6 +27,7 @@ public abstract partial class CommonWindow : UiBase
 
     public sealed override void OnInitNestedUi()
     {
+
     }
 
     /// <summary>

@@ -14,7 +14,7 @@ public abstract partial class Package : UiBase
     {
         get
         {
-            if (_L_ScrollContainer == null) _L_ScrollContainer = new ScrollContainer((PackagePanel)this, GetNodeOrNull<Godot.ScrollContainer>("ScrollContainer"));
+            if (_L_ScrollContainer == null) _L_ScrollContainer = new ScrollContainer((PackagePanel)this, GetNode<Godot.ScrollContainer>("ScrollContainer"));
             return _L_ScrollContainer;
         }
     }
@@ -27,6 +27,7 @@ public abstract partial class Package : UiBase
 
     public sealed override void OnInitNestedUi()
     {
+
     }
 
     /// <summary>
@@ -59,7 +60,7 @@ public abstract partial class Package : UiBase
         {
             get
             {
-                if (_L_UseButton == null) _L_UseButton = new UseButton(UiPanel, Instance.GetNodeOrNull<Godot.Button>("UseButton"));
+                if (_L_UseButton == null) _L_UseButton = new UseButton(UiPanel, Instance.GetNode<Godot.Button>("UseButton"));
                 return _L_UseButton;
             }
         }
@@ -81,7 +82,7 @@ public abstract partial class Package : UiBase
         {
             get
             {
-                if (_L_ItemName == null) _L_ItemName = new ItemName(UiPanel, Instance.GetNodeOrNull<Godot.Label>("ItemName"));
+                if (_L_ItemName == null) _L_ItemName = new ItemName(UiPanel, Instance.GetNode<Godot.Label>("ItemName"));
                 return _L_ItemName;
             }
         }
@@ -94,7 +95,7 @@ public abstract partial class Package : UiBase
         {
             get
             {
-                if (_L_Mask == null) _L_Mask = new Mask(UiPanel, Instance.GetNodeOrNull<Godot.ColorRect>("Mask"));
+                if (_L_Mask == null) _L_Mask = new Mask(UiPanel, Instance.GetNode<Godot.ColorRect>("Mask"));
                 return _L_Mask;
             }
         }
@@ -116,7 +117,7 @@ public abstract partial class Package : UiBase
         {
             get
             {
-                if (_L_Item == null) _L_Item = new Item(UiPanel, Instance.GetNodeOrNull<Godot.TextureButton>("Item"));
+                if (_L_Item == null) _L_Item = new Item(UiPanel, Instance.GetNode<Godot.TextureButton>("Item"));
                 return _L_Item;
             }
         }

@@ -14,7 +14,7 @@ public abstract partial class Tips : UiBase
     {
         get
         {
-            if (_L_AcceptDialog == null) _L_AcceptDialog = new AcceptDialog((TipsPanel)this, GetNodeOrNull<Godot.AcceptDialog>("AcceptDialog"));
+            if (_L_AcceptDialog == null) _L_AcceptDialog = new AcceptDialog((TipsPanel)this, GetNode<Godot.AcceptDialog>("AcceptDialog"));
             return _L_AcceptDialog;
         }
     }
@@ -27,6 +27,7 @@ public abstract partial class Tips : UiBase
 
     public sealed override void OnInitNestedUi()
     {
+
     }
 
     /// <summary>

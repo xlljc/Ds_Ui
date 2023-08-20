@@ -330,7 +330,7 @@ namespace DsUi.Generator
                    retraction + $"    get\n" +
                    retraction + $"    {{\n" +
                    retraction +
-                   $"        if (_{uiNodeInfo.Name} == null) _{uiNodeInfo.Name} = new {uiNodeInfo.ClassName}({uiPanel}, {target}GetNodeOrNull<{uiNodeInfo.NodeTypeName}>(\"{uiNodeInfo.OriginName}\"));\n" +
+                   $"        if (_{uiNodeInfo.Name} == null) _{uiNodeInfo.Name} = new {uiNodeInfo.ClassName}({uiPanel}, {target}GetNode<{uiNodeInfo.NodeTypeName}>(\"{uiNodeInfo.OriginName}\"));\n" +
                    retraction + $"        return _{uiNodeInfo.Name};\n" +
                    retraction + $"    }}\n" +
                    retraction + $"}}\n" +

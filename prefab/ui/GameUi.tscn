@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjspcymebeqyl"]
+[gd_scene load_steps=2 format=3 uid="uid://dn5oljjs1wd80"]
 
 [ext_resource type="Script" path="res://src/ui/gameUi/GameUiPanel.cs" id="1_r0ukk"]
 

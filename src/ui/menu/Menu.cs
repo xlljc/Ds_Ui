@@ -14,7 +14,7 @@ public abstract partial class Menu : UiBase
     {
         get
         {
-            if (_L_VBoxContainer == null) _L_VBoxContainer = new VBoxContainer((MenuPanel)this, GetNodeOrNull<Godot.VBoxContainer>("VBoxContainer"));
+            if (_L_VBoxContainer == null) _L_VBoxContainer = new VBoxContainer((MenuPanel)this, GetNode<Godot.VBoxContainer>("VBoxContainer"));
             return _L_VBoxContainer;
         }
     }
@@ -88,7 +88,7 @@ public abstract partial class Menu : UiBase
         {
             get
             {
-                if (_L_Start == null) _L_Start = new Start(UiPanel, Instance.GetNodeOrNull<Godot.Button>("Start"));
+                if (_L_Start == null) _L_Start = new Start(UiPanel, Instance.GetNode<Godot.Button>("Start"));
                 return _L_Start;
             }
         }
@@ -101,7 +101,7 @@ public abstract partial class Menu : UiBase
         {
             get
             {
-                if (_L_Setting == null) _L_Setting = new Setting(UiPanel, Instance.GetNodeOrNull<Godot.Button>("Setting"));
+                if (_L_Setting == null) _L_Setting = new Setting(UiPanel, Instance.GetNode<Godot.Button>("Setting"));
                 return _L_Setting;
             }
         }
@@ -114,7 +114,7 @@ public abstract partial class Menu : UiBase
         {
             get
             {
-                if (_L_Custom == null) _L_Custom = new Custom(UiPanel, Instance.GetNodeOrNull<UI.Menu.CustomButton>("Custom"));
+                if (_L_Custom == null) _L_Custom = new Custom(UiPanel, Instance.GetNode<UI.Menu.CustomButton>("Custom"));
                 return _L_Custom;
             }
         }
@@ -127,7 +127,7 @@ public abstract partial class Menu : UiBase
         {
             get
             {
-                if (_L_Exit == null) _L_Exit = new Exit(UiPanel, Instance.GetNodeOrNull<Godot.Button>("Exit"));
+                if (_L_Exit == null) _L_Exit = new Exit(UiPanel, Instance.GetNode<Godot.Button>("Exit"));
                 return _L_Exit;
             }
         }
@@ -149,7 +149,7 @@ public abstract partial class Menu : UiBase
         {
             get
             {
-                if (_L_VBoxContainer == null) _L_VBoxContainer = new VBoxContainer_1(UiPanel, Instance.GetNodeOrNull<Godot.VBoxContainer>("VBoxContainer"));
+                if (_L_VBoxContainer == null) _L_VBoxContainer = new VBoxContainer_1(UiPanel, Instance.GetNode<Godot.VBoxContainer>("VBoxContainer"));
                 return _L_VBoxContainer;
             }
         }
@@ -171,7 +171,7 @@ public abstract partial class Menu : UiBase
         {
             get
             {
-                if (_L_Label == null) _L_Label = new Label(UiPanel, Instance.GetNodeOrNull<Godot.Label>("Label"));
+                if (_L_Label == null) _L_Label = new Label(UiPanel, Instance.GetNode<Godot.Label>("Label"));
                 return _L_Label;
             }
         }
@@ -184,7 +184,7 @@ public abstract partial class Menu : UiBase
         {
             get
             {
-                if (_L_Control == null) _L_Control = new Control(UiPanel, Instance.GetNodeOrNull<Godot.Control>("Control"));
+                if (_L_Control == null) _L_Control = new Control(UiPanel, Instance.GetNode<Godot.Control>("Control"));
                 return _L_Control;
             }
         }

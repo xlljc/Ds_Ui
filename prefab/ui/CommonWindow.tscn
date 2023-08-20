@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://byy4dwgh1pkg7"]
+[gd_scene load_steps=2 format=3 uid="uid://bhot28kuymyfs"]
 
 [ext_resource type="Script" path="res://src/ui/commonWindow/CommonWindowPanel.cs" id="1_vy06k"]
 

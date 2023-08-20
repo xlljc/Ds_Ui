@@ -14,7 +14,7 @@ public abstract partial class Setting : UiBase
     {
         get
         {
-            if (_L_Back == null) _L_Back = new Back((SettingPanel)this, GetNodeOrNull<Godot.Button>("Back"));
+            if (_L_Back == null) _L_Back = new Back((SettingPanel)this, GetNode<Godot.Button>("Back"));
             return _L_Back;
         }
     }
@@ -27,7 +27,7 @@ public abstract partial class Setting : UiBase
     {
         get
         {
-            if (_L_CenterContainer == null) _L_CenterContainer = new CenterContainer((SettingPanel)this, GetNodeOrNull<Godot.CenterContainer>("CenterContainer"));
+            if (_L_CenterContainer == null) _L_CenterContainer = new CenterContainer((SettingPanel)this, GetNode<Godot.CenterContainer>("CenterContainer"));
             return _L_CenterContainer;
         }
     }
@@ -40,6 +40,7 @@ public abstract partial class Setting : UiBase
 
     public sealed override void OnInitNestedUi()
     {
+
     }
 
     /// <summary>
@@ -81,7 +82,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_Setting1Name == null) _L_Setting1Name = new Setting1Name(UiPanel, Instance.GetNodeOrNull<Godot.Label>("Setting1Name"));
+                if (_L_Setting1Name == null) _L_Setting1Name = new Setting1Name(UiPanel, Instance.GetNode<Godot.Label>("Setting1Name"));
                 return _L_Setting1Name;
             }
         }
@@ -94,7 +95,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_SettingValue1 == null) _L_SettingValue1 = new SettingValue1(UiPanel, Instance.GetNodeOrNull<Godot.HSlider>("SettingValue1"));
+                if (_L_SettingValue1 == null) _L_SettingValue1 = new SettingValue1(UiPanel, Instance.GetNode<Godot.HSlider>("SettingValue1"));
                 return _L_SettingValue1;
             }
         }
@@ -134,7 +135,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_Setting2Name == null) _L_Setting2Name = new Setting2Name(UiPanel, Instance.GetNodeOrNull<Godot.Label>("Setting2Name"));
+                if (_L_Setting2Name == null) _L_Setting2Name = new Setting2Name(UiPanel, Instance.GetNode<Godot.Label>("Setting2Name"));
                 return _L_Setting2Name;
             }
         }
@@ -147,7 +148,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_SettingValue2 == null) _L_SettingValue2 = new SettingValue2(UiPanel, Instance.GetNodeOrNull<Godot.OptionButton>("SettingValue2"));
+                if (_L_SettingValue2 == null) _L_SettingValue2 = new SettingValue2(UiPanel, Instance.GetNode<Godot.OptionButton>("SettingValue2"));
                 return _L_SettingValue2;
             }
         }
@@ -187,7 +188,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_Setting3Name == null) _L_Setting3Name = new Setting3Name(UiPanel, Instance.GetNodeOrNull<Godot.Label>("Setting3Name"));
+                if (_L_Setting3Name == null) _L_Setting3Name = new Setting3Name(UiPanel, Instance.GetNode<Godot.Label>("Setting3Name"));
                 return _L_Setting3Name;
             }
         }
@@ -200,7 +201,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_SettingValue3 == null) _L_SettingValue3 = new SettingValue3(UiPanel, Instance.GetNodeOrNull<Godot.SpinBox>("SettingValue3"));
+                if (_L_SettingValue3 == null) _L_SettingValue3 = new SettingValue3(UiPanel, Instance.GetNode<Godot.SpinBox>("SettingValue3"));
                 return _L_SettingValue3;
             }
         }
@@ -231,7 +232,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_HBoxContainer == null) _L_HBoxContainer = new HBoxContainer(UiPanel, Instance.GetNodeOrNull<Godot.HBoxContainer>("HBoxContainer"));
+                if (_L_HBoxContainer == null) _L_HBoxContainer = new HBoxContainer(UiPanel, Instance.GetNode<Godot.HBoxContainer>("HBoxContainer"));
                 return _L_HBoxContainer;
             }
         }
@@ -244,7 +245,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_HBoxContainer2 == null) _L_HBoxContainer2 = new HBoxContainer2(UiPanel, Instance.GetNodeOrNull<Godot.HBoxContainer>("HBoxContainer2"));
+                if (_L_HBoxContainer2 == null) _L_HBoxContainer2 = new HBoxContainer2(UiPanel, Instance.GetNode<Godot.HBoxContainer>("HBoxContainer2"));
                 return _L_HBoxContainer2;
             }
         }
@@ -257,7 +258,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_HBoxContainer3 == null) _L_HBoxContainer3 = new HBoxContainer3(UiPanel, Instance.GetNodeOrNull<Godot.HBoxContainer>("HBoxContainer3"));
+                if (_L_HBoxContainer3 == null) _L_HBoxContainer3 = new HBoxContainer3(UiPanel, Instance.GetNode<Godot.HBoxContainer>("HBoxContainer3"));
                 return _L_HBoxContainer3;
             }
         }
@@ -270,7 +271,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_Apply == null) _L_Apply = new Apply(UiPanel, Instance.GetNodeOrNull<Godot.Button>("Apply"));
+                if (_L_Apply == null) _L_Apply = new Apply(UiPanel, Instance.GetNode<Godot.Button>("Apply"));
                 return _L_Apply;
             }
         }
@@ -292,7 +293,7 @@ public abstract partial class Setting : UiBase
         {
             get
             {
-                if (_L_VBoxContainer == null) _L_VBoxContainer = new VBoxContainer(UiPanel, Instance.GetNodeOrNull<Godot.VBoxContainer>("VBoxContainer"));
+                if (_L_VBoxContainer == null) _L_VBoxContainer = new VBoxContainer(UiPanel, Instance.GetNode<Godot.VBoxContainer>("VBoxContainer"));
                 return _L_VBoxContainer;
             }
         }

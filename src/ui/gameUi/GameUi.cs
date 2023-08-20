@@ -14,7 +14,7 @@ public abstract partial class GameUi : UiBase
     {
         get
         {
-            if (_L_Back == null) _L_Back = new Back((GameUiPanel)this, GetNodeOrNull<Godot.Button>("Back"));
+            if (_L_Back == null) _L_Back = new Back((GameUiPanel)this, GetNode<Godot.Button>("Back"));
             return _L_Back;
         }
     }
@@ -27,7 +27,7 @@ public abstract partial class GameUi : UiBase
     {
         get
         {
-            if (_L_HBoxContainer == null) _L_HBoxContainer = new HBoxContainer((GameUiPanel)this, GetNodeOrNull<Godot.HBoxContainer>("HBoxContainer"));
+            if (_L_HBoxContainer == null) _L_HBoxContainer = new HBoxContainer((GameUiPanel)this, GetNode<Godot.HBoxContainer>("HBoxContainer"));
             return _L_HBoxContainer;
         }
     }
@@ -40,7 +40,7 @@ public abstract partial class GameUi : UiBase
     {
         get
         {
-            if (_L_Coin == null) _L_Coin = new Coin((GameUiPanel)this, GetNodeOrNull<Godot.Label>("Coin"));
+            if (_L_Coin == null) _L_Coin = new Coin((GameUiPanel)this, GetNode<Godot.Label>("Coin"));
             return _L_Coin;
         }
     }
@@ -53,6 +53,7 @@ public abstract partial class GameUi : UiBase
 
     public sealed override void OnInitNestedUi()
     {
+
     }
 
     /// <summary>
@@ -94,7 +95,7 @@ public abstract partial class GameUi : UiBase
         {
             get
             {
-                if (_L_Package == null) _L_Package = new Package(UiPanel, Instance.GetNodeOrNull<Godot.Button>("Package"));
+                if (_L_Package == null) _L_Package = new Package(UiPanel, Instance.GetNode<Godot.Button>("Package"));
                 return _L_Package;
             }
         }
@@ -107,7 +108,7 @@ public abstract partial class GameUi : UiBase
         {
             get
             {
-                if (_L_Label == null) _L_Label = new Label(UiPanel, Instance.GetNodeOrNull<Godot.Label>("Label"));
+                if (_L_Label == null) _L_Label = new Label(UiPanel, Instance.GetNode<Godot.Label>("Label"));
                 return _L_Label;
             }
         }
@@ -147,7 +148,7 @@ public abstract partial class GameUi : UiBase
         {
             get
             {
-                if (_L_Setting == null) _L_Setting = new Setting(UiPanel, Instance.GetNodeOrNull<Godot.Button>("Setting"));
+                if (_L_Setting == null) _L_Setting = new Setting(UiPanel, Instance.GetNode<Godot.Button>("Setting"));
                 return _L_Setting;
             }
         }
@@ -160,7 +161,7 @@ public abstract partial class GameUi : UiBase
         {
             get
             {
-                if (_L_Label == null) _L_Label = new Label_1(UiPanel, Instance.GetNodeOrNull<Godot.Label>("Label"));
+                if (_L_Label == null) _L_Label = new Label_1(UiPanel, Instance.GetNode<Godot.Label>("Label"));
                 return _L_Label;
             }
         }
@@ -182,7 +183,7 @@ public abstract partial class GameUi : UiBase
         {
             get
             {
-                if (_L_Control == null) _L_Control = new Control(UiPanel, Instance.GetNodeOrNull<Godot.Control>("Control"));
+                if (_L_Control == null) _L_Control = new Control(UiPanel, Instance.GetNode<Godot.Control>("Control"));
                 return _L_Control;
             }
         }
@@ -195,7 +196,7 @@ public abstract partial class GameUi : UiBase
         {
             get
             {
-                if (_L_Control2 == null) _L_Control2 = new Control2(UiPanel, Instance.GetNodeOrNull<Godot.Control>("Control2"));
+                if (_L_Control2 == null) _L_Control2 = new Control2(UiPanel, Instance.GetNode<Godot.Control>("Control2"));
                 return _L_Control2;
             }
         }
