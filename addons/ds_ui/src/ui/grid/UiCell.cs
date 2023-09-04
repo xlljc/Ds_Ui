@@ -9,7 +9,7 @@ namespace DsUi
     /// </summary>
     /// <typeparam name="TUiCellNode">ui节点类型</typeparam>
     /// <typeparam name="T">数据类型</typeparam>
-    public abstract class UiCell<TUiCellNode, T> : IUiCell where TUiCellNode : IUiCellNode
+    public abstract class UiCell<TUiCellNode, T> : IUiCell, IData<T> where TUiCellNode : IUiCellNode
     {
         public bool IsDestroyed { get; private set; }
         
@@ -87,6 +87,17 @@ namespace DsUi
         
         public virtual void OnDestroy()
         {
+        }
+
+        /// <summary>
+        /// 当 Cell 参与排序时调用, 参数 other 为需要对比的另一个 Cell 对象<br/>
+        /// 函数返回 -1 表示当前 Cell 在 other 之前<br/>
+        /// 函数返回 0 表示当前 Cell 和 other 位置相同<br/>
+        /// 函数返回 1 表示当前 Cell 和 other 之后<br/>
+        /// </summary>
+        public virtual int OnSort(UiCell<TUiCellNode, T> other)
+        {
+            return 0;
         }
 
         /// <summary>

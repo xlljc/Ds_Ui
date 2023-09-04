@@ -14,7 +14,7 @@ namespace DsUi
     public class UiGrid<TUiCellNode, TData> : IUiGrid where TUiCellNode : IUiCellNode
     {
         public bool IsDestroyed { get; private set; }
-
+        
         public int SelectIndex
         {
             get => _selectIndex;
@@ -33,7 +33,6 @@ namespace DsUi
                             return;
                         }
                     }
-
                     var prevIndex = _selectIndex;
                     _selectIndex = newIndex;
 
@@ -58,7 +57,7 @@ namespace DsUi
         /// 选中的 Cell 包含的数据
         /// </summary>
         public TData SelectData => _selectIndex >= 0 ? _cellList[_selectIndex].Data : default;
-
+        
         public bool Visible
         {
             get => _gridContainer.Visible;
@@ -66,34 +65,25 @@ namespace DsUi
         }
 
         public int Count => _cellList.Count;
-
+        
         //模板对象
         private TUiCellNode _template;
-
         //模板大小
         private Vector2 _size = Vector2.Zero;
-
         //cell逻辑处理类
         private Type _cellType;
-
         //当前活动的cell池
         private List<UiCell<TUiCellNode, TData>> _cellList = new List<UiCell<TUiCellNode, TData>>();
-
         //当前已被回收的cell池
         private Stack<UiCell<TUiCellNode, TData>> _cellPool = new Stack<UiCell<TUiCellNode, TData>>();
-
         //godot原生网格组件
         private UiGridContainer _gridContainer;
-
         //单个cell偏移
         private Vector2I _cellOffset;
-
         //列数
         private int _columns;
-
         //是否自动扩展列数
         private bool _autoColumns;
-
         //选中的cell索引
         private int _selectIndex = -1;
 
@@ -115,7 +105,7 @@ namespace DsUi
         /// <summary>
         /// 设置每个 Cell 之间的偏移量
         /// </summary>
-        public void SetCellOffset(Vector2I offset)
+        public void  SetCellOffset(Vector2I offset)
         {
             _cellOffset = offset;
             _gridContainer.AddThemeConstantOverride("h_separation", offset.X);
@@ -312,7 +302,6 @@ namespace DsUi
                 //取消选中
                 SelectIndex = -1;
             }
-
             var uiCell = _cellList[index];
             _cellList.RemoveAt(index);
             ReclaimCellInstance(uiCell);
@@ -332,12 +321,65 @@ namespace DsUi
             //取消选中
             SelectIndex = -1;
             var uiCells = _cellList.ToArray();
+            _cellList.Clear();
             foreach (var uiCell in uiCells)
             {
                 ReclaimCellInstance(uiCell);
             }
         }
+        
+        public void Click(int index)
+        {
+            if (index < 0 || index >= _cellList.Count)
+            {
+                return;
+            }
+            
+            _cellList[index].Click();
+        }
 
+        /// <summary>
+        /// 对所有已经启用的 Cell 进行排序操作, 排序时会调用 Cell 的 OnSort() 函数用于处理排序逻辑<br/>
+        /// 注意: 排序会影响 Cell 的 Index
+        /// </summary>
+        public void Sort()
+        {
+            if (_cellList.Count <= 0)
+            {
+                return;
+            }
+            //这里记录 SelectIndex 是让排序后 SelectIndex 指向的 Cell 不变
+            var selectIndex = SelectIndex;
+            var selectCell = GetCell(selectIndex);
+            //执行排序操作
+            _cellList.Sort((a, b) => a.OnSort(b));
+            if (selectIndex >= 0)
+            {
+                selectIndex = _cellList.FindIndex(cell => cell == selectCell);
+            }
+            //先移除所有节点
+            for (var i = 0; i < _cellList.Count; i++)
+            {
+                _gridContainer.RemoveChild(_cellList[i].CellNode.GetUiInstance());
+            }
+
+            if (selectIndex >= 0)
+            {
+                _selectIndex = selectIndex;
+            }
+            //以新的顺序加入GridContainer
+            for (var i = 0; i < _cellList.Count; i++)
+            {
+                _gridContainer.AddChild(_cellList[i].CellNode.GetUiInstance());
+            }
+            //刷新Index
+            for (var i = 0; i < _cellList.Count; i++)
+            {
+                var cell = _cellList[i];
+                cell.SetIndex(i);
+            }
+        }
+        
         /// <summary>
         /// 销毁当前网格组件
         /// </summary>
@@ -364,7 +406,7 @@ namespace DsUi
             _cellPool = null;
             _gridContainer.QueueFree();
         }
-
+        
         private void OnReady()
         {
             if (_template.GetUiInstance() is Control control)
@@ -372,14 +414,13 @@ namespace DsUi
                 _gridContainer.Position = control.Position;
             }
         }
-
+        
         private void OnProcess(float delta)
         {
             if (IsDestroyed || !_template.GetUiPanel().IsOpen)
             {
                 return;
             }
-
             //调用 cell 更新
             var uiCells = _cellPool.ToArray();
             for (var i = 0; i < uiCells.Length; i++)
