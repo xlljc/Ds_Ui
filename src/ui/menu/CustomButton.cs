@@ -13,4 +13,9 @@ public partial class CustomButton : Button, IUiNodeScript
         var node = (Menu.Custom)uiNode;
         GD.Print("初始化Node: " + node.Instance.Name);
     }
+
+    public void OnDestroy()
+    {
+        GD.Print("销毁Node");
+    }
 }
