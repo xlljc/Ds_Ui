@@ -13,13 +13,14 @@ namespace DsUi
         /// <summary>
         /// 当前 UI 所属层级
         /// </summary>
-        [Export] public UiLayer Layer = UiLayer.Middle;
+        [Export]
+        public UiLayer Layer = UiLayer.Middle;
 
         /// <summary>
         /// ui名称
         /// </summary>
-        public string UiName { get; }
-
+        public string UiName { get; } 
+        
         /// <summary>
         /// 是否已经打开ui
         /// </summary>
@@ -37,7 +38,7 @@ namespace DsUi
         /// 注意: 如果是在预制体中放置的子 Ui, 那么子 Ui 的该属性会在 父 Ui 的 OnCreateUi() 之后赋值
         /// </summary>
         public UiBase ParentUi { get; private set; }
-
+        
         /// <summary>
         /// 所属父级节点, 仅当通过 UiNode.OpenNestedUi() 打开时才会赋值<br/>
         /// 注意: 如果是在预制体中放置的子 Ui, 那么子 Ui 的该属性会在 父 Ui 的 OnCreateUi() 之后赋值
@@ -46,9 +47,10 @@ namespace DsUi
 
         //开启的协程
         private List<CoroutineData> _coroutineList;
-
         //嵌套打开的Ui列表
         private HashSet<UiBase> _nestedUiSet;
+        //当前Ui包含的 IUiNodeScript 接口, 关闭Ui是需要调用 IUiNodeScript.OnDestroy()
+        private HashSet<IUiNodeScript> _nodeScripts;
 
         public UiBase(string uiName)
         {
@@ -63,7 +65,7 @@ namespace DsUi
         public virtual void OnCreateUi()
         {
         }
-
+        
         /// <summary>
         /// 用于初始化打开的子Ui, 在 OnCreateUi() 之后调用
         /// </summary>
@@ -93,7 +95,7 @@ namespace DsUi
         }
 
         /// <summary>
-        /// 每帧调用一次
+        /// 如果 Ui 处于打开状态, 则每帧调用一次
         /// </summary>
         public virtual void Process(float delta)
         {
@@ -104,6 +106,11 @@ namespace DsUi
         /// </summary>
         public void ShowUi()
         {
+            if (IsDestroyed)
+            {
+                GD.PrintErr($"当前Ui: {UiName}已经被销毁!");
+                return;
+            }
             if (IsOpen)
             {
                 return;
@@ -112,7 +119,7 @@ namespace DsUi
             IsOpen = true;
             Visible = true;
             OnShowUi();
-
+            
             //子Ui调用显示
             if (_nestedUiSet != null)
             {
@@ -122,12 +129,17 @@ namespace DsUi
                 }
             }
         }
-
+        
         /// <summary>
         /// 隐藏ui, 不会执行销毁
         /// </summary>
         public void HideUi()
         {
+            if (IsDestroyed)
+            {
+                GD.PrintErr($"当前Ui: {UiName}已经被销毁!");
+                return;
+            }
             if (!IsOpen)
             {
                 return;
@@ -136,7 +148,7 @@ namespace DsUi
             IsOpen = false;
             Visible = false;
             OnHideUi();
-
+            
             //子Ui调用隐藏
             if (_nestedUiSet != null)
             {
@@ -156,13 +168,12 @@ namespace DsUi
             {
                 return;
             }
-
             //记录ui关闭
             UiManager.RecordUi(this, UiManager.RecordType.Close);
             HideUi();
             IsDestroyed = true;
             OnDestroyUi();
-
+            
             //子Ui调用销毁
             if (_nestedUiSet != null)
             {
@@ -171,8 +182,16 @@ namespace DsUi
                     uiBase.ParentUi = null;
                     uiBase.Destroy();
                 }
-
                 _nestedUiSet.Clear();
+            }
+            
+            //销毁 IUiNodeScript
+            if (_nodeScripts != null)
+            {
+                foreach (var uiNodeScript in _nodeScripts)
+                {
+                    uiNodeScript.OnDestroy();
+                }
             }
 
             //在父Ui中移除当前Ui
@@ -180,7 +199,7 @@ namespace DsUi
             {
                 ParentUi.RecordNestedUi(this, null, UiManager.RecordType.Close);
             }
-
+            
             QueueFree();
         }
 
@@ -190,10 +209,9 @@ namespace DsUi
             {
                 return;
             }
-
             var newDelta = (float)delta;
             Process(newDelta);
-
+            
             //协程更新
             if (_coroutineList != null)
             {
@@ -211,14 +229,14 @@ namespace DsUi
             uiBase.PrevUi = prevUi;
             AddChild(uiBase);
             RecordNestedUi(uiBase, null, UiManager.RecordType.Open);
-
+            
             uiBase.OnCreateUi();
             uiBase.OnInitNestedUi();
             if (IsOpen)
             {
                 uiBase.ShowUi();
             }
-
+            
             return uiBase;
         }
 
@@ -242,7 +260,6 @@ namespace DsUi
                     GD.PrintErr($"子Ui:'{uiBase.UiName}'已经被其他Ui:'{uiBase.ParentUi.UiName}'嵌套打开!");
                     uiBase.ParentUi.RecordNestedUi(uiBase, node, UiManager.RecordType.Close);
                 }
-
                 if (_nestedUiSet == null)
                 {
                     _nestedUiSet = new HashSet<UiBase>();
@@ -264,14 +281,25 @@ namespace DsUi
                     GD.PrintErr($"当前Ui:'{UiName}'没有嵌套打开子Ui:'{uiBase.UiName}'!");
                     return;
                 }
-
+                
                 if (_nestedUiSet == null)
                 {
                     return;
                 }
-
                 _nestedUiSet.Remove(uiBase);
             }
+        }
+
+        /// <summary>
+        /// 记录当前Ui包含的 IUiNodeScript 接口
+        /// </summary>
+        public void RecordUiNodeScript(IUiNodeScript nodeScript)
+        {
+            if (_nodeScripts == null)
+            {
+                _nodeScripts = new HashSet<IUiNodeScript>();
+            }
+            _nodeScripts.Add(nodeScript);
         }
 
         /// <summary>
@@ -296,12 +324,11 @@ namespace DsUi
             {
                 uiBase = UiManager.OpenUi(uiName, this);
             }
-
             HideUi();
             return uiBase;
         }
-
-
+        
+        
         /// <summary>
         /// 打开下一级Ui, 当前Ui会被隐藏
         /// </summary>
@@ -337,6 +364,11 @@ namespace DsUi
             ProxyCoroutineHandler.ProxyStopCoroutine(ref _coroutineList, coroutineId);
         }
 
+        public bool IsCoroutineOver(long coroutineId)
+        {
+            return ProxyCoroutineHandler.ProxyIsCoroutineOver(ref _coroutineList, coroutineId);
+        }
+        
         public void StopAllCoroutine()
         {
             ProxyCoroutineHandler.ProxyStopAllCoroutine(ref _coroutineList);
