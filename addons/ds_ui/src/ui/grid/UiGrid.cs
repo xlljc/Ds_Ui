@@ -99,6 +99,10 @@ namespace DsUi
             if (uiInstance is Control control)
             {
                 _size = control.Size;
+                if (control.CustomMinimumSize == Vector2.Zero)
+                {
+                    control.CustomMinimumSize = _size;
+                }
             }
         }
 
@@ -488,6 +492,8 @@ namespace DsUi
         {
             if (flag)
             {
+                control.LayoutMode = 1;
+                control.AnchorsPreset = (int)Control.LayoutPreset.TopWide;
                 control.SizeFlagsHorizontal |= Control.SizeFlags.Expand;
             }
             else if ((control.SizeFlagsHorizontal & Control.SizeFlags.Expand) != 0)
