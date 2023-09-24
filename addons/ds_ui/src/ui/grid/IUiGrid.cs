@@ -1,4 +1,6 @@
 ﻿
+using Godot;
+
 namespace DsUi
 {
     /// <summary>
@@ -20,5 +22,16 @@ namespace DsUi
         /// 当前网格组件数据大小
         /// </summary>
         int Count { get; }
+        
+        /// <summary>
+        /// Godot 原生网格组件
+        /// </summary>
+        GridContainer GridContainer { get; }
+
+        /// <summary>
+        /// 触发 Cell 的点击事件
+        /// </summary>
+        /// <param name="index">cell的索引</param>
+        void Click(int index);
     }
 }

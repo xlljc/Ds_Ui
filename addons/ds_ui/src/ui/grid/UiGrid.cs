@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Godot;
 
@@ -60,11 +58,13 @@ namespace DsUi
         
         public bool Visible
         {
-            get => _gridContainer.Visible;
-            set => _gridContainer.Visible = value;
+            get => GridContainer.Visible;
+            set => GridContainer.Visible = value;
         }
 
         public int Count => _cellList.Count;
+        
+        public GridContainer GridContainer { get; private set; }
         
         //模板对象
         private TUiCellNode _template;
@@ -76,8 +76,6 @@ namespace DsUi
         private List<UiCell<TUiCellNode, TData>> _cellList = new List<UiCell<TUiCellNode, TData>>();
         //当前已被回收的cell池
         private Stack<UiCell<TUiCellNode, TData>> _cellPool = new Stack<UiCell<TUiCellNode, TData>>();
-        //godot原生网格组件
-        private UiGridContainer _gridContainer;
         //单个cell偏移
         private Vector2I _cellOffset;
         //列数
@@ -89,12 +87,12 @@ namespace DsUi
 
         public UiGrid(TUiCellNode template, Type cellType)
         {
-            _gridContainer = new UiGridContainer(OnReady, OnProcess);
-            _gridContainer.Ready += OnReady;
+            GridContainer = new UiGridContainer(OnReady, OnProcess);
+            GridContainer.Ready += OnReady;
             _template = template;
             _cellType = cellType;
             var uiInstance = _template.GetUiInstance();
-            uiInstance.AddSibling(_gridContainer);
+            uiInstance.AddSibling(GridContainer);
             uiInstance.GetParent().RemoveChild(uiInstance);
             if (uiInstance is Control control)
             {
@@ -112,8 +110,8 @@ namespace DsUi
         public void  SetCellOffset(Vector2I offset)
         {
             _cellOffset = offset;
-            _gridContainer.AddThemeConstantOverride("h_separation", offset.X);
-            _gridContainer.AddThemeConstantOverride("v_separation", offset.Y);
+            GridContainer.AddThemeConstantOverride("h_separation", offset.X);
+            GridContainer.AddThemeConstantOverride("v_separation", offset.Y);
         }
 
         /// <summary>
@@ -130,7 +128,7 @@ namespace DsUi
         public void SetColumns(int columns)
         {
             _columns = columns;
-            _gridContainer.Columns = columns;
+            GridContainer.Columns = columns;
         }
 
         /// <summary>
@@ -138,7 +136,7 @@ namespace DsUi
         /// </summary>
         public int GetColumns()
         {
-            return _gridContainer.Columns;
+            return GridContainer.Columns;
         }
 
         /// <summary>
@@ -151,13 +149,13 @@ namespace DsUi
                 _autoColumns = flag;
                 if (_autoColumns)
                 {
-                    _gridContainer.Resized += OnGridResized;
+                    GridContainer.Resized += OnGridResized;
                     OnGridResized();
                 }
                 else
                 {
-                    _gridContainer.Columns = _columns;
-                    _gridContainer.Resized -= OnGridResized;
+                    GridContainer.Columns = _columns;
+                    GridContainer.Resized -= OnGridResized;
                 }
             }
         }
@@ -175,7 +173,7 @@ namespace DsUi
         /// </summary>
         public void SetHorizontalExpand(bool flag)
         {
-            SetHorizontalExpand(_gridContainer, flag);
+            SetHorizontalExpand(GridContainer, flag);
         }
 
         /// <summary>
@@ -183,7 +181,7 @@ namespace DsUi
         /// </summary>
         public bool GetHorizontalExpand()
         {
-            return GetHorizontalExpand(_gridContainer);
+            return GetHorizontalExpand(GridContainer);
         }
 
         /// <summary>
@@ -246,7 +244,7 @@ namespace DsUi
                 do
                 {
                     var cell = GetCellInstance();
-                    _gridContainer.AddChild(cell.CellNode.GetUiInstance());
+                    GridContainer.AddChild(cell.CellNode.GetUiInstance());
                 } while (array.Length > _cellList.Count);
             }
             else if (array.Length < _cellList.Count)
@@ -274,7 +272,7 @@ namespace DsUi
             //取消选中
             SelectIndex = -1;
             var cell = GetCellInstance();
-            _gridContainer.AddChild(cell.CellNode.GetUiInstance());
+            GridContainer.AddChild(cell.CellNode.GetUiInstance());
             cell.SetData(data);
         }
 
@@ -364,7 +362,7 @@ namespace DsUi
             //先移除所有节点
             for (var i = 0; i < _cellList.Count; i++)
             {
-                _gridContainer.RemoveChild(_cellList[i].CellNode.GetUiInstance());
+                GridContainer.RemoveChild(_cellList[i].CellNode.GetUiInstance());
             }
 
             if (selectIndex >= 0)
@@ -374,7 +372,7 @@ namespace DsUi
             //以新的顺序加入GridContainer
             for (var i = 0; i < _cellList.Count; i++)
             {
-                _gridContainer.AddChild(_cellList[i].CellNode.GetUiInstance());
+                GridContainer.AddChild(_cellList[i].CellNode.GetUiInstance());
             }
             //刷新Index
             for (var i = 0; i < _cellList.Count; i++)
@@ -408,14 +406,14 @@ namespace DsUi
 
             _cellList = null;
             _cellPool = null;
-            _gridContainer.QueueFree();
+            GridContainer.QueueFree();
         }
         
         private void OnReady()
         {
             if (_template.GetUiInstance() is Control control)
             {
-                _gridContainer.Position = control.Position;
+                GridContainer.Position = control.Position;
             }
         }
         
@@ -465,22 +463,22 @@ namespace DsUi
         private void ReclaimCellInstance(UiCell<TUiCellNode, TData> cell)
         {
             cell.SetEnable(false);
-            _gridContainer.RemoveChild(cell.CellNode.GetUiInstance());
+            GridContainer.RemoveChild(cell.CellNode.GetUiInstance());
             _cellPool.Push(cell);
         }
 
         private void OnGridResized()
         {
-            if (_autoColumns && _gridContainer != null)
+            if (_autoColumns && GridContainer != null)
             {
-                var width = _gridContainer.Size.X;
+                var width = GridContainer.Size.X;
                 if (width <= _size.X + _cellOffset.X)
                 {
-                    _gridContainer.Columns = 1;
+                    GridContainer.Columns = 1;
                 }
                 else
                 {
-                    _gridContainer.Columns = Mathf.FloorToInt(width / (_size.X + _cellOffset.X));
+                    GridContainer.Columns = Mathf.FloorToInt(width / (_size.X + _cellOffset.X));
                 }
             }
         }
@@ -498,6 +496,8 @@ namespace DsUi
             }
             else if ((control.SizeFlagsHorizontal & Control.SizeFlags.Expand) != 0)
             {
+                control.LayoutMode = 1;
+                control.AnchorsPreset = (int)Control.LayoutPreset.TopLeft;
                 control.SizeFlagsHorizontal ^= Control.SizeFlags.Expand;
             }
         }
