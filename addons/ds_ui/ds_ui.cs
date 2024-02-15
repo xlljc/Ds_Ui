@@ -8,7 +8,7 @@ using DsUi.Generator;
 namespace DsUi
 {
     [Tool]
-    public partial class ds_ui : EditorPlugin
+    public partial class ds_ui : EditorPlugin, ISerializationListener
     {
         /// <summary>
         /// 当前插件实例
@@ -230,6 +230,16 @@ namespace DsUi
             };
             confirm.Title = title;
             confirm.Popup();
+        }
+
+        public void OnBeforeSerialize()
+        {
+            SceneChanged -= OnSceneChanged;
+        }
+        
+        public void OnAfterDeserialize()
+        {
+            SceneChanged += OnSceneChanged;
         }
     }
 }

@@ -4,6 +4,7 @@ using Godot;
 
 namespace DsUi
 {
+
     /// <summary>
     /// ui管理类
     /// </summary>
@@ -21,6 +22,7 @@ namespace DsUi
         private static CanvasLayer _middleLayer;
         private static CanvasLayer _heightLayer;
         private static CanvasLayer _popLayer;
+
         private static Dictionary<string, List<UiBase>> _recordUiMap = new Dictionary<string, List<UiBase>>();
 
         /// <summary>
@@ -126,6 +128,7 @@ namespace DsUi
             {
                 throw new Exception("未初始化 UiManager!, 请先调用 UiManager.Init() 函数!");
             }
+
             var packedScene = ResourceLoader.Load<PackedScene>("res://" + DsUiConfig.UiPrefabDir + uiName + ".tscn");
             var uiBase = packedScene.Instantiate<UiBase>();
             uiBase.Visible = false;
@@ -186,7 +189,7 @@ namespace DsUi
         {
             uiBase.HideUi();
         }
-        
+
         /// <summary>
         /// 销毁所有Ui
         /// </summary>
@@ -197,7 +200,7 @@ namespace DsUi
             {
                 map.Add(item.Key, new List<UiBase>(item.Value));
             }
-            
+
             foreach (var item in map)
             {
                 foreach (var uiBase in item.Value)
@@ -217,7 +220,7 @@ namespace DsUi
             {
                 map.Add(item.Key, new List<UiBase>(item.Value));
             }
-            
+
             foreach (var item in map)
             {
                 foreach (var uiBase in item.Value)
@@ -239,6 +242,7 @@ namespace DsUi
                 {
                     result[i] = (T)list[i];
                 }
+
                 return result;
             }
 

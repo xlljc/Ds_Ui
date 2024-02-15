@@ -7,6 +7,7 @@ using Godot;
 
 namespace DsUi
 {
+
     /// <summary>
     /// 协程代理类
     /// </summary>
@@ -17,6 +18,11 @@ namespace DsUi
         /// </summary>
         public static void ProxyUpdateCoroutine(ref List<CoroutineData> coroutineList, float delta)
         {
+            if (coroutineList == null || coroutineList.Count == 0)
+            {
+                return;
+            }
+
             var pairs = coroutineList.ToArray();
             for (var i = 0; i < pairs.Length; i++)
             {
@@ -79,17 +85,7 @@ namespace DsUi
                         if (item.Enumerator.MoveNext())
                         {
                             var next = item.Enumerator.Current;
-                            if (next is IEnumerable enumerable) //嵌套协程
-                            {
-                                if (item.EnumeratorStack == null)
-                                {
-                                    item.EnumeratorStack = new Stack<IEnumerator>();
-                                }
-
-                                item.EnumeratorStack.Push(item.Enumerator);
-                                item.Enumerator = enumerable.GetEnumerator();
-                            }
-                            else if (next is IEnumerator enumerator) //嵌套协程
+                            if (next is IEnumerator enumerator) //嵌套协程
                             {
                                 if (item.EnumeratorStack == null)
                                 {
@@ -98,6 +94,16 @@ namespace DsUi
 
                                 item.EnumeratorStack.Push(item.Enumerator);
                                 item.Enumerator = enumerator;
+                            }
+                            else if (next is IEnumerable enumerable) //嵌套协程
+                            {
+                                if (item.EnumeratorStack == null)
+                                {
+                                    item.EnumeratorStack = new Stack<IEnumerator>();
+                                }
+
+                                item.EnumeratorStack.Push(item.Enumerator);
+                                item.Enumerator = enumerable.GetEnumerator();
                             }
                             else if (next is WaitForSeconds seconds) //等待秒数
                             {
@@ -136,7 +142,7 @@ namespace DsUi
                 }
             }
         }
-        
+
         /// <summary>
         /// 代理协程, 开启一个协程, 返回协程 id, 协程是在普通帧执行的, 支持: 协程嵌套, WaitForSeconds, WaitForFixedProcess, Task, SignalAwaiter
         /// </summary>
@@ -190,7 +196,7 @@ namespace DsUi
 
             return true;
         }
-        
+
         /// <summary>
         /// 代理协程, 停止所有协程
         /// </summary>
@@ -201,6 +207,6 @@ namespace DsUi
                 coroutineList.Clear();
             }
         }
-        
+
     }
 }

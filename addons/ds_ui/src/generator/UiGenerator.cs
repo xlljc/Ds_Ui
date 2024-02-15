@@ -8,6 +8,7 @@ using Godot;
 
 namespace DsUi.Generator
 {
+
     /// <summary>
     /// Ui类生成器
     /// </summary>
@@ -180,21 +181,19 @@ namespace DsUi.Generator
             {
                 str += retraction + $"    _ = {node};\n";
             }
-            else
+
+            if (uiNodeInfo.Children != null)
             {
-                if (uiNodeInfo.Children != null)
+                for (var i = 0; i < uiNodeInfo.Children.Count; i++)
                 {
-                    for (var i = 0; i < uiNodeInfo.Children.Count; i++)
+                    var item = uiNodeInfo.Children[i];
+                    if (uiNodeInfo.OriginName == uiNodeInfo.UiRootName)
                     {
-                        var item = uiNodeInfo.Children[i];
-                        if (uiNodeInfo.OriginName == uiNodeInfo.UiRootName)
-                        {
-                            str += GenerateUiScriptCode("", item, retraction);
-                        }
-                        else
-                        {
-                            str += GenerateUiScriptCode(node, item, retraction);
-                        }
+                        str += GenerateUiScriptCode("", item, retraction);
+                    }
+                    else
+                    {
+                        str += GenerateUiScriptCode(node, item, retraction);
                     }
                 }
             }
@@ -418,13 +417,13 @@ namespace DsUi.Generator
                 bool isNodeScript;
                 if (match.Success) //存在命名空间
                 {
-                    isNodeScript = IsNodeScript(match.Value + "." + fileName);
+                    isNodeScript = CheckNodeScript(match.Value + "." + fileName);
                     uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, match.Value + "." + fileName,
                         isNodeScript);
                 }
                 else //不存在命名空间
                 {
-                    isNodeScript = IsNodeScript(fileName);
+                    isNodeScript = CheckNodeScript(fileName);
                     uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, fileName, isNodeScript);
                 }
 
@@ -467,7 +466,7 @@ namespace DsUi.Generator
             return uiNode;
         }
 
-        private static bool IsNodeScript(string typeName)
+        private static bool CheckNodeScript(string typeName)
         {
             var type = typeof(UiGenerator).Assembly.GetType(typeName);
             if (type == null)
@@ -529,9 +528,12 @@ namespace DsUi.Generator
                 ClassName = className;
                 NodeTypeName = nodeTypeName;
                 IsNodeScript = isNodeScript;
+                if (isNodeScript)
+                {
+                    GD.Print("发现 IUiNodeScript 节点: " + originName);
+                }
             }
         }
-
     }
 }
 
