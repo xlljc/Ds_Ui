@@ -13,14 +13,14 @@ namespace DsUi
         /// <summary>
         /// 当前插件实例
         /// </summary>
-        public static ds_ui Instance { get; private set; }
+        public static EditorInterface EditorInterface { get; private set; }
 
         //ui监听器
         private NodeMonitor _uiMonitor;
 
         public override void _Process(double delta)
         {
-            Instance = this;
+            EditorInterface = GetEditorInterface();
 
             if (_uiMonitor != null)
             {
@@ -30,13 +30,13 @@ namespace DsUi
             {
                 _uiMonitor = new NodeMonitor();
                 _uiMonitor.SceneNodeChangeEvent += GenerateUiCode;
-                OnSceneChanged(GetEditorInterface().GetEditedSceneRoot());
+                OnSceneChanged(EditorInterface.GetEditedSceneRoot());
             }
         }
 
         public override void _EnterTree()
         {
-            Instance = this;
+            EditorInterface = GetEditorInterface();
             //场景切换事件
             SceneChanged += OnSceneChanged;
 
@@ -163,10 +163,10 @@ namespace DsUi
 
         private void OnGenerateUiCode()
         {
-            if (Instance != null)
+            if (EditorInterface != null)
             {
-                var root = Instance.GetEditorInterface().GetEditedSceneRoot();
-                if (root != null && Instance.CheckIsUi(root))
+                var root = EditorInterface.GetEditedSceneRoot();
+                if (root != null && CheckIsUi(root))
                 {
                     if (UiGenerator.GenerateUiCodeFromEditor(root))
                     {

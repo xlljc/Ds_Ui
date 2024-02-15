@@ -83,7 +83,7 @@ namespace DsUi.Generator
                 //打开ui
                 if (open)
                 {
-                    ds_ui.Instance.GetEditorInterface().OpenSceneFromPath(prefabResPath);
+                    ds_ui.EditorInterface.OpenSceneFromPath(prefabResPath);
                 }
 
             }
