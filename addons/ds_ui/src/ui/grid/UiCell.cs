@@ -197,6 +197,7 @@ namespace DsUi
             }
 
             OnDestroy();
+            CellNode.GetUiInstance().QueueFree();
             IsDestroyed = true;
         }
     }

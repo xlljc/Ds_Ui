@@ -27,7 +27,7 @@ namespace DsUi.Generator
                 var directoryInfo = new DirectoryInfo(DsUiConfig.UiPrefabDir);
                 var fileInfos = directoryInfo.GetFiles();
 
-                var code = $"namespace DsUi;\\n\n// 该类为自动生成的, 请不要手动编辑, 以免造成代码丢失\n" +
+                var code = $"namespace DsUi;\n\n// 该类为自动生成的, 请不要手动编辑, 以免造成代码丢失\n" +
                            $"public static partial class UiManager\n" +
                            $"{{\n" +
                            $"\n";
