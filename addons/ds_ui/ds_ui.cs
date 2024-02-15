@@ -20,7 +20,11 @@ namespace DsUi
 
         public override void _Process(double delta)
         {
+#if GODOT4_2_OR_GREATER
+            EditorInterface = EditorInterface.Singleton;
+#else
             EditorInterface = GetEditorInterface();
+#endif
 
             if (_uiMonitor != null)
             {
@@ -36,13 +40,17 @@ namespace DsUi
 
         public override void _EnterTree()
         {
+#if GODOT4_2_OR_GREATER
+            EditorInterface = EditorInterface.Singleton;
+#else
             EditorInterface = GetEditorInterface();
+#endif
             //场景切换事件
             SceneChanged += OnSceneChanged;
 
             _uiMonitor = new NodeMonitor();
             _uiMonitor.SceneNodeChangeEvent += GenerateUiCode;
-            OnSceneChanged(GetEditorInterface().GetEditedSceneRoot());
+            OnSceneChanged(EditorInterface.GetEditedSceneRoot());
 
             AddToolMenuItem("创建Ui", new Callable(this, nameof(OnCreateUi)));
             AddToolMenuItem("重新生成当前Ui代码", new Callable(this, nameof(OnGenerateUiCode)));
@@ -199,7 +207,7 @@ namespace DsUi
         private void ShowTips(string title, string message)
         {
             var tips = (AcceptDialog)ResourceLoader.Load<PackedScene>("res://addons/ds_ui/ui/Tips.tscn").Instantiate();
-            GetEditorInterface().GetEditorMainScreen().AddChild(tips);
+            EditorInterface.GetEditorMainScreen().AddChild(tips);
             tips.Confirmed += () => { tips.QueueFree(); };
             tips.Canceled += () => { tips.QueueFree(); };
             tips.Title = title;
@@ -211,7 +219,7 @@ namespace DsUi
         {
             var confirm = (ConfirmationDialog)ResourceLoader.Load<PackedScene>("res://addons/ds_ui/ui/Confirm.tscn")
                 .Instantiate();
-            GetEditorInterface().GetEditorMainScreen().AddChild(confirm);
+            EditorInterface.GetEditorMainScreen().AddChild(confirm);
             confirm.Confirmed += () =>
             {
                 confirm.QueueFree();
