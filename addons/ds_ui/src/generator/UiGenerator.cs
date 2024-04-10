@@ -29,7 +29,7 @@ namespace DsUi.Generator
                 var scriptFile = scriptPath + "/" + uiName + "Panel.cs";
                 var scriptCode = $"using Godot;\n" +
                                  $"\n" +
-                                 $"namespace UI.{uiName};\n" +
+                                 $"namespace {DsUiConfig.UiNamespace}.{uiName};\n" +
                                  $"\n" +
                                  $"public partial class {uiName}Panel : {uiName}\n" +
                                  $"{{\n" +
@@ -147,7 +147,7 @@ namespace DsUi.Generator
         private static string GenerateClassCode(UiNodeInfo uiNodeInfo)
         {
             var retraction = "    ";
-            return $"namespace UI.{uiNodeInfo.OriginName};\n\n" +
+            return $"namespace {DsUiConfig.UiNamespace}.{uiNodeInfo.OriginName};\n\n" +
                    $"using DsUi;\n\n" +
                    $"/// <summary>\n" +
                    $"/// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失\n" +

@@ -55,6 +55,9 @@ DsUi插件就是为了解决这个问题, **在编辑场景完成后动态生成
     * 最后运行效果  
     ![img.png](image/img3.png)
 
+3. 配置项
+    * 配置文件路径: `addons/ds_ui/DsUiConfig.cs`
+
 ### 样例
 本仓库包含样例代码, 入口文件为`example/Example.cs`  
 视频教程: https://www.bilibili.com/video/BV1Xp4y1c7p9

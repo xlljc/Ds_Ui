@@ -46,17 +46,17 @@ namespace DsUi.Generator
                         methodClass += $"    /// <summary>\n" +
                                        $"    /// 创建 {uiName}, 并返回UI实例, 该函数不会打开 Ui\n" +
                                        $"    /// </summary>\n" +
-                                       $"    public static UI.{uiName}.{uiName}Panel Create_{uiName}()\n" +
+                                       $"    public static {DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel Create_{uiName}()\n" +
                                        $"    {{\n" +
-                                       $"        return CreateUi<UI.{uiName}.{uiName}Panel>(UiName.{uiName});\n" +
+                                       $"        return CreateUi<{DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel>(UiName.{uiName});\n" +
                                        $"    }}\n" +
                                        $"\n" +
                                        $"    /// <summary>\n" +
                                        $"    /// 打开 {uiName}, 并返回UI实例\n" +
                                        $"    /// </summary>\n" +
-                                       $"    public static UI.{uiName}.{uiName}Panel Open_{uiName}()\n" +
+                                       $"    public static {DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel Open_{uiName}()\n" +
                                        $"    {{\n" +
-                                       $"        return OpenUi<UI.{uiName}.{uiName}Panel>(UiName.{uiName});\n" +
+                                       $"        return OpenUi<{DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel>(UiName.{uiName});\n" +
                                        $"    }}\n" +
                                        $"\n" +
                                        $"    /// <summary>\n" +
@@ -86,9 +86,9 @@ namespace DsUi.Generator
                                        $"    /// <summary>\n" +
                                        $"    /// 获取所有 {uiName} 的实例, 如果没有实例, 则返回一个空数组\n" +
                                        $"    /// </summary>\n" +
-                                       $"    public static UI.{uiName}.{uiName}Panel[] Get_{uiName}_Instance()\n" +
+                                       $"    public static {DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel[] Get_{uiName}_Instance()\n" +
                                        $"    {{\n" +
-                                       $"        return GetUiInstance<UI.{uiName}.{uiName}Panel>(nameof(UI.{uiName}.{uiName}));\n" +
+                                       $"        return GetUiInstance<{DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel>(nameof({DsUiConfig.UiNamespace}.{uiName}.{uiName}));\n" +
                                        $"    }}\n" +
                                        $"\n";
                     }
