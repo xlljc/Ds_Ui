@@ -20,16 +20,21 @@ namespace DsUi.Generator
         /// <summary>
         /// 根据名称在编辑器中创建Ui, open 表示创建完成后是否在编辑器中打开这个ui
         /// </summary>
-        public static bool CreateUi(string uiName, bool open = false)
+        public static bool CreateUi(string uiPath, bool open = false)
         {
             try
             {
                 //创建脚本代码
-                var scriptPath = DsUiConfig.UiCodeDir + ds_ui.FirstToLower(uiName);
+                var index = uiPath.LastIndexOf("/", StringComparison.Ordinal) + 1;
+                var uiName = uiPath.Substring(index);
+                var subPath = uiPath.Substring(0, index);
+                var nameSpace = subPath.Replace("/", ".");
+                
+                var scriptPath = DsUiConfig.UiCodeDir + subPath + ds_ui.FirstToLower(uiName);
                 var scriptFile = scriptPath + "/" + uiName + "Panel.cs";
                 var scriptCode = $"using Godot;\n" +
                                  $"\n" +
-                                 $"namespace {DsUiConfig.UiNamespace}.{uiName};\n" +
+                                 $"namespace {DsUiConfig.UiNamespace}.{nameSpace}{uiName};\n" +
                                  $"\n" +
                                  $"public partial class {uiName}Panel : {uiName}\n" +
                                  $"{{\n" +
@@ -56,11 +61,12 @@ namespace DsUi.Generator
                 var scriptRes = GD.Load<CSharpScript>("res://" + scriptFile);
 
                 //创建场景资源
-                var prefabFile = DsUiConfig.UiPrefabDir + uiName + ".tscn";
+                var prefabPath = DsUiConfig.UiPrefabDir + subPath;
+                var prefabFile = prefabPath + uiName + ".tscn";
                 var prefabResPath = "res://" + prefabFile;
-                if (!Directory.Exists(DsUiConfig.UiPrefabDir))
+                if (!Directory.Exists(prefabPath))
                 {
-                    Directory.CreateDirectory(DsUiConfig.UiPrefabDir);
+                    Directory.CreateDirectory(prefabPath);
                 }
 
                 var uiNode = new Control();
@@ -72,7 +78,7 @@ namespace DsUi.Generator
                 ResourceSaver.Save(scene, prefabResPath);
 
                 //生成Ui结构代码
-                GenerateUiCode(uiNode, scriptPath + "/" + uiName + ".cs");
+                GenerateUiCode(uiNode, scriptPath + "/" + uiName + ".cs", nameSpace);
 
                 //生成 ResourcePath.cs 代码
                 //ResourcePathGenerator.Generate();
@@ -99,12 +105,12 @@ namespace DsUi.Generator
         /// <summary>
         /// 根据指定ui节点生成相应的Ui类, 并保存到指定路径下
         /// </summary>
-        public static void GenerateUiCode(Node control, string path)
+        public static void GenerateUiCode(Node control, string path, string nameSpace)
         {
             _nodeNameMap.Clear();
             _nestedIndex = 1;
             var uiNode = EachNodeFromEditor(control.Name, control);
-            var code = GenerateClassCode(uiNode);
+            var code = GenerateClassCode(uiNode, nameSpace);
             File.WriteAllText(path, code);
         }
 
@@ -117,13 +123,21 @@ namespace DsUi.Generator
             {
                 _nodeNameMap.Clear();
                 _nestedIndex = 1;
+                
+                var resourcePath = control.GetScript().As<CSharpScript>().ResourcePath;
+                var index = resourcePath.LastIndexOf("/", StringComparison.Ordinal);
+                var uiName = resourcePath.Substring(index + 1, resourcePath.Length - index - 8 - 1);
+                
+                var temp = "res://" + DsUiConfig.UiCodeDir;
+                var subPath = resourcePath.Substring(temp.Length, resourcePath.Length - temp.Length - uiName.Length * 2 - 9);
+                var nameSpace = subPath.Replace("/", ".");
 
-                var uiName = control.Name.ToString();
-                var path = DsUiConfig.UiCodeDir + ds_ui.FirstToLower(uiName) + "/" + uiName + ".cs";
-                GD.Print("重新生成ui代码: " + path);
-
-                var uiNode = EachNodeFromEditor(control.Name, control);
-                var code = GenerateClassCode(uiNode);
+                var codeFilePath = DsUiConfig.UiCodeDir + subPath + ds_ui.FirstToLower(uiName) + "/" + uiName + ".cs";
+                
+                GD.Print("重新生成ui代码: " + codeFilePath);
+                
+                var uiNode = EachNodeFromEditor(uiName, control);
+                var code = GenerateClassCode(uiNode, nameSpace);
 
                 foreach (var pair in _nodeNameMap)
                 {
@@ -133,7 +147,7 @@ namespace DsUi.Generator
                     }
                 }
 
-                File.WriteAllText(path, code);
+                File.WriteAllText(codeFilePath, code);
             }
             catch (Exception e)
             {
@@ -144,10 +158,10 @@ namespace DsUi.Generator
             return true;
         }
 
-        private static string GenerateClassCode(UiNodeInfo uiNodeInfo)
+        private static string GenerateClassCode(UiNodeInfo uiNodeInfo, string nameSpace)
         {
             var retraction = "    ";
-            return $"namespace {DsUiConfig.UiNamespace}.{uiNodeInfo.OriginName};\n\n" +
+            return $"namespace {DsUiConfig.UiNamespace}.{nameSpace}{uiNodeInfo.OriginName};\n\n" +
                    $"using DsUi;\n\n" +
                    $"/// <summary>\n" +
                    $"/// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失\n" +
@@ -279,7 +293,7 @@ namespace DsUi.Generator
 
             return retraction + $"/// <summary>\n" +
                    retraction +
-                   $"/// 类型: <see cref=\"{uiNodeInfo.NodeTypeName}\"/>, 路径: {parent}{uiNodeInfo.OriginName}\n" +
+                   $"/// 路径: {parent}{uiNodeInfo.OriginName}\n" +
                    retraction + $"/// </summary>\n" +
                    retraction +
                    $"public class {uiNodeInfo.ClassName} : UiNode<{uiNodeInfo.UiRootName}Panel, {uiNodeInfo.NodeTypeName}, {uiNodeInfo.ClassName}>\n" +
@@ -322,7 +336,7 @@ namespace DsUi.Generator
 
             return retraction + $"/// <summary>\n" +
                    retraction +
-                   $"/// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref=\"{uiNodeInfo.NodeTypeName}\"/>, 节点路径: {parent}{uiNodeInfo.OriginName}\n" +
+                   $"/// 节点路径: {parent}{uiNodeInfo.OriginName}\n" +
                    retraction + $"/// </summary>\n" +
                    retraction + $"public {uiNodeInfo.ClassName} {uiNodeInfo.Name}\n" +
                    retraction + $"{{\n" +
@@ -357,7 +371,7 @@ namespace DsUi.Generator
                     {
                         str += $"{retraction}/// <summary>\n";
                         str +=
-                            $"{retraction}/// 场景中唯一名称的节点, 节点类型: <see cref=\"{nodeInfo.NodeTypeName}\"/>, 节点路径: {path}\n";
+                            $"{retraction}/// 场景中唯一名称的节点, 节点路径: {path}\n";
                         str += $"{retraction}/// </summary>\n";
                         str += $"{retraction}public {nodeInfo.ClassName} S_{nodeInfo.OriginName} => {layer};\n\n";
                     }

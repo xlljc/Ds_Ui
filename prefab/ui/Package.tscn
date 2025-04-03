@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dn6c5nfr6kua"]
 
-[ext_resource type="Script" path="res://src/ui/package/PackagePanel.cs" id="1_0o36a"]
+[ext_resource type="Script" uid="uid://dfkpjuq7shkox" path="res://src/ui/package/PackagePanel.cs" id="1_0o36a"]
 [ext_resource type="Texture2D" uid="uid://bo6230c1vpyu8" path="res://icon.svg" id="2_onj6v"]
 
 [node name="Package" type="Control"]

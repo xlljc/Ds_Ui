@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dbm0xtwrt8mok"]
 
-[ext_resource type="Script" path="res://src/ui/tips/TipsPanel.cs" id="1_e40px"]
+[ext_resource type="Script" uid="uid://cvhsvl0pky8m1" path="res://src/ui/tips/TipsPanel.cs" id="1_e40px"]
 
 [node name="Tips" type="Control"]
 layout_mode = 3

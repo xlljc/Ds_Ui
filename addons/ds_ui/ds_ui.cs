@@ -18,6 +18,8 @@ namespace DsUi
         //ui监听器
         private NodeMonitor _uiMonitor;
 
+        private delegate void CreateUiCallback(string uiName);
+
         public override void _Process(double delta)
         {
 #if GODOT4_2_OR_GREATER
@@ -86,11 +88,19 @@ namespace DsUi
                 return false;
             }
 
-            if (resourcePath.StartsWith("res://" + DsUiConfig.UiCodeDir) && resourcePath.EndsWith("Panel.cs"))
+            var temp = "res://" + DsUiConfig.UiCodeDir;
+            if (resourcePath.StartsWith(temp) && resourcePath.EndsWith("Panel.cs"))
             {
                 var index = resourcePath.LastIndexOf("/", StringComparison.Ordinal);
                 var uiName = resourcePath.Substring(index + 1, resourcePath.Length - index - 8 - 1);
-                var codePath = "res://" + DsUiConfig.UiCodeDir + FirstToLower(uiName) + "/" + uiName + "Panel.cs";
+                
+                
+                // 规则： uiName/UiNamePanel.cs，存在两个"uiName"，并且多出"/"和"Panel.cs"，所以最后要 * 2 并且 - 9
+                var subPath = resourcePath.Substring(temp.Length, resourcePath.Length - temp.Length - uiName.Length * 2 - 9);
+                //var nameSpace = subPath.Length > 0 ? subPath.Substring(0, subPath.Length - 1).Replace("/", ".") : "";
+                //var codePath = "res://" + DsUiConfig.UiCodeDir + FirstToLower(uiName) + "/" + uiName + "Panel.cs";
+                var codePath = "res://" + DsUiConfig.UiCodeDir + subPath + FirstToLower(uiName) + "/" + uiName + "Panel.cs";
+
                 if (ResourceLoader.Exists(codePath))
                 {
                     return true;
@@ -141,7 +151,7 @@ namespace DsUi
                 if (result != null)
                 {
                     //检查名称是否合规
-                    if (!Regex.IsMatch(result, "^[A-Z][a-zA-Z0-9]*$"))
+                    if (!Regex.IsMatch(result, "^([a-zA-z][\\w]*/)*[A-Z][\\w]*$")) // ^[A-Z][a-zA-Z0-9]*$
                     {
                         ShowTips("错误", "UI名称'" + result + "'不符合名称约束, UI名称只允许大写字母开头, 且名称中只允许出现大小字母和数字!");
                         return;
@@ -215,7 +225,7 @@ namespace DsUi
             tips.Popup();
         }
 
-        private void ShowInput(string title, Action<string> callback)
+        private void ShowInput(string title, CreateUiCallback callback)
         {
             var confirm = (ConfirmationDialog)ResourceLoader.Load<PackedScene>("res://addons/ds_ui/ui/Confirm.tscn")
                 .Instantiate();

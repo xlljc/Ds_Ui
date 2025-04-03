@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bhot28kuymyfs"]
 
-[ext_resource type="Script" path="res://src/ui/commonWindow/CommonWindowPanel.cs" id="1_vy06k"]
+[ext_resource type="Script" uid="uid://pq7nwmekhssp" path="res://src/ui/commonWindow/CommonWindowPanel.cs" id="1_vy06k"]
 
 [node name="CommonWindow" type="Control"]
 layout_mode = 3
