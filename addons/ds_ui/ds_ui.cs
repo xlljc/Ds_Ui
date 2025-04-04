@@ -143,6 +143,14 @@ namespace DsUi
         {
             return str.Substring(0, 1).ToLower() + str.Substring(1);
         }
+        
+        /// <summary>
+        /// 字符串首字母大写
+        /// </summary>
+        public static string FirstToUpper(string str)
+        {
+            return str.Substring(0, 1).ToUpper() + str.Substring(1);
+        }
 
         private void OnCreateUi()
         {

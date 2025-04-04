@@ -32,7 +32,7 @@ public class PackageItemCell : UiCell<Package.Item, PackagePanel.ItemCellData>
         //移除当前cell
         Grid.RemoveByIndex(Index);
         //调用主菜单加钱
-        var gameUis = UiManager.Get_GameUi_Instance();
+        var gameUis = UiManager.GetUiInstance<GameUi.GameUiPanel>(UiManager.UiName.GameUi);
         if (gameUis.Length > 0)
         {
             gameUis[0].AddCoin(Data.Coin);
