@@ -8,7 +8,7 @@ using DsUi;
 public abstract partial class Setting : UiBase
 {
     /// <summary>
-    /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: Setting.Back
+    /// 节点路径: Setting.Back
     /// </summary>
     public Back L_Back
     {
@@ -21,7 +21,7 @@ public abstract partial class Setting : UiBase
     private Back _L_Back;
 
     /// <summary>
-    /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.CenterContainer"/>, 节点路径: Setting.CenterContainer
+    /// 节点路径: Setting.CenterContainer
     /// </summary>
     public CenterContainer L_CenterContainer
     {
@@ -44,7 +44,7 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Button"/>, 路径: Setting.Back
+    /// 路径: Setting.Back
     /// </summary>
     public class Back : UiNode<SettingPanel, Godot.Button, Back>
     {
@@ -53,7 +53,7 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Label"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer.Setting1Name
+    /// 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer.Setting1Name
     /// </summary>
     public class Setting1Name : UiNode<SettingPanel, Godot.Label, Setting1Name>
     {
@@ -62,7 +62,7 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.HSlider"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer.SettingValue1
+    /// 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer.SettingValue1
     /// </summary>
     public class SettingValue1 : UiNode<SettingPanel, Godot.HSlider, SettingValue1>
     {
@@ -71,12 +71,12 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.HBoxContainer"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer
+    /// 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer
     /// </summary>
     public class HBoxContainer : UiNode<SettingPanel, Godot.HBoxContainer, HBoxContainer>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: Setting.CenterContainer.VBoxContainer.Setting1Name
+        /// 节点路径: Setting.CenterContainer.VBoxContainer.Setting1Name
         /// </summary>
         public Setting1Name L_Setting1Name
         {
@@ -89,7 +89,7 @@ public abstract partial class Setting : UiBase
         private Setting1Name _L_Setting1Name;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.HSlider"/>, 节点路径: Setting.CenterContainer.VBoxContainer.SettingValue1
+        /// 节点路径: Setting.CenterContainer.VBoxContainer.SettingValue1
         /// </summary>
         public SettingValue1 L_SettingValue1
         {
@@ -106,7 +106,7 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Label"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2.Setting2Name
+    /// 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2.Setting2Name
     /// </summary>
     public class Setting2Name : UiNode<SettingPanel, Godot.Label, Setting2Name>
     {
@@ -115,7 +115,7 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.OptionButton"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2.SettingValue2
+    /// 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2.SettingValue2
     /// </summary>
     public class SettingValue2 : UiNode<SettingPanel, Godot.OptionButton, SettingValue2>
     {
@@ -124,12 +124,12 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.HBoxContainer"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2
+    /// 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2
     /// </summary>
     public class HBoxContainer2 : UiNode<SettingPanel, Godot.HBoxContainer, HBoxContainer2>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: Setting.CenterContainer.VBoxContainer.Setting2Name
+        /// 节点路径: Setting.CenterContainer.VBoxContainer.Setting2Name
         /// </summary>
         public Setting2Name L_Setting2Name
         {
@@ -142,7 +142,7 @@ public abstract partial class Setting : UiBase
         private Setting2Name _L_Setting2Name;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.OptionButton"/>, 节点路径: Setting.CenterContainer.VBoxContainer.SettingValue2
+        /// 节点路径: Setting.CenterContainer.VBoxContainer.SettingValue2
         /// </summary>
         public SettingValue2 L_SettingValue2
         {
@@ -159,7 +159,7 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Label"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3.Setting3Name
+    /// 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3.Setting3Name
     /// </summary>
     public class Setting3Name : UiNode<SettingPanel, Godot.Label, Setting3Name>
     {
@@ -168,7 +168,7 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.SpinBox"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3.SettingValue3
+    /// 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3.SettingValue3
     /// </summary>
     public class SettingValue3 : UiNode<SettingPanel, Godot.SpinBox, SettingValue3>
     {
@@ -177,12 +177,12 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.HBoxContainer"/>, 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3
+    /// 路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3
     /// </summary>
     public class HBoxContainer3 : UiNode<SettingPanel, Godot.HBoxContainer, HBoxContainer3>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: Setting.CenterContainer.VBoxContainer.Setting3Name
+        /// 节点路径: Setting.CenterContainer.VBoxContainer.Setting3Name
         /// </summary>
         public Setting3Name L_Setting3Name
         {
@@ -195,7 +195,7 @@ public abstract partial class Setting : UiBase
         private Setting3Name _L_Setting3Name;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.SpinBox"/>, 节点路径: Setting.CenterContainer.VBoxContainer.SettingValue3
+        /// 节点路径: Setting.CenterContainer.VBoxContainer.SettingValue3
         /// </summary>
         public SettingValue3 L_SettingValue3
         {
@@ -212,7 +212,7 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Button"/>, 路径: Setting.CenterContainer.VBoxContainer.Apply
+    /// 路径: Setting.CenterContainer.VBoxContainer.Apply
     /// </summary>
     public class Apply : UiNode<SettingPanel, Godot.Button, Apply>
     {
@@ -221,12 +221,12 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.VBoxContainer"/>, 路径: Setting.CenterContainer.VBoxContainer
+    /// 路径: Setting.CenterContainer.VBoxContainer
     /// </summary>
     public class VBoxContainer : UiNode<SettingPanel, Godot.VBoxContainer, VBoxContainer>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.HBoxContainer"/>, 节点路径: Setting.CenterContainer.HBoxContainer
+        /// 节点路径: Setting.CenterContainer.HBoxContainer
         /// </summary>
         public HBoxContainer L_HBoxContainer
         {
@@ -239,7 +239,7 @@ public abstract partial class Setting : UiBase
         private HBoxContainer _L_HBoxContainer;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.HBoxContainer"/>, 节点路径: Setting.CenterContainer.HBoxContainer2
+        /// 节点路径: Setting.CenterContainer.HBoxContainer2
         /// </summary>
         public HBoxContainer2 L_HBoxContainer2
         {
@@ -252,7 +252,7 @@ public abstract partial class Setting : UiBase
         private HBoxContainer2 _L_HBoxContainer2;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.HBoxContainer"/>, 节点路径: Setting.CenterContainer.HBoxContainer3
+        /// 节点路径: Setting.CenterContainer.HBoxContainer3
         /// </summary>
         public HBoxContainer3 L_HBoxContainer3
         {
@@ -265,7 +265,7 @@ public abstract partial class Setting : UiBase
         private HBoxContainer3 _L_HBoxContainer3;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: Setting.CenterContainer.Apply
+        /// 节点路径: Setting.CenterContainer.Apply
         /// </summary>
         public Apply L_Apply
         {
@@ -282,12 +282,12 @@ public abstract partial class Setting : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.CenterContainer"/>, 路径: Setting.CenterContainer
+    /// 路径: Setting.CenterContainer
     /// </summary>
     public class CenterContainer : UiNode<SettingPanel, Godot.CenterContainer, CenterContainer>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.VBoxContainer"/>, 节点路径: Setting.VBoxContainer
+        /// 节点路径: Setting.VBoxContainer
         /// </summary>
         public VBoxContainer L_VBoxContainer
         {
@@ -305,67 +305,67 @@ public abstract partial class Setting : UiBase
 
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: Setting.Back
+    /// 场景中唯一名称的节点, 节点路径: Setting.Back
     /// </summary>
     public Back S_Back => L_Back;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Label"/>, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer.Setting1Name
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer.Setting1Name
     /// </summary>
     public Setting1Name S_Setting1Name => L_CenterContainer.L_VBoxContainer.L_HBoxContainer.L_Setting1Name;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.HSlider"/>, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer.SettingValue1
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer.SettingValue1
     /// </summary>
     public SettingValue1 S_SettingValue1 => L_CenterContainer.L_VBoxContainer.L_HBoxContainer.L_SettingValue1;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.HBoxContainer"/>, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer
     /// </summary>
     public HBoxContainer S_HBoxContainer => L_CenterContainer.L_VBoxContainer.L_HBoxContainer;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Label"/>, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2.Setting2Name
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2.Setting2Name
     /// </summary>
     public Setting2Name S_Setting2Name => L_CenterContainer.L_VBoxContainer.L_HBoxContainer2.L_Setting2Name;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.OptionButton"/>, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2.SettingValue2
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2.SettingValue2
     /// </summary>
     public SettingValue2 S_SettingValue2 => L_CenterContainer.L_VBoxContainer.L_HBoxContainer2.L_SettingValue2;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.HBoxContainer"/>, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer2
     /// </summary>
     public HBoxContainer2 S_HBoxContainer2 => L_CenterContainer.L_VBoxContainer.L_HBoxContainer2;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Label"/>, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3.Setting3Name
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3.Setting3Name
     /// </summary>
     public Setting3Name S_Setting3Name => L_CenterContainer.L_VBoxContainer.L_HBoxContainer3.L_Setting3Name;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.SpinBox"/>, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3.SettingValue3
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3.SettingValue3
     /// </summary>
     public SettingValue3 S_SettingValue3 => L_CenterContainer.L_VBoxContainer.L_HBoxContainer3.L_SettingValue3;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.HBoxContainer"/>, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer.HBoxContainer3
     /// </summary>
     public HBoxContainer3 S_HBoxContainer3 => L_CenterContainer.L_VBoxContainer.L_HBoxContainer3;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: Setting.CenterContainer.VBoxContainer.Apply
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer.Apply
     /// </summary>
     public Apply S_Apply => L_CenterContainer.L_VBoxContainer.L_Apply;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.VBoxContainer"/>, 节点路径: Setting.CenterContainer.VBoxContainer
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer.VBoxContainer
     /// </summary>
     public VBoxContainer S_VBoxContainer => L_CenterContainer.L_VBoxContainer;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.CenterContainer"/>, 节点路径: Setting.CenterContainer
+    /// 场景中唯一名称的节点, 节点路径: Setting.CenterContainer
     /// </summary>
     public CenterContainer S_CenterContainer => L_CenterContainer;
 

@@ -437,26 +437,38 @@ namespace DsUi.Generator
                 //在源代码中寻找命名空间
                 var match = Regex.Match(script.SourceCode, "(?<=namespace\\s+)[\\w\\.]+");
                 bool isNodeScript;
+                string nodeTypeName;
                 if (match.Success) //存在命名空间
                 {
-                    isNodeScript = CheckNodeScript(match.Value + "." + fileName);
-                    uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, match.Value + "." + fileName,
-                        isNodeScript);
+                    nodeTypeName = match.Value + "." + fileName;
                 }
                 else //不存在命名空间
                 {
-                    isNodeScript = CheckNodeScript(fileName);
-                    uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, fileName, isNodeScript);
+                    nodeTypeName = fileName;
                 }
+                isNodeScript = CheckNodeScript(nodeTypeName);
+                uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, nodeTypeName, isNodeScript);
 
                 //检测是否是引用Ui
                 if (fileName.EndsWith("Panel"))
                 {
                     var childUiName = fileName.Substring(0, fileName.Length - 5);
-                    if (childUiName != uiRootName && File.Exists(DsUiConfig.UiPrefabDir + childUiName + ".tscn"))
+                    if (childUiName != uiRootName)
                     {
-                        //是引用Ui
-                        uiNode.IsRefUi = true;
+                        var i1 = nodeTypeName.IndexOf(".", StringComparison.Ordinal);
+                        var i2 = nodeTypeName.LastIndexOf(".", StringComparison.Ordinal);
+                    
+                        if (i1 != -1 && i2 != -1 && i2 >= i1)
+                        {
+                            var tempPath = nodeTypeName.Substring(i1 + 1, i2 - i1 - 1).Replace(".", "/");
+                            var resPath = DsUiConfig.UiPrefabDir + tempPath + ".tscn";
+                            if (File.Exists(resPath))
+                            {
+                                //是引用Ui
+                                uiNode.IsRefUi = true;
+                                GD.Print("检测到引用其他Ui: " + resPath);
+                            }
+                        }
                     }
                 }
             }
@@ -525,11 +537,11 @@ namespace DsUi.Generator
                         var node = ResourceLoader.Load<PackedScene>(resPath).Instantiate();
                         try
                         {
+                            GD.Print($"\n---------------------------------\n检测到Ui: {resPath}");
                             if (!cb(node))
                             {
                                 return false;
                             }
-                            GD.Print($"重新生成UI代码: {resPath}");
                         }
                         finally
                         {

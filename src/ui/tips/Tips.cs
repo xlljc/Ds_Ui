@@ -8,7 +8,7 @@ using DsUi;
 public abstract partial class Tips : UiBase
 {
     /// <summary>
-    /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.AcceptDialog"/>, 节点路径: Tips.AcceptDialog
+    /// 节点路径: Tips.AcceptDialog
     /// </summary>
     public AcceptDialog L_AcceptDialog
     {
@@ -31,7 +31,7 @@ public abstract partial class Tips : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.AcceptDialog"/>, 路径: Tips.AcceptDialog
+    /// 路径: Tips.AcceptDialog
     /// </summary>
     public class AcceptDialog : UiNode<TipsPanel, Godot.AcceptDialog, AcceptDialog>
     {
@@ -41,7 +41,7 @@ public abstract partial class Tips : UiBase
 
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.AcceptDialog"/>, 节点路径: Tips.AcceptDialog
+    /// 场景中唯一名称的节点, 节点路径: Tips.AcceptDialog
     /// </summary>
     public AcceptDialog S_AcceptDialog => L_AcceptDialog;
 
