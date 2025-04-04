@@ -8,7 +8,7 @@ using DsUi;
 public abstract partial class Menu : UiBase
 {
     /// <summary>
-    /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.VBoxContainer"/>, 节点路径: Menu.VBoxContainer
+    /// 节点路径: Menu.VBoxContainer
     /// </summary>
     public VBoxContainer L_VBoxContainer
     {
@@ -32,7 +32,7 @@ public abstract partial class Menu : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Label"/>, 路径: Menu.VBoxContainer.Label
+    /// 路径: Menu.VBoxContainer.Label
     /// </summary>
     public class Label : UiNode<MenuPanel, Godot.Label, Label>
     {
@@ -41,7 +41,7 @@ public abstract partial class Menu : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Button"/>, 路径: Menu.VBoxContainer.Control.VBoxContainer.Start
+    /// 路径: Menu.VBoxContainer.Control.VBoxContainer.Start
     /// </summary>
     public class Start : UiNode<MenuPanel, Godot.Button, Start>
     {
@@ -50,7 +50,7 @@ public abstract partial class Menu : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Button"/>, 路径: Menu.VBoxContainer.Control.VBoxContainer.Setting
+    /// 路径: Menu.VBoxContainer.Control.VBoxContainer.Setting
     /// </summary>
     public class Setting : UiNode<MenuPanel, Godot.Button, Setting>
     {
@@ -59,7 +59,7 @@ public abstract partial class Menu : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="UI.Menu.CustomButton"/>, 路径: Menu.VBoxContainer.Control.VBoxContainer.Custom
+    /// 路径: Menu.VBoxContainer.Control.VBoxContainer.Custom
     /// </summary>
     public class Custom : UiNode<MenuPanel, UI.Menu.CustomButton, Custom>
     {
@@ -68,7 +68,7 @@ public abstract partial class Menu : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Button"/>, 路径: Menu.VBoxContainer.Control.VBoxContainer.Exit
+    /// 路径: Menu.VBoxContainer.Control.VBoxContainer.Exit
     /// </summary>
     public class Exit : UiNode<MenuPanel, Godot.Button, Exit>
     {
@@ -77,12 +77,12 @@ public abstract partial class Menu : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.VBoxContainer"/>, 路径: Menu.VBoxContainer.Control.VBoxContainer
+    /// 路径: Menu.VBoxContainer.Control.VBoxContainer
     /// </summary>
     public class VBoxContainer_1 : UiNode<MenuPanel, Godot.VBoxContainer, VBoxContainer_1>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: Menu.VBoxContainer.Control.Start
+        /// 节点路径: Menu.VBoxContainer.Control.Start
         /// </summary>
         public Start L_Start
         {
@@ -95,7 +95,7 @@ public abstract partial class Menu : UiBase
         private Start _L_Start;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: Menu.VBoxContainer.Control.Setting
+        /// 节点路径: Menu.VBoxContainer.Control.Setting
         /// </summary>
         public Setting L_Setting
         {
@@ -108,7 +108,7 @@ public abstract partial class Menu : UiBase
         private Setting _L_Setting;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="UI.Menu.CustomButton"/>, 节点路径: Menu.VBoxContainer.Control.Custom
+        /// 节点路径: Menu.VBoxContainer.Control.Custom
         /// </summary>
         public Custom L_Custom
         {
@@ -121,7 +121,7 @@ public abstract partial class Menu : UiBase
         private Custom _L_Custom;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: Menu.VBoxContainer.Control.Exit
+        /// 节点路径: Menu.VBoxContainer.Control.Exit
         /// </summary>
         public Exit L_Exit
         {
@@ -138,12 +138,12 @@ public abstract partial class Menu : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Control"/>, 路径: Menu.VBoxContainer.Control
+    /// 路径: Menu.VBoxContainer.Control
     /// </summary>
     public class Control : UiNode<MenuPanel, Godot.Control, Control>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.VBoxContainer"/>, 节点路径: Menu.VBoxContainer.VBoxContainer
+        /// 节点路径: Menu.VBoxContainer.VBoxContainer
         /// </summary>
         public VBoxContainer_1 L_VBoxContainer
         {
@@ -160,12 +160,12 @@ public abstract partial class Menu : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.VBoxContainer"/>, 路径: Menu.VBoxContainer
+    /// 路径: Menu.VBoxContainer
     /// </summary>
     public class VBoxContainer : UiNode<MenuPanel, Godot.VBoxContainer, VBoxContainer>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: Menu.Label
+        /// 节点路径: Menu.Label
         /// </summary>
         public Label L_Label
         {
@@ -178,7 +178,7 @@ public abstract partial class Menu : UiBase
         private Label _L_Label;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Control"/>, 节点路径: Menu.Control
+        /// 节点路径: Menu.Control
         /// </summary>
         public Control L_Control
         {
@@ -196,32 +196,32 @@ public abstract partial class Menu : UiBase
 
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Label"/>, 节点路径: Menu.VBoxContainer.Label
+    /// 场景中唯一名称的节点, 节点路径: Menu.VBoxContainer.Label
     /// </summary>
     public Label S_Label => L_VBoxContainer.L_Label;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Start
+    /// 场景中唯一名称的节点, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Start
     /// </summary>
     public Start S_Start => L_VBoxContainer.L_Control.L_VBoxContainer.L_Start;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Setting
+    /// 场景中唯一名称的节点, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Setting
     /// </summary>
     public Setting S_Setting => L_VBoxContainer.L_Control.L_VBoxContainer.L_Setting;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="UI.Menu.CustomButton"/>, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Custom
+    /// 场景中唯一名称的节点, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Custom
     /// </summary>
     public Custom S_Custom => L_VBoxContainer.L_Control.L_VBoxContainer.L_Custom;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Exit
+    /// 场景中唯一名称的节点, 节点路径: Menu.VBoxContainer.Control.VBoxContainer.Exit
     /// </summary>
     public Exit S_Exit => L_VBoxContainer.L_Control.L_VBoxContainer.L_Exit;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Control"/>, 节点路径: Menu.VBoxContainer.Control
+    /// 场景中唯一名称的节点, 节点路径: Menu.VBoxContainer.Control
     /// </summary>
     public Control S_Control => L_VBoxContainer.L_Control;
 

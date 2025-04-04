@@ -6,33 +6,12 @@ public static partial class UiManager
 
     public static class UiName
     {
-        public const string Test_Menu2 = "test/Menu2";
         public const string CommonWindow = "CommonWindow";
         public const string GameUi = "GameUi";
         public const string Menu = "Menu";
         public const string Package = "Package";
         public const string Setting = "Setting";
         public const string Tips = "Tips";
-    }
-
-    /// <summary>
-    /// 打开 test/Menu2, 并返回UI实例
-    /// </summary>
-    public static UI.Menu2.Menu2Panel Open_Test_Menu2()
-    {
-        return OpenUi<UI.Menu2.Menu2Panel>(UiName.Test_Menu2);
-    }
-
-    /// <summary>
-    /// 销毁 test/Menu2 的所有实例
-    /// </summary>
-    public static void Destroy_Test_Menu2()
-    {
-        var uiInstance = GetUiInstance<UI.Menu2.Menu2Panel>(nameof(UI.Menu2.Menu2));
-        foreach (var uiPanel in uiInstance)
-        {
-            uiPanel.Destroy();
-        }
     }
 
     /// <summary>
