@@ -54,9 +54,9 @@ namespace DsUi
             _uiMonitor.SceneNodeChangeEvent += GenerateUiCode;
             OnSceneChanged(EditorInterface.GetEditedSceneRoot());
 
-            AddToolMenuItem("创建Ui", new Callable(this, nameof(OnCreateUi)));
-            AddToolMenuItem("重新生成当前Ui代码", new Callable(this, nameof(OnGenerateUiCode)));
-            AddToolMenuItem("重新生成UiManager中的Ui函数", new Callable(this, nameof(GenerateUiManagerMethods)));
+            AddToolMenuItem("DsUi：创建Ui", new Callable(this, nameof(OnCreateUi)));
+            AddToolMenuItem("DsUi：重新生成当前Ui代码", new Callable(this, nameof(OnGenerateUiCode)));
+            AddToolMenuItem("DsUi：重新生成UiManager中的Ui函数", new Callable(this, nameof(GenerateUiManagerMethods)));
             AddAutoloadSingleton("InitUiManager", "res://addons/ds_ui/InitUiManager.cs");
         }
 
@@ -241,7 +241,7 @@ namespace DsUi
             confirm.Confirmed += () =>
             {
                 confirm.QueueFree();
-                var result = confirm.GetNode<LineEdit>("Control/HBoxContainer/LineEdit").Text;
+                var result = confirm.GetNode<LineEdit>("Control/VBoxContainer/LineEdit").Text;
                 if (string.IsNullOrEmpty(result))
                 {
                     result = "";

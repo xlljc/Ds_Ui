@@ -103,7 +103,7 @@ namespace DsUi.Generator
                     // Path_Name
                     var pathName2 = ds_ui.FirstToUpper(pathName.Replace('/', '_'));
                     // UI.path.Name
-                    var csNamespace = DsUiConfig.UiNamespace + "." + uiName;
+                    var csNamespace = DsUiConfig.UiNamespace + "." + names.Join(".");
                     // UI.path.Name.NamePanel
                     var csFullName = csNamespace + "." + uiName + "Panel";
                     

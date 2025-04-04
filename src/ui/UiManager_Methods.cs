@@ -6,12 +6,54 @@ public static partial class UiManager
 
     public static class UiName
     {
+        public const string Aa_Baba_Aaa = "aa/Baba/Aaa";
+        public const string Aa_BB_Cc = "aa/BB/Cc";
         public const string CommonWindow = "CommonWindow";
         public const string GameUi = "GameUi";
         public const string Menu = "Menu";
         public const string Package = "Package";
         public const string Setting = "Setting";
         public const string Tips = "Tips";
+    }
+
+    /// <summary>
+    /// 打开 aa/Baba/Aaa, 并返回UI实例
+    /// </summary>
+    public static UI.aa.Baba.Aaa.AaaPanel Open_Aa_Baba_Aaa()
+    {
+        return OpenUi<UI.aa.Baba.Aaa.AaaPanel>(UiName.Aa_Baba_Aaa);
+    }
+
+    /// <summary>
+    /// 销毁 aa/Baba/Aaa 的所有实例
+    /// </summary>
+    public static void Destroy_Aa_Baba_Aaa()
+    {
+        var uiInstance = GetUiInstance<UI.aa.Baba.Aaa.AaaPanel>(nameof(UI.aa.Baba.Aaa.Aaa));
+        foreach (var uiPanel in uiInstance)
+        {
+            uiPanel.Destroy();
+        }
+    }
+
+    /// <summary>
+    /// 打开 aa/BB/Cc, 并返回UI实例
+    /// </summary>
+    public static UI.aa.BB.Cc.CcPanel Open_Aa_BB_Cc()
+    {
+        return OpenUi<UI.aa.BB.Cc.CcPanel>(UiName.Aa_BB_Cc);
+    }
+
+    /// <summary>
+    /// 销毁 aa/BB/Cc 的所有实例
+    /// </summary>
+    public static void Destroy_Aa_BB_Cc()
+    {
+        var uiInstance = GetUiInstance<UI.aa.BB.Cc.CcPanel>(nameof(UI.aa.BB.Cc.Cc));
+        foreach (var uiPanel in uiInstance)
+        {
+            uiPanel.Destroy();
+        }
     }
 
     /// <summary>
