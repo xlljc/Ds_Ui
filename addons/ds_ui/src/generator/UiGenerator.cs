@@ -113,6 +113,14 @@ namespace DsUi.Generator
             var code = GenerateClassCode(uiNode, nameSpace);
             File.WriteAllText(path, code);
         }
+        
+        /// <summary>
+        /// 从编辑器中生成所有ui代码
+        /// </summary>
+        public static bool GenerateAllUiCode()
+        {
+            return GenEachUiPrefab(new DirectoryInfo(DsUiConfig.UiPrefabDir), GenerateUiCodeFromEditor);
+        }
 
         /// <summary>
         /// 从编辑器中生成ui代码
@@ -489,6 +497,49 @@ namespace DsUi.Generator
             }
 
             return type.IsAssignableTo(typeof(IUiNodeScript));
+        }
+
+        private static bool GenEachUiPrefab(DirectoryInfo directoryInfo, Func<Node, bool> cb)
+        {
+            var directoryInfos = directoryInfo.GetDirectories();
+            foreach (var dir in directoryInfos)
+            {
+                if (!GenEachUiPrefab(dir, cb))
+                {
+                    return false;
+                }
+            }
+
+            var fileInfos = directoryInfo.GetFiles();
+            foreach (var fileInfo in fileInfos)
+            {
+                if (fileInfo.Extension == ".tscn") //文件
+                {
+                    var fullName = fileInfo.FullName.Replace("\\", "/");
+                    var index = fullName.IndexOf(DsUiConfig.UiPrefabDir, StringComparison.Ordinal);
+                    if (index == -1) continue;
+                    // res://path/Name.tscn
+                    var resPath = "res://" + fullName.Substring(index);
+                    if (ResourceLoader.Exists(resPath))
+                    {
+                        var node = ResourceLoader.Load<PackedScene>(resPath).Instantiate();
+                        try
+                        {
+                            if (!cb(node))
+                            {
+                                return false;
+                            }
+                            GD.Print($"重新生成UI代码: {resPath}");
+                        }
+                        finally
+                        {
+                            node.QueueFree();
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
 
         private class UiNodeInfo

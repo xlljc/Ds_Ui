@@ -56,6 +56,7 @@ namespace DsUi
 
             AddToolMenuItem("DsUi：创建Ui", new Callable(this, nameof(OnCreateUi)));
             AddToolMenuItem("DsUi：重新生成当前Ui代码", new Callable(this, nameof(OnGenerateUiCode)));
+            AddToolMenuItem("DsUi：重新生成所有Ui代码", new Callable(this, nameof(OnGenerateAllUiCode)));
             AddToolMenuItem("DsUi：重新生成UiManager中的Ui函数", new Callable(this, nameof(GenerateUiManagerMethods)));
             AddAutoloadSingleton("InitUiManager", "res://addons/ds_ui/InitUiManager.cs");
         }
@@ -206,6 +207,21 @@ namespace DsUi
                 else
                 {
                     ShowTips("错误", "当前的场景不是受管束的UI场景!");
+                }
+            }
+        }
+
+        private void OnGenerateAllUiCode()
+        {
+            if (EditorInterface != null)
+            {
+                if (UiGenerator.GenerateAllUiCode())
+                {
+                    ShowTips("提示", "生成所有UI代码执行成功!");
+                }
+                else
+                {
+                    ShowTips("错误", "生成所有UI代码执行失败! 前往控制台查看错误日志!");
                 }
             }
         }
