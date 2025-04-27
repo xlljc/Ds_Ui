@@ -1,6 +1,6 @@
-namespace UI.CommonWindow;
-
 using DsUi;
+
+namespace UI.CommonWindow;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -21,7 +21,7 @@ public abstract partial class CommonWindow : UiBase
     private Window _L_Window;
 
 
-    public CommonWindow() : base(nameof(CommonWindow))
+    public CommonWindow() : base(UiManager.UiName.CommonWindow)
     {
     }
 

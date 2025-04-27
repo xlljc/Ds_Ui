@@ -1,6 +1,6 @@
-namespace UI.Package;
-
 using DsUi;
+
+namespace UI.Package;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -21,7 +21,7 @@ public abstract partial class Package : UiBase
     private ScrollContainer _L_ScrollContainer;
 
 
-    public Package() : base(nameof(Package))
+    public Package() : base(UiManager.UiName.Package)
     {
     }
 

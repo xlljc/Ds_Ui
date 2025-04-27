@@ -1,6 +1,6 @@
-namespace UI.GameUi;
-
 using DsUi;
+
+namespace UI.GameUi;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -47,7 +47,7 @@ public abstract partial class GameUi : UiBase
     private Coin _L_Coin;
 
 
-    public GameUi() : base(nameof(GameUi))
+    public GameUi() : base(UiManager.UiName.GameUi)
     {
     }
 

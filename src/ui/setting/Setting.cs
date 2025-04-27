@@ -1,6 +1,6 @@
-namespace UI.Setting;
-
 using DsUi;
+
+namespace UI.Setting;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -34,7 +34,7 @@ public abstract partial class Setting : UiBase
     private CenterContainer _L_CenterContainer;
 
 
-    public Setting() : base(nameof(Setting))
+    public Setting() : base(UiManager.UiName.Setting)
     {
     }
 

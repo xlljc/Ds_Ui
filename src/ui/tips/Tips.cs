@@ -1,6 +1,6 @@
-namespace UI.Tips;
-
 using DsUi;
+
+namespace UI.Tips;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -21,7 +21,7 @@ public abstract partial class Tips : UiBase
     private AcceptDialog _L_AcceptDialog;
 
 
-    public Tips() : base(nameof(Tips))
+    public Tips() : base(UiManager.UiName.Tips)
     {
     }
 

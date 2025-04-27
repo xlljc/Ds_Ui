@@ -6,54 +6,12 @@ public static partial class UiManager
 
     public static class UiName
     {
-        public const string Aa_Baba_Aaa = "aa/Baba/Aaa";
-        public const string Aa_BB_Cc = "aa/BB/Cc";
         public const string CommonWindow = "CommonWindow";
         public const string GameUi = "GameUi";
         public const string Menu = "Menu";
         public const string Package = "Package";
         public const string Setting = "Setting";
         public const string Tips = "Tips";
-    }
-
-    /// <summary>
-    /// 打开 aa/Baba/Aaa, 并返回UI实例
-    /// </summary>
-    public static UI.aa.Baba.Aaa.AaaPanel Open_Aa_Baba_Aaa()
-    {
-        return OpenUi<UI.aa.Baba.Aaa.AaaPanel>(UiName.Aa_Baba_Aaa);
-    }
-
-    /// <summary>
-    /// 销毁 aa/Baba/Aaa 的所有实例
-    /// </summary>
-    public static void Destroy_Aa_Baba_Aaa()
-    {
-        var uiInstance = GetUiInstance<UI.aa.Baba.Aaa.AaaPanel>(nameof(UI.aa.Baba.Aaa.Aaa));
-        foreach (var uiPanel in uiInstance)
-        {
-            uiPanel.Destroy();
-        }
-    }
-
-    /// <summary>
-    /// 打开 aa/BB/Cc, 并返回UI实例
-    /// </summary>
-    public static UI.aa.BB.Cc.CcPanel Open_Aa_BB_Cc()
-    {
-        return OpenUi<UI.aa.BB.Cc.CcPanel>(UiName.Aa_BB_Cc);
-    }
-
-    /// <summary>
-    /// 销毁 aa/BB/Cc 的所有实例
-    /// </summary>
-    public static void Destroy_Aa_BB_Cc()
-    {
-        var uiInstance = GetUiInstance<UI.aa.BB.Cc.CcPanel>(nameof(UI.aa.BB.Cc.Cc));
-        foreach (var uiPanel in uiInstance)
-        {
-            uiPanel.Destroy();
-        }
     }
 
     /// <summary>
@@ -69,7 +27,7 @@ public static partial class UiManager
     /// </summary>
     public static void Destroy_CommonWindow()
     {
-        var uiInstance = GetUiInstance<UI.CommonWindow.CommonWindowPanel>(nameof(UI.CommonWindow.CommonWindow));
+        var uiInstance = GetUiInstance<UI.CommonWindow.CommonWindowPanel>(UiName.CommonWindow);
         foreach (var uiPanel in uiInstance)
         {
             uiPanel.Destroy();
@@ -89,7 +47,7 @@ public static partial class UiManager
     /// </summary>
     public static void Destroy_GameUi()
     {
-        var uiInstance = GetUiInstance<UI.GameUi.GameUiPanel>(nameof(UI.GameUi.GameUi));
+        var uiInstance = GetUiInstance<UI.GameUi.GameUiPanel>(UiName.GameUi);
         foreach (var uiPanel in uiInstance)
         {
             uiPanel.Destroy();
@@ -109,7 +67,7 @@ public static partial class UiManager
     /// </summary>
     public static void Destroy_Menu()
     {
-        var uiInstance = GetUiInstance<UI.Menu.MenuPanel>(nameof(UI.Menu.Menu));
+        var uiInstance = GetUiInstance<UI.Menu.MenuPanel>(UiName.Menu);
         foreach (var uiPanel in uiInstance)
         {
             uiPanel.Destroy();
@@ -129,7 +87,7 @@ public static partial class UiManager
     /// </summary>
     public static void Destroy_Package()
     {
-        var uiInstance = GetUiInstance<UI.Package.PackagePanel>(nameof(UI.Package.Package));
+        var uiInstance = GetUiInstance<UI.Package.PackagePanel>(UiName.Package);
         foreach (var uiPanel in uiInstance)
         {
             uiPanel.Destroy();
@@ -149,7 +107,7 @@ public static partial class UiManager
     /// </summary>
     public static void Destroy_Setting()
     {
-        var uiInstance = GetUiInstance<UI.Setting.SettingPanel>(nameof(UI.Setting.Setting));
+        var uiInstance = GetUiInstance<UI.Setting.SettingPanel>(UiName.Setting);
         foreach (var uiPanel in uiInstance)
         {
             uiPanel.Destroy();
@@ -169,7 +127,7 @@ public static partial class UiManager
     /// </summary>
     public static void Destroy_Tips()
     {
-        var uiInstance = GetUiInstance<UI.Tips.TipsPanel>(nameof(UI.Tips.Tips));
+        var uiInstance = GetUiInstance<UI.Tips.TipsPanel>(UiName.Tips);
         foreach (var uiPanel in uiInstance)
         {
             uiPanel.Destroy();
