@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://doircnrysw8kd"]
 
-[ext_resource type="Script" uid="uid://bgdlliad5eb81" path="res://src/ui/menu/MenuPanel.cs" id="1_4mvrv"]
-[ext_resource type="Script" uid="uid://cgnncke5t7lyy" path="res://src/ui/menu/CustomButton.cs" id="2_okq76"]
+[ext_resource type="Script" path="res://src/ui/menu/MenuPanel.cs" id="1_4mvrv"]
+[ext_resource type="Script" path="res://src/ui/menu/CustomButton.cs" id="2_okq76"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
