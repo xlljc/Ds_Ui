@@ -1,6 +1,6 @@
-namespace UI.Package;
-
 using DsUi;
+
+namespace UI.Package;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -8,7 +8,7 @@ using DsUi;
 public abstract partial class Package : UiBase
 {
     /// <summary>
-    /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.ScrollContainer"/>, 节点路径: Package.ScrollContainer
+    /// 节点路径: Package.ScrollContainer
     /// </summary>
     public ScrollContainer L_ScrollContainer
     {
@@ -21,7 +21,7 @@ public abstract partial class Package : UiBase
     private ScrollContainer _L_ScrollContainer;
 
 
-    public Package() : base(nameof(Package))
+    public Package() : base(UiManager.UiName.Package)
     {
     }
 
@@ -31,7 +31,7 @@ public abstract partial class Package : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Label"/>, 路径: Package.ScrollContainer.Item.ItemName
+    /// 路径: Package.ScrollContainer.Item.ItemName
     /// </summary>
     public class ItemName : UiNode<PackagePanel, Godot.Label, ItemName>
     {
@@ -40,7 +40,7 @@ public abstract partial class Package : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Button"/>, 路径: Package.ScrollContainer.Item.Mask.UseButton
+    /// 路径: Package.ScrollContainer.Item.Mask.UseButton
     /// </summary>
     public class UseButton : UiNode<PackagePanel, Godot.Button, UseButton>
     {
@@ -49,12 +49,12 @@ public abstract partial class Package : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.ColorRect"/>, 路径: Package.ScrollContainer.Item.Mask
+    /// 路径: Package.ScrollContainer.Item.Mask
     /// </summary>
     public class Mask : UiNode<PackagePanel, Godot.ColorRect, Mask>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: Package.ScrollContainer.Item.UseButton
+        /// 节点路径: Package.ScrollContainer.Item.UseButton
         /// </summary>
         public UseButton L_UseButton
         {
@@ -71,12 +71,12 @@ public abstract partial class Package : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.TextureButton"/>, 路径: Package.ScrollContainer.Item
+    /// 路径: Package.ScrollContainer.Item
     /// </summary>
     public class Item : UiNode<PackagePanel, Godot.TextureButton, Item>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: Package.ScrollContainer.ItemName
+        /// 节点路径: Package.ScrollContainer.ItemName
         /// </summary>
         public ItemName L_ItemName
         {
@@ -89,7 +89,7 @@ public abstract partial class Package : UiBase
         private ItemName _L_ItemName;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.ColorRect"/>, 节点路径: Package.ScrollContainer.Mask
+        /// 节点路径: Package.ScrollContainer.Mask
         /// </summary>
         public Mask L_Mask
         {
@@ -106,12 +106,12 @@ public abstract partial class Package : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.ScrollContainer"/>, 路径: Package.ScrollContainer
+    /// 路径: Package.ScrollContainer
     /// </summary>
     public class ScrollContainer : UiNode<PackagePanel, Godot.ScrollContainer, ScrollContainer>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.TextureButton"/>, 节点路径: Package.Item
+        /// 节点路径: Package.Item
         /// </summary>
         public Item L_Item
         {
@@ -129,27 +129,27 @@ public abstract partial class Package : UiBase
 
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Label"/>, 节点路径: Package.ScrollContainer.Item.ItemName
+    /// 场景中唯一名称的节点, 节点路径: Package.ScrollContainer.Item.ItemName
     /// </summary>
     public ItemName S_ItemName => L_ScrollContainer.L_Item.L_ItemName;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: Package.ScrollContainer.Item.Mask.UseButton
+    /// 场景中唯一名称的节点, 节点路径: Package.ScrollContainer.Item.Mask.UseButton
     /// </summary>
     public UseButton S_UseButton => L_ScrollContainer.L_Item.L_Mask.L_UseButton;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.ColorRect"/>, 节点路径: Package.ScrollContainer.Item.Mask
+    /// 场景中唯一名称的节点, 节点路径: Package.ScrollContainer.Item.Mask
     /// </summary>
     public Mask S_Mask => L_ScrollContainer.L_Item.L_Mask;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.TextureButton"/>, 节点路径: Package.ScrollContainer.Item
+    /// 场景中唯一名称的节点, 节点路径: Package.ScrollContainer.Item
     /// </summary>
     public Item S_Item => L_ScrollContainer.L_Item;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.ScrollContainer"/>, 节点路径: Package.ScrollContainer
+    /// 场景中唯一名称的节点, 节点路径: Package.ScrollContainer
     /// </summary>
     public ScrollContainer S_ScrollContainer => L_ScrollContainer;
 

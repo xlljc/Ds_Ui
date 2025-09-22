@@ -18,6 +18,8 @@ namespace DsUi
         //ui监听器
         private NodeMonitor _uiMonitor;
 
+        private delegate void CreateUiCallback(string uiName);
+
         public override void _Process(double delta)
         {
 #if GODOT4_2_OR_GREATER
@@ -52,9 +54,10 @@ namespace DsUi
             _uiMonitor.SceneNodeChangeEvent += GenerateUiCode;
             OnSceneChanged(EditorInterface.GetEditedSceneRoot());
 
-            AddToolMenuItem("创建Ui", new Callable(this, nameof(OnCreateUi)));
-            AddToolMenuItem("重新生成当前Ui代码", new Callable(this, nameof(OnGenerateUiCode)));
-            AddToolMenuItem("重新生成UiManager中的Ui函数", new Callable(this, nameof(GenerateUiManagerMethods)));
+            AddToolMenuItem("DsUi：创建Ui", new Callable(this, nameof(OnCreateUi)));
+            AddToolMenuItem("DsUi：重新生成当前Ui代码", new Callable(this, nameof(OnGenerateUiCode)));
+            AddToolMenuItem("DsUi：重新生成所有Ui代码", new Callable(this, nameof(OnGenerateAllUiCode)));
+            AddToolMenuItem("DsUi：重新生成UiManager中的Ui函数", new Callable(this, nameof(GenerateUiManagerMethods)));
             AddAutoloadSingleton("InitUiManager", "res://addons/ds_ui/InitUiManager.cs");
         }
 
@@ -68,38 +71,13 @@ namespace DsUi
                 _uiMonitor = null;
             }
 
-            RemoveToolMenuItem("创建Ui");
-            RemoveToolMenuItem("重新生成当前Ui代码");
-            RemoveToolMenuItem("重新生成UiManager中的Ui函数");
+            RemoveToolMenuItem("DsUi：创建Ui");
+            RemoveToolMenuItem("DsUi：重新生成当前Ui代码");
+            RemoveToolMenuItem("DsUi：重新生成所有Ui代码");
+            RemoveToolMenuItem("DsUi：重新生成UiManager中的Ui函数");
             RemoveAutoloadSingleton("InitUiManager");
         }
-
-
-        /// <summary>
-        /// 检查节点是否为UI节点
-        /// </summary>
-        public bool CheckIsUi(Node node)
-        {
-            var resourcePath = node.GetScript().As<CSharpScript>()?.ResourcePath;
-            if (resourcePath == null)
-            {
-                return false;
-            }
-
-            if (resourcePath.StartsWith("res://" + DsUiConfig.UiCodeDir) && resourcePath.EndsWith("Panel.cs"))
-            {
-                var index = resourcePath.LastIndexOf("/", StringComparison.Ordinal);
-                var uiName = resourcePath.Substring(index + 1, resourcePath.Length - index - 8 - 1);
-                var codePath = "res://" + DsUiConfig.UiCodeDir + FirstToLower(uiName) + "/" + uiName + "Panel.cs";
-                if (ResourceLoader.Exists(codePath))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
+        
         /// <summary>
         /// 执行生成ui代码操作
         /// </summary>
@@ -118,20 +96,12 @@ namespace DsUi
                 _uiMonitor.ChangeCurrentNode(null);
                 if (node != null)
                 {
-                    if (CheckIsUi(node))
+                    if (UiGeneratorUtils.CheckIsUi(node))
                     {
                         _uiMonitor.ChangeCurrentNode(node);
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// 字符串首字母小写
-        /// </summary>
-        public static string FirstToLower(string str)
-        {
-            return str.Substring(0, 1).ToLower() + str.Substring(1);
         }
 
         private void OnCreateUi()
@@ -141,7 +111,7 @@ namespace DsUi
                 if (result != null)
                 {
                     //检查名称是否合规
-                    if (!Regex.IsMatch(result, "^[A-Z][a-zA-Z0-9]*$"))
+                    if (!Regex.IsMatch(result, "^([a-zA-z][\\w]*/)*[A-Z][\\w]*$")) // ^[A-Z][a-zA-Z0-9]*$
                     {
                         ShowTips("错误", "UI名称'" + result + "'不符合名称约束, UI名称只允许大写字母开头, 且名称中只允许出现大小字母和数字!");
                         return;
@@ -174,7 +144,7 @@ namespace DsUi
             if (EditorInterface != null)
             {
                 var root = EditorInterface.GetEditedSceneRoot();
-                if (root != null && CheckIsUi(root))
+                if (root != null && UiGeneratorUtils.CheckIsUi(root))
                 {
                     if (UiGenerator.GenerateUiCodeFromEditor(root))
                     {
@@ -188,6 +158,21 @@ namespace DsUi
                 else
                 {
                     ShowTips("错误", "当前的场景不是受管束的UI场景!");
+                }
+            }
+        }
+
+        private void OnGenerateAllUiCode()
+        {
+            if (EditorInterface != null)
+            {
+                if (UiGenerator.GenerateAllUiCode())
+                {
+                    ShowTips("提示", "生成所有UI代码执行成功!");
+                }
+                else
+                {
+                    ShowTips("错误", "生成所有UI代码执行失败! 前往控制台查看错误日志!");
                 }
             }
         }
@@ -215,7 +200,7 @@ namespace DsUi
             tips.Popup();
         }
 
-        private void ShowInput(string title, Action<string> callback)
+        private void ShowInput(string title, CreateUiCallback callback)
         {
             var confirm = (ConfirmationDialog)ResourceLoader.Load<PackedScene>("res://addons/ds_ui/ui/Confirm.tscn")
                 .Instantiate();
@@ -223,7 +208,7 @@ namespace DsUi
             confirm.Confirmed += () =>
             {
                 confirm.QueueFree();
-                var result = confirm.GetNode<LineEdit>("Control/HBoxContainer/LineEdit").Text;
+                var result = confirm.GetNode<LineEdit>("Control/VBoxContainer/LineEdit").Text;
                 if (string.IsNullOrEmpty(result))
                 {
                     result = "";

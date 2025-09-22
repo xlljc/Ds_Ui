@@ -24,8 +24,6 @@ namespace DsUi.Generator
 
             try
             {
-                var directoryInfo = new DirectoryInfo(DsUiConfig.UiPrefabDir);
-                var fileInfos = directoryInfo.GetFiles();
 
                 var code = $"namespace DsUi;\n\n// 该类为自动生成的, 请不要手动编辑, 以免造成代码丢失\n" +
                            $"public static partial class UiManager\n" +
@@ -36,66 +34,9 @@ namespace DsUi.Generator
                                   $"    {{\n";
                 var methodClass = "";
 
-                foreach (var fileInfo in fileInfos)
-                {
-                    if (fileInfo.Extension == ".tscn")
-                    {
-                        var uiName = fileInfo.Name.Substring(0, fileInfo.Name.Length - 5);
-                        uiNameClass += $"        public const string {uiName} = \"{uiName}\";\n";
-
-                        methodClass += $"    /// <summary>\n" +
-                                       $"    /// 创建 {uiName}, 并返回UI实例, 该函数不会打开 Ui\n" +
-                                       $"    /// </summary>\n" +
-                                       $"    public static {DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel Create_{uiName}()\n" +
-                                       $"    {{\n" +
-                                       $"        return CreateUi<{DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel>(UiName.{uiName});\n" +
-                                       $"    }}\n" +
-                                       $"\n" +
-                                       $"    /// <summary>\n" +
-                                       $"    /// 打开 {uiName}, 并返回UI实例\n" +
-                                       $"    /// </summary>\n" +
-                                       $"    public static {DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel Open_{uiName}()\n" +
-                                       $"    {{\n" +
-                                       $"        return OpenUi<{DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel>(UiName.{uiName});\n" +
-                                       $"    }}\n" +
-                                       $"\n" +
-                                       $"    /// <summary>\n" +
-                                       $"    /// 隐藏 {uiName} 的所有实例\n" +
-                                       $"    /// </summary>\n" +
-                                       $"    public static void Hide_{uiName}()\n" +
-                                       $"    {{\n" +
-                                       $"        var uiInstance = Get_{uiName}_Instance();\n" +
-                                       $"        foreach (var uiPanel in uiInstance)\n" +
-                                       $"        {{\n" +
-                                       $"            uiPanel.HideUi();\n" +
-                                       $"        }}\n" +
-                                       $"    }}\n" +
-                                       $"\n" +
-                                       $"    /// <summary>\n" +
-                                       $"    /// 销毁 {uiName} 的所有实例\n" +
-                                       $"    /// </summary>\n" +
-                                       $"    public static void Destroy_{uiName}()\n" +
-                                       $"    {{\n" +
-                                       $"        var uiInstance = Get_{uiName}_Instance();\n" +
-                                       $"        foreach (var uiPanel in uiInstance)\n" +
-                                       $"        {{\n" +
-                                       $"            uiPanel.Destroy();\n" +
-                                       $"        }}\n" +
-                                       $"    }}\n" +
-                                       $"\n" +
-                                       $"    /// <summary>\n" +
-                                       $"    /// 获取所有 {uiName} 的实例, 如果没有实例, 则返回一个空数组\n" +
-                                       $"    /// </summary>\n" +
-                                       $"    public static {DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel[] Get_{uiName}_Instance()\n" +
-                                       $"    {{\n" +
-                                       $"        return GetUiInstance<{DsUiConfig.UiNamespace}.{uiName}.{uiName}Panel>(nameof({DsUiConfig.UiNamespace}.{uiName}.{uiName}));\n" +
-                                       $"    }}\n" +
-                                       $"\n";
-                    }
-                }
+                GenEachPrefab(new DirectoryInfo(DsUiConfig.UiPrefabDir), ref uiNameClass, ref methodClass);
 
                 uiNameClass += $"    }}\n\n";
-
                 code += uiNameClass;
                 code += methodClass;
                 code += $"}}\n";
@@ -110,6 +51,89 @@ namespace DsUi.Generator
 
             return true;
         }
+
+        private static void GenEachPrefab(DirectoryInfo directoryInfo, ref string uiNameClass,
+            ref string methodClass)
+        {
+            var directoryInfos = directoryInfo.GetDirectories();
+            foreach (var dir in directoryInfos)
+            {
+                GenEachPrefab(dir, ref uiNameClass, ref methodClass);
+            }
+
+            var fileInfos = directoryInfo.GetFiles();
+            foreach (var fileInfo in fileInfos)
+            {
+                if (fileInfo.Extension == ".tscn") //文件
+                {
+                    var fullName = fileInfo.FullName.Replace("\\", "/");
+                    var index = fullName.IndexOf(DsUiConfig.UiPrefabDir, StringComparison.Ordinal);
+                    if (index == -1) continue;
+
+                    var index2 = index + DsUiConfig.UiPrefabDir.Length;
+                    // path/Name
+                    var pathName = fullName.Substring(index2, fullName.Length - index2 - 5);
+                    // [path,Name]
+                    var names = pathName.Split('/');
+                    // Name
+                    var uiName = names[names.Length - 1];
+                    
+                    // cs脚本路径
+                    var csCodePath = "";
+                    for (var i = 0; i < names.Length; i++)
+                    {
+                        if (i < names.Length - 1)
+                        {
+                            csCodePath += names[i] + "/";
+                        }
+                        else
+                        {
+                            csCodePath += UiGeneratorUtils.FirstToLower(names[i]) + "/";
+                        }
+                    }
+
+                    csCodePath += uiName + ".cs";
+                    // 判断文件是否是ui
+                    if (!File.Exists(DsUiConfig.UiCodeDir + csCodePath))
+                    {
+                        GD.Print($"----------- 检测到非ui文件: {fullName}，找不到对应Ui代码：{DsUiConfig.UiCodeDir + csCodePath}");
+                        continue;
+                    }
+                    GD.Print($"检测到ui文件: {fullName}");
+                    
+                    // Path_Name
+                    var pathName2 = UiGeneratorUtils.FirstToUpper(pathName.Replace('/', '_'));
+                    // UI.path.Name
+                    var csNamespace = DsUiConfig.UiNamespace + "." + names.Join(".");
+                    // UI.path.Name.NamePanel
+                    var csFullName = csNamespace + "." + uiName + "Panel";
+                    
+                    uiNameClass += $"        public const string {pathName2} = \"{pathName}\";\n";
+                    methodClass += $"    /// <summary>\n" +
+                                   $"    /// 打开 {pathName}, 并返回UI实例\n" +
+                                   $"    /// </summary>\n" +
+                                   $"    public static {csFullName} Open_{pathName2}()\n" +
+                                   $"    {{\n" +
+                                   $"        return OpenUi<{csFullName}>(UiName.{pathName2});\n" +
+                                   $"    }}\n" +
+                                   $"\n" +
+                                   $"    /// <summary>\n" +
+                                   $"    /// 销毁 {pathName} 的所有实例\n" +
+                                   $"    /// </summary>\n" +
+                                   $"    public static void Destroy_{pathName2}()\n" +
+                                   $"    {{\n" +
+                                   $"        var uiInstance = GetUiInstance<{csFullName}>(UiName.{pathName2});\n" + 
+                                   $"        foreach (var uiPanel in uiInstance)\n" +
+                                   $"        {{\n" +
+                                   $"            uiPanel.Destroy();\n" +
+                                   $"        }}\n" +
+                                   $"    }}\n" +
+                                   $"\n";
+                }
+            }
+        }
+
+
     }
 
 }

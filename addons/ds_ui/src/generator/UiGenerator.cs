@@ -20,16 +20,22 @@ namespace DsUi.Generator
         /// <summary>
         /// 根据名称在编辑器中创建Ui, open 表示创建完成后是否在编辑器中打开这个ui
         /// </summary>
-        public static bool CreateUi(string uiName, bool open = false)
+        public static bool CreateUi(string uiPath, bool open = false)
         {
             try
             {
                 //创建脚本代码
-                var scriptPath = DsUiConfig.UiCodeDir + ds_ui.FirstToLower(uiName);
+                var index = uiPath.LastIndexOf("/", StringComparison.Ordinal) + 1;
+                var uiName = uiPath.Substring(index);
+                var subPath = uiPath.Substring(0, index);
+                var nameSpace = subPath.Replace("/", ".");
+                var uiNameFiledName = UiGeneratorUtils.FirstToUpper(subPath.Replace("/", "_")) + uiName;
+                
+                var scriptPath = DsUiConfig.UiCodeDir + subPath + UiGeneratorUtils.FirstToLower(uiName);
                 var scriptFile = scriptPath + "/" + uiName + "Panel.cs";
                 var scriptCode = $"using Godot;\n" +
                                  $"\n" +
-                                 $"namespace {DsUiConfig.UiNamespace}.{uiName};\n" +
+                                 $"namespace {DsUiConfig.UiNamespace}.{nameSpace}{uiName};\n" +
                                  $"\n" +
                                  $"public partial class {uiName}Panel : {uiName}\n" +
                                  $"{{\n" +
@@ -56,11 +62,12 @@ namespace DsUi.Generator
                 var scriptRes = GD.Load<CSharpScript>("res://" + scriptFile);
 
                 //创建场景资源
-                var prefabFile = DsUiConfig.UiPrefabDir + uiName + ".tscn";
+                var prefabPath = DsUiConfig.UiPrefabDir + subPath;
+                var prefabFile = prefabPath + uiName + ".tscn";
                 var prefabResPath = "res://" + prefabFile;
-                if (!Directory.Exists(DsUiConfig.UiPrefabDir))
+                if (!Directory.Exists(prefabPath))
                 {
-                    Directory.CreateDirectory(DsUiConfig.UiPrefabDir);
+                    Directory.CreateDirectory(prefabPath);
                 }
 
                 var uiNode = new Control();
@@ -72,7 +79,7 @@ namespace DsUi.Generator
                 ResourceSaver.Save(scene, prefabResPath);
 
                 //生成Ui结构代码
-                GenerateUiCode(uiNode, scriptPath + "/" + uiName + ".cs");
+                GenerateUiCode(uiNode, uiNameFiledName, scriptPath + "/" + uiName + ".cs", nameSpace);
 
                 //生成 ResourcePath.cs 代码
                 //ResourcePathGenerator.Generate();
@@ -99,13 +106,21 @@ namespace DsUi.Generator
         /// <summary>
         /// 根据指定ui节点生成相应的Ui类, 并保存到指定路径下
         /// </summary>
-        public static void GenerateUiCode(Node control, string path)
+        public static void GenerateUiCode(Node control, string uiNameFiledName, string path, string nameSpace)
         {
             _nodeNameMap.Clear();
             _nestedIndex = 1;
-            var uiNode = EachNodeFromEditor(control.Name, control);
-            var code = GenerateClassCode(uiNode);
+            var uiNode = EachNodeFromEditor(uiNameFiledName, control.Name, control);
+            var code = GenerateClassCode(uiNode, nameSpace);
             File.WriteAllText(path, code);
+        }
+        
+        /// <summary>
+        /// 从编辑器中生成所有ui代码
+        /// </summary>
+        public static bool GenerateAllUiCode()
+        {
+            return GenEachUiPrefab(new DirectoryInfo(DsUiConfig.UiPrefabDir), GenerateUiCodeFromEditor);
         }
 
         /// <summary>
@@ -117,13 +132,22 @@ namespace DsUi.Generator
             {
                 _nodeNameMap.Clear();
                 _nestedIndex = 1;
+                
+                var resourcePath = control.GetScript().As<CSharpScript>().ResourcePath;
+                var index = resourcePath.LastIndexOf("/", StringComparison.Ordinal);
+                var uiName = resourcePath.Substring(index + 1, resourcePath.Length - index - 8 - 1);
 
-                var uiName = control.Name.ToString();
-                var path = DsUiConfig.UiCodeDir + ds_ui.FirstToLower(uiName) + "/" + uiName + ".cs";
-                GD.Print("重新生成ui代码: " + path);
+                var temp = "res://" + DsUiConfig.UiCodeDir;
+                var subPath = resourcePath.Substring(temp.Length, resourcePath.Length - temp.Length - uiName.Length * 2 - 9);
+                var nameSpace = subPath.Replace("/", ".");
+                var uiNameFiledName = UiGeneratorUtils.FirstToUpper(subPath.Replace("/", "_")) + uiName;
 
-                var uiNode = EachNodeFromEditor(control.Name, control);
-                var code = GenerateClassCode(uiNode);
+                var codeFilePath = DsUiConfig.UiCodeDir + subPath + UiGeneratorUtils.FirstToLower(uiName) + "/" + uiName + ".cs";
+                
+                GD.Print("重新生成ui代码: " + codeFilePath);
+                
+                var uiNode = EachNodeFromEditor(uiNameFiledName, uiName, control);
+                var code = GenerateClassCode(uiNode, nameSpace);
 
                 foreach (var pair in _nodeNameMap)
                 {
@@ -133,7 +157,7 @@ namespace DsUi.Generator
                     }
                 }
 
-                File.WriteAllText(path, code);
+                File.WriteAllText(codeFilePath, code);
             }
             catch (Exception e)
             {
@@ -144,11 +168,11 @@ namespace DsUi.Generator
             return true;
         }
 
-        private static string GenerateClassCode(UiNodeInfo uiNodeInfo)
+        private static string GenerateClassCode(UiNodeInfo uiNodeInfo, string nameSpace)
         {
             var retraction = "    ";
-            return $"namespace {DsUiConfig.UiNamespace}.{uiNodeInfo.OriginName};\n\n" +
-                   $"using DsUi;\n\n" +
+            return $"using DsUi;\n\n" +
+                   $"namespace {DsUiConfig.UiNamespace}.{nameSpace}{uiNodeInfo.OriginName};\n\n" +
                    $"/// <summary>\n" +
                    $"/// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失\n" +
                    $"/// </summary>\n" +
@@ -156,7 +180,7 @@ namespace DsUi.Generator
                    $"{{\n" +
                    GeneratePropertyListClassCode("", uiNodeInfo.OriginName + ".", uiNodeInfo, retraction) +
                    $"\n" +
-                   $"    public {uiNodeInfo.OriginName}() : base(nameof({uiNodeInfo.OriginName}))\n" +
+                   $"    public {uiNodeInfo.OriginName}() : base(UiManager.UiName.{uiNodeInfo.UiNameFiledName})\n" +
                    $"    {{\n" +
                    $"    }}\n" +
                    $"\n" +
@@ -279,7 +303,7 @@ namespace DsUi.Generator
 
             return retraction + $"/// <summary>\n" +
                    retraction +
-                   $"/// 类型: <see cref=\"{uiNodeInfo.NodeTypeName}\"/>, 路径: {parent}{uiNodeInfo.OriginName}\n" +
+                   $"/// 路径: {parent}{uiNodeInfo.OriginName}\n" +
                    retraction + $"/// </summary>\n" +
                    retraction +
                    $"public class {uiNodeInfo.ClassName} : UiNode<{uiNodeInfo.UiRootName}Panel, {uiNodeInfo.NodeTypeName}, {uiNodeInfo.ClassName}>\n" +
@@ -322,7 +346,7 @@ namespace DsUi.Generator
 
             return retraction + $"/// <summary>\n" +
                    retraction +
-                   $"/// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref=\"{uiNodeInfo.NodeTypeName}\"/>, 节点路径: {parent}{uiNodeInfo.OriginName}\n" +
+                   $"/// 节点路径: {parent}{uiNodeInfo.OriginName}\n" +
                    retraction + $"/// </summary>\n" +
                    retraction + $"public {uiNodeInfo.ClassName} {uiNodeInfo.Name}\n" +
                    retraction + $"{{\n" +
@@ -357,7 +381,7 @@ namespace DsUi.Generator
                     {
                         str += $"{retraction}/// <summary>\n";
                         str +=
-                            $"{retraction}/// 场景中唯一名称的节点, 节点类型: <see cref=\"{nodeInfo.NodeTypeName}\"/>, 节点路径: {path}\n";
+                            $"{retraction}/// 场景中唯一名称的节点, 节点路径: {path}\n";
                         str += $"{retraction}/// </summary>\n";
                         str += $"{retraction}public {nodeInfo.ClassName} S_{nodeInfo.OriginName} => {layer};\n\n";
                     }
@@ -381,7 +405,7 @@ namespace DsUi.Generator
         /// <summary>
         /// 在编辑器下递归解析节点, 由于编辑器下绑定用户脚本的节点无法直接判断节点类型, 那么就只能获取节点的脚本然后解析名称和命名空间
         /// </summary>
-        private static UiNodeInfo EachNodeFromEditor(string uiRootName, Node node)
+        private static UiNodeInfo EachNodeFromEditor(string uiNameFiledName, string uiRootName, Node node)
         {
             UiNodeInfo uiNode;
             //原名称
@@ -405,7 +429,7 @@ namespace DsUi.Generator
             var script = node.GetScript().As<CSharpScript>();
             if (script == null) //无脚本, 说明是内置节点
             {
-                uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, node.GetType().FullName, false);
+                uiNode = new UiNodeInfo(uiNameFiledName, uiRootName, fieldName, originName, className, node.GetType().FullName, false);
             }
             else //存在脚本
             {
@@ -415,26 +439,38 @@ namespace DsUi.Generator
                 //在源代码中寻找命名空间
                 var match = Regex.Match(script.SourceCode, "(?<=namespace\\s+)[\\w\\.]+");
                 bool isNodeScript;
+                string nodeTypeName;
                 if (match.Success) //存在命名空间
                 {
-                    isNodeScript = CheckNodeScript(match.Value + "." + fileName);
-                    uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, match.Value + "." + fileName,
-                        isNodeScript);
+                    nodeTypeName = match.Value + "." + fileName;
                 }
                 else //不存在命名空间
                 {
-                    isNodeScript = CheckNodeScript(fileName);
-                    uiNode = new UiNodeInfo(uiRootName, fieldName, originName, className, fileName, isNodeScript);
+                    nodeTypeName = fileName;
                 }
+                isNodeScript = CheckNodeScript(nodeTypeName);
+                uiNode = new UiNodeInfo(uiNameFiledName, uiRootName, fieldName, originName, className, nodeTypeName, isNodeScript);
 
                 //检测是否是引用Ui
                 if (fileName.EndsWith("Panel"))
                 {
                     var childUiName = fileName.Substring(0, fileName.Length - 5);
-                    if (childUiName != uiRootName && File.Exists(DsUiConfig.UiPrefabDir + childUiName + ".tscn"))
+                    if (childUiName != uiRootName)
                     {
-                        //是引用Ui
-                        uiNode.IsRefUi = true;
+                        var i1 = nodeTypeName.IndexOf(".", StringComparison.Ordinal);
+                        var i2 = nodeTypeName.LastIndexOf(".", StringComparison.Ordinal);
+                    
+                        if (i1 != -1 && i2 != -1 && i2 >= i1)
+                        {
+                            var tempPath = nodeTypeName.Substring(i1 + 1, i2 - i1 - 1).Replace(".", "/");
+                            var resPath = DsUiConfig.UiPrefabDir + tempPath + ".tscn";
+                            if (File.Exists(resPath))
+                            {
+                                //是引用Ui
+                                uiNode.IsRefUi = true;
+                                GD.Print("检测到引用其他Ui: " + resPath);
+                            }
+                        }
                     }
                 }
             }
@@ -458,7 +494,7 @@ namespace DsUi.Generator
                             uiNode.Children = new List<UiNodeInfo>();
                         }
 
-                        uiNode.Children.Add(EachNodeFromEditor(uiRootName, children));
+                        uiNode.Children.Add(EachNodeFromEditor(uiNameFiledName, uiRootName, children));
                     }
                 }
             }
@@ -477,8 +513,59 @@ namespace DsUi.Generator
             return type.IsAssignableTo(typeof(IUiNodeScript));
         }
 
+        private static bool GenEachUiPrefab(DirectoryInfo directoryInfo, Func<Node, bool> cb)
+        {
+            var directoryInfos = directoryInfo.GetDirectories();
+            foreach (var dir in directoryInfos)
+            {
+                if (!GenEachUiPrefab(dir, cb))
+                {
+                    return false;
+                }
+            }
+
+            var fileInfos = directoryInfo.GetFiles();
+            foreach (var fileInfo in fileInfos)
+            {
+                if (fileInfo.Extension == ".tscn") //文件
+                {
+                    var fullName = fileInfo.FullName.Replace("\\", "/");
+                    var index = fullName.IndexOf(DsUiConfig.UiPrefabDir, StringComparison.Ordinal);
+                    if (index == -1) continue;
+                    // res://path/Name.tscn
+                    var resPath = "res://" + fullName.Substring(index);
+                    if (ResourceLoader.Exists(resPath))
+                    {
+                        var node = ResourceLoader.Load<PackedScene>(resPath).Instantiate();
+                        try
+                        {
+                            if (UiGeneratorUtils.CheckIsUi(node))
+                            {
+                                GD.Print($"\n---------------------------------\n检测到Ui: {resPath}");
+                                if (!cb(node))
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            node.QueueFree();
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
         private class UiNodeInfo
         {
+            /// <summary>
+            /// UiName 类中字段名称
+            /// </summary>
+            public string UiNameFiledName;
+            
             /// <summary>
             /// 层级名称
             /// </summary>
@@ -519,7 +606,7 @@ namespace DsUi.Generator
             /// </summary>
             public bool IsRefUi;
 
-            public UiNodeInfo(string uiRootName, string name, string originName, string className, string nodeTypeName,
+            public UiNodeInfo(string uiNameFiledName, string uiRootName, string name, string originName, string className, string nodeTypeName,
                 bool isNodeScript)
             {
                 UiRootName = uiRootName;
@@ -528,6 +615,7 @@ namespace DsUi.Generator
                 ClassName = className;
                 NodeTypeName = nodeTypeName;
                 IsNodeScript = isNodeScript;
+                UiNameFiledName = uiNameFiledName;
                 if (isNodeScript)
                 {
                     GD.Print("发现 IUiNodeScript 节点: " + originName);

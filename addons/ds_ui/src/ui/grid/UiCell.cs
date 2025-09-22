@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using Godot;
 
 namespace DsUi
@@ -9,7 +10,7 @@ namespace DsUi
     /// </summary>
     /// <typeparam name="TUiCellNode">ui节点类型</typeparam>
     /// <typeparam name="T">数据类型</typeparam>
-    public abstract class UiCell<TUiCellNode, T> : IUiCell, IData<T> where TUiCellNode : IUiCellNode
+    public abstract partial class UiCell<TUiCellNode, T> : IUiCell, IData<T> where TUiCellNode : IUiCellNode
     {
         public bool IsDestroyed { get; private set; }
         
@@ -50,6 +51,14 @@ namespace DsUi
         /// </summary>
         public virtual void OnSetData(T data)
         {
+        }
+        
+        /// <summary>
+        /// 当前cell被分配值时调用，该函数为协程函数，当仅在 Grid 中调研 SetDataListCoroutine() 函数时才会被调用
+        /// </summary>
+        public virtual IEnumerator OnSetDataCoroutine(T data)
+        {
+            yield break;
         }
 
 
@@ -128,12 +137,20 @@ namespace DsUi
         }
         
         /// <summary>
-        /// 设置当前 Cell 的值, 该函数由 UiGrid 调用
+        /// 更新当前 Cell 的值, 该函数由 UiGrid 调用
+        /// </summary>
+        public void UpdateData(T data)
+        {
+            Data = data;
+            OnSetData(data);
+        }
+        
+        /// <summary>
+        /// 设置当前 Cell 的值, 该函数由 UiGrid 调用，该函数为协程函数
         /// </summary>
         public void SetData(T data)
         {
             Data = data;
-            OnSetData(data);
         }
 
         /// <summary>

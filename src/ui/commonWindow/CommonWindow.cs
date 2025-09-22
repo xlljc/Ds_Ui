@@ -1,6 +1,6 @@
-namespace UI.CommonWindow;
-
 using DsUi;
+
+namespace UI.CommonWindow;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -8,7 +8,7 @@ using DsUi;
 public abstract partial class CommonWindow : UiBase
 {
     /// <summary>
-    /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Window"/>, 节点路径: CommonWindow.Window
+    /// 节点路径: CommonWindow.Window
     /// </summary>
     public Window L_Window
     {
@@ -21,7 +21,7 @@ public abstract partial class CommonWindow : UiBase
     private Window _L_Window;
 
 
-    public CommonWindow() : base(nameof(CommonWindow))
+    public CommonWindow() : base(UiManager.UiName.CommonWindow)
     {
     }
 
@@ -31,7 +31,7 @@ public abstract partial class CommonWindow : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Window"/>, 路径: CommonWindow.Window
+    /// 路径: CommonWindow.Window
     /// </summary>
     public class Window : UiNode<CommonWindowPanel, Godot.Window, Window>
     {
@@ -41,7 +41,7 @@ public abstract partial class CommonWindow : UiBase
 
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Window"/>, 节点路径: CommonWindow.Window
+    /// 场景中唯一名称的节点, 节点路径: CommonWindow.Window
     /// </summary>
     public Window S_Window => L_Window;
 

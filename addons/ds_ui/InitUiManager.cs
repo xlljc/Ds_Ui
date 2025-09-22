@@ -4,9 +4,11 @@ namespace DsUi;
 
 public partial class InitUiManager : Node
 {
-    public override void _Ready()
+    public override void _EnterTree()
     {
         //初始化Ui管理器
         UiManager.Init(GetParent());
+        
+        CallDeferred(Node.MethodName.QueueFree);
     }
 }

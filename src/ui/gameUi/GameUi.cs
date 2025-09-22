@@ -1,6 +1,6 @@
-namespace UI.GameUi;
-
 using DsUi;
+
+namespace UI.GameUi;
 
 /// <summary>
 /// Ui代码, 该类是根据ui场景自动生成的, 请不要手动编辑该类, 以免造成代码丢失
@@ -8,7 +8,7 @@ using DsUi;
 public abstract partial class GameUi : UiBase
 {
     /// <summary>
-    /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: GameUi.Back
+    /// 节点路径: GameUi.Back
     /// </summary>
     public Back L_Back
     {
@@ -21,7 +21,7 @@ public abstract partial class GameUi : UiBase
     private Back _L_Back;
 
     /// <summary>
-    /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.HBoxContainer"/>, 节点路径: GameUi.HBoxContainer
+    /// 节点路径: GameUi.HBoxContainer
     /// </summary>
     public HBoxContainer L_HBoxContainer
     {
@@ -34,7 +34,7 @@ public abstract partial class GameUi : UiBase
     private HBoxContainer _L_HBoxContainer;
 
     /// <summary>
-    /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: GameUi.Coin
+    /// 节点路径: GameUi.Coin
     /// </summary>
     public Coin L_Coin
     {
@@ -47,7 +47,7 @@ public abstract partial class GameUi : UiBase
     private Coin _L_Coin;
 
 
-    public GameUi() : base(nameof(GameUi))
+    public GameUi() : base(UiManager.UiName.GameUi)
     {
     }
 
@@ -57,7 +57,7 @@ public abstract partial class GameUi : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Button"/>, 路径: GameUi.Back
+    /// 路径: GameUi.Back
     /// </summary>
     public class Back : UiNode<GameUiPanel, Godot.Button, Back>
     {
@@ -66,7 +66,7 @@ public abstract partial class GameUi : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Button"/>, 路径: GameUi.HBoxContainer.Control.Package
+    /// 路径: GameUi.HBoxContainer.Control.Package
     /// </summary>
     public class Package : UiNode<GameUiPanel, Godot.Button, Package>
     {
@@ -75,7 +75,7 @@ public abstract partial class GameUi : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Label"/>, 路径: GameUi.HBoxContainer.Control.Label
+    /// 路径: GameUi.HBoxContainer.Control.Label
     /// </summary>
     public class Label : UiNode<GameUiPanel, Godot.Label, Label>
     {
@@ -84,12 +84,12 @@ public abstract partial class GameUi : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Control"/>, 路径: GameUi.HBoxContainer.Control
+    /// 路径: GameUi.HBoxContainer.Control
     /// </summary>
     public class Control : UiNode<GameUiPanel, Godot.Control, Control>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: GameUi.HBoxContainer.Package
+        /// 节点路径: GameUi.HBoxContainer.Package
         /// </summary>
         public Package L_Package
         {
@@ -102,7 +102,7 @@ public abstract partial class GameUi : UiBase
         private Package _L_Package;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: GameUi.HBoxContainer.Label
+        /// 节点路径: GameUi.HBoxContainer.Label
         /// </summary>
         public Label L_Label
         {
@@ -119,7 +119,7 @@ public abstract partial class GameUi : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Button"/>, 路径: GameUi.HBoxContainer.Control2.Setting
+    /// 路径: GameUi.HBoxContainer.Control2.Setting
     /// </summary>
     public class Setting : UiNode<GameUiPanel, Godot.Button, Setting>
     {
@@ -128,7 +128,7 @@ public abstract partial class GameUi : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Label"/>, 路径: GameUi.HBoxContainer.Control2.Label
+    /// 路径: GameUi.HBoxContainer.Control2.Label
     /// </summary>
     public class Label_1 : UiNode<GameUiPanel, Godot.Label, Label_1>
     {
@@ -137,12 +137,12 @@ public abstract partial class GameUi : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Control"/>, 路径: GameUi.HBoxContainer.Control2
+    /// 路径: GameUi.HBoxContainer.Control2
     /// </summary>
     public class Control2 : UiNode<GameUiPanel, Godot.Control, Control2>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Button"/>, 节点路径: GameUi.HBoxContainer.Setting
+        /// 节点路径: GameUi.HBoxContainer.Setting
         /// </summary>
         public Setting L_Setting
         {
@@ -155,7 +155,7 @@ public abstract partial class GameUi : UiBase
         private Setting _L_Setting;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Label"/>, 节点路径: GameUi.HBoxContainer.Label
+        /// 节点路径: GameUi.HBoxContainer.Label
         /// </summary>
         public Label_1 L_Label
         {
@@ -172,12 +172,12 @@ public abstract partial class GameUi : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.HBoxContainer"/>, 路径: GameUi.HBoxContainer
+    /// 路径: GameUi.HBoxContainer
     /// </summary>
     public class HBoxContainer : UiNode<GameUiPanel, Godot.HBoxContainer, HBoxContainer>
     {
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Control"/>, 节点路径: GameUi.Control
+        /// 节点路径: GameUi.Control
         /// </summary>
         public Control L_Control
         {
@@ -190,7 +190,7 @@ public abstract partial class GameUi : UiBase
         private Control _L_Control;
 
         /// <summary>
-        /// 使用 Instance 属性获取当前节点实例对象, 节点类型: <see cref="Godot.Control"/>, 节点路径: GameUi.Control2
+        /// 节点路径: GameUi.Control2
         /// </summary>
         public Control2 L_Control2
         {
@@ -207,7 +207,7 @@ public abstract partial class GameUi : UiBase
     }
 
     /// <summary>
-    /// 类型: <see cref="Godot.Label"/>, 路径: GameUi.Coin
+    /// 路径: GameUi.Coin
     /// </summary>
     public class Coin : UiNode<GameUiPanel, Godot.Label, Coin>
     {
@@ -217,37 +217,37 @@ public abstract partial class GameUi : UiBase
 
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: GameUi.Back
+    /// 场景中唯一名称的节点, 节点路径: GameUi.Back
     /// </summary>
     public Back S_Back => L_Back;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: GameUi.HBoxContainer.Control.Package
+    /// 场景中唯一名称的节点, 节点路径: GameUi.HBoxContainer.Control.Package
     /// </summary>
     public Package S_Package => L_HBoxContainer.L_Control.L_Package;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Control"/>, 节点路径: GameUi.HBoxContainer.Control
+    /// 场景中唯一名称的节点, 节点路径: GameUi.HBoxContainer.Control
     /// </summary>
     public Control S_Control => L_HBoxContainer.L_Control;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Button"/>, 节点路径: GameUi.HBoxContainer.Control2.Setting
+    /// 场景中唯一名称的节点, 节点路径: GameUi.HBoxContainer.Control2.Setting
     /// </summary>
     public Setting S_Setting => L_HBoxContainer.L_Control2.L_Setting;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Control"/>, 节点路径: GameUi.HBoxContainer.Control2
+    /// 场景中唯一名称的节点, 节点路径: GameUi.HBoxContainer.Control2
     /// </summary>
     public Control2 S_Control2 => L_HBoxContainer.L_Control2;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.HBoxContainer"/>, 节点路径: GameUi.HBoxContainer
+    /// 场景中唯一名称的节点, 节点路径: GameUi.HBoxContainer
     /// </summary>
     public HBoxContainer S_HBoxContainer => L_HBoxContainer;
 
     /// <summary>
-    /// 场景中唯一名称的节点, 节点类型: <see cref="Godot.Label"/>, 节点路径: GameUi.Coin
+    /// 场景中唯一名称的节点, 节点路径: GameUi.Coin
     /// </summary>
     public Coin S_Coin => L_Coin;
 
